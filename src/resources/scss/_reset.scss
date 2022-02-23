@@ -1,0 +1,42 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+html {
+  box-sizing: border-box;
+  font-size: 62.5%;
+  line-height: 1.6rem;
+}
+body {
+  font-family: 'Inter', sans-serif!important;
+  transition: all .3s ease;
+  overflow-x: hidden;
+  height: 100vh;
+}
+input,
+textarea,
+select,
+button {
+  outline: none;
+}
+input {
+  line-height: normal;
+}
+label,
+button {
+  cursor: pointer;
+}
+a {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: none;
+}
+img {
+  display: block;
+  max-width: 100%;
+}
+

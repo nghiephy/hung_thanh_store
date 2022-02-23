@@ -1,0 +1,85 @@
+<section class="product-detail">
+    <div class="breadcrumb-wrap">
+        <div class="container">
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="#">Văn phòng phẩm</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="#">Sách</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="#">Sách tham khảo</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="body-wrap">
+        <div class="container">
+            <div class="product mt-4">
+                <div class="row">
+                    <div class="product_gallery col-lg-5">
+                        <div class="product_gallery-imgBox">
+                            <img src="/img/products/product_1.jpg" alt="">
+                        </div>
+                        <div class="owl-carousel product_gallery-imgslide">
+                            <div class="product_gallery-imgitem active">
+                                <img src="/img/products/product_1.jpg" alt="">
+                            </div>
+                            <div class="product_gallery-imgitem">
+                                <img src="/img/products/compa.jpg" alt="">
+                            </div>
+                            <div class="product_gallery-imgitem">
+                                <img src="/img/products/but-mau.jpg" alt="">
+                            </div>
+                        </div>
+                        <div class="product_gallery-phone">
+                            <h3>Để lại SĐT mua hàng công ty giá tốt</h3>
+                            <form action="#">
+                                <input type="number" name="phone" id="phone">
+                                <button type="submit">GỬI</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="product_body col-lg-7">
+                        Body
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        $(document).ready(function() {
+            $(".owl-carousel.product_gallery-imgslide").owlCarousel({
+                margin:10,
+                responsiveClass:true,
+                dots: false,
+                responsive:{
+                    0:{
+                        items:2,
+                        nav:true,
+                    },
+                    480:{
+                        items:3,
+                        nav:true,
+                    },
+                    800:{
+                        items:4,
+                        nav:true,
+                    },
+                    900:{
+                        items:5,
+                        nav:true,
+                    },
+                    1200:{
+                        items:6,
+                        nav:true,
+                    }
+                }
+            });
+        }
+    }
+</script>

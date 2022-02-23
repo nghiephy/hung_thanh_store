@@ -1,0 +1,109 @@
+$red_color: #ed1c24;
+$white_color: white;
+$black_color: black;
+$price-color: #dc3545;
+$black-lighter-color: #464646;
+$gray-light: #f4f4f4;
+$text-lighter: #D7D7D7;
+$footer-text-color: #7a7a7a;
+$text-color: #555;
+$text-dark-color: #343434;
+$hover-color: #f06292;
+$hover-dark-color: #ce567e;
+$border-color: #e1e1e1;
+$border-footer-color: #c2c2c2;
+$subtitle-color: #333;
+$black-background-color: #363636;
+
+/* Mixin */
+/* Set các giá trị với màn hình tương ứng */
+$mobile-width: 480px; 
+$tablet-width: 768px; 
+$desktop-width: 992px;
+$desktop-lg-width: 1200px;  
+
+@mixin mobile { @media (max-width: #{$tablet-width - 1px}) {     
+  @content;   
+ } 
+}  
+
+@mixin mobile-sm { @media (max-width: #{$mobile-width - 1px}) {       
+  @content;   
+  } 
+}
+
+@mixin landscape-mobile { @media (min-width: #{$mobile-width}) and (max-width: #{$tablet-width - 1px}) {       
+    @content;   
+  } 
+}
+
+@mixin tablet { @media (min-width: #{$tablet-width}) and (max-width: #{$desktop-width - 1px}) {       
+   @content;   
+ } 
+}  
+
+@mixin desktop { @media (min-width: #{$desktop-width}) {     
+  @content;  
+ } 
+}
+
+@mixin desktop-sm { @media (min-width: #{$desktop-width}) and (max-width: #{$desktop-lg-width - 1px}) {       
+    @content;   
+  } 
+}
+
+@mixin desktop-lg { @media (min-width: #{$desktop-lg-width}) {       
+    @content;   
+  } 
+}
+
+.col-2dot4,
+.col-sm-2dot4,
+.col-md-2dot4,
+.col-lg-2dot4,
+.col-xl-2dot4 {
+    position: relative;
+    // width: 100%;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+.col-2dot4 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 20%;
+    flex: 0 0 20%;
+    max-width: 20%;
+}
+@media (min-width: 540px) {
+    .col-sm-2dot4 {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 20%;
+        flex: 0 0 20%;
+        max-width: 20%;
+    }
+}
+@media (min-width: 720px) {
+    .col-md-2dot4 {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 20%;
+        flex: 0 0 20%;
+        max-width: 20%;
+    }
+}
+@media (min-width: 960px) {
+    .col-lg-2dot4 {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 20%;
+        flex: 0 0 20%;
+        max-width: 20%;
+    }
+}
+@media (min-width: 1140px) {
+    .col-xl-2dot4 {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 20%;
+        flex: 0 0 20%;
+        max-width: 20%;
+    }
+}
+

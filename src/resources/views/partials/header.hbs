@@ -1,0 +1,325 @@
+<header id="header">
+    <div class="header-top-wrap">
+        <div class="container header-top">
+            <div class="header-top-contact">
+                <div class="header-top-phone">
+                    <ion-icon name="call"></ion-icon>
+                    <span>(420) 608 1345 96</span>
+                </div>
+                <div class="header-top-email">
+                    <ion-icon name="mail"></ion-icon>
+                    <span>support@hungthanh-bookstore.com</span>
+                </div>
+            </div>
+            <div class="header-top-config">
+                <div class="header-top-config-item">
+                    <span>Đăng nhập</span>
+                </div>
+                <div class="header-top-config-item">
+                    <span>Đăng ký</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header-bottom">
+        <div class="container-md">
+            <div class="header-user">
+                <div class="row">
+                    <a href="/"class="header-user-logo col-lg-3 col-md-3 col-sm-4">
+                        <img src="/img/logo.png" alt="logo">
+                    </a>
+                    {{!-- <div class="header-user-info col-lg-6 col-md-7 col-sm-8">
+                        <ul class="header-user-info__list">
+                            <li class="header-user-info__item account-item" >
+                                <a href="#">Tài Khoản</a>
+                                <ul class="account-list" >
+                                    <li class="account-item">
+                                        <a href="#">
+                                            <ion-icon name="person"></ion-icon>
+                                            Cá Nhân
+                                        </a>
+                                    </li>
+                                    <li class="account-item" >
+                                        <a href="#">
+                                            <ion-icon name="heart"></ion-icon>
+                                            Yêu Thích
+                                        </a>
+                                    </li>
+                                    <li class="account-item" >
+                                        <a href="#">
+                                            <ion-icon name="cart"></ion-icon>
+                                            Giỏ Hàng
+                                        </a>
+                                    </li>
+                                    <li class="account-item" >
+                                        <a href="#">
+                                            <ion-icon name="bag-check"></ion-icon>
+                                            Thanh Toán
+                                        </a>
+                                    </li>
+                                    <li class="account-item" >
+                                        <a href="#">
+                                            <ion-icon name="log-in"></ion-icon>
+                                            Đăng Nhập
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="header-user-info__item" ><a href="#">Yêu Thích</a></li>
+                            <li class="header-user-info__item" ><a href="#">So Sánh</a></li>
+                            <li class="header-user-info__item" ><a href="#">Thanh Toán</a></li>
+                        </ul>
+                    </div> --}}
+                    <div class="header-user-search col-lg-6 col-md-6 col-sm-8">
+                        <form class="search-form">
+                            <input type="text" placeholder="Bạn có thể tìm bất cứ thứ gì...">
+                            <button class="button button--primary button-search" >
+                                <ion-icon name="search"></ion-icon>
+                            </button>
+                        </form>
+                    </div>
+                    <div class="header-user-control col-lg-3 col-md-3 col-sm-0 d-none d-md-flex">
+                        {{!-- <div class="header-user-control-search">
+                            <form>
+                                <input type="text">
+                                <button class="button button--primary" >
+                                    <ion-icon name="search"></ion-icon>
+                                </button>
+                            </form>
+                            <button class="button button--transparent button-close-search">
+                                    <ion-icon name="close"></ion-icon>
+                            </button>
+                            <button class="button button--primary button-search" >
+                                    <ion-icon name="search"></ion-icon>
+                            </button>
+                        </div> --}}
+
+                        <div class="header-user-control-cart">
+                            <button class="button button--primary" >
+                                <ion-icon name="cart"></ion-icon>
+                            </button>
+                            <div class="header-user-control-cart__quantily">
+                                <span>0</span>
+                                &nbsp;&nbsp;Sản Phẩm
+                            </div>
+                            <div class="cart-popup">
+                                <div class="cart-popup__recent">
+                                    <span class="cart-popup__recent-title">Sản Phẩm Vừa Thêm</span>
+                                    <ul class="cart-popup__recent-list" >
+                                        <li class="cart-popup__recent-item" >
+                                            <div class="cart-popup__recent-item__imgBox">
+                                                <a href="#" >
+                                                    <img src="/img/products/product_1.jpg" alt="">
+                                                </a> 
+                                            </div>
+                                            <div class="cart-popup__recent-item__info">
+                                                <a href="#" class="title"><span >Tập viết bìa lớn</span></a>
+                                                <div class="start-review">
+                                                    <ion-icon name="star-outline"></ion-icon>
+                                                    <ion-icon name="star-outline"></ion-icon>
+                                                    <ion-icon name="star-outline"></ion-icon>
+                                                    <ion-icon name="star-outline"></ion-icon>
+                                                    <ion-icon name="star-outline"></ion-icon>
+                                                </div>
+                                                <div class="quantily-price">
+                                                    <div class="price">
+                                                        <span>10.000</span>
+                                                    </div>
+                                                    <div class="quantily">
+                                                        <span class="quantily__label" >SL: </span>
+                                                        <span class="quantily__value" >1</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                             <button class="button button--transparent cart-popup__recent-item__closeBtn">
+                                                <ion-icon name="close"></ion-icon>
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="cart-popup__total">
+                                    <div class="cart-popup__total-label">Tổng Cộng: </div>
+                                    <span class="cart-popup__total-value" >10.000</span>
+                                    <span class="cart-popup__total-currency" >VND</span>
+                                </div>
+                                <div class="cart-popup__option">
+                                    <div class="button button--square-trans">
+                                        <a href="#">Giỏ Hàng</a>
+                                    </div>
+                                    <div class="button button--square-trans">
+                                        <a href="#">Thanh Toán</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div> 
+            </div>
+            <div class="row header-navigation">
+                <div class="header-navigation-left col-xs-12 col-sm-10 col-md-12 col-lg-9">
+                    <div class="header-navigation-left-bars d-flex d-md-none">
+                        <ion-icon name="list"></ion-icon>
+                    </div>
+                    <ul class="nav-left-list d-none d-md-flex">
+                        <li class="nav-left-item">
+                            <a href="#">Trang Chủ</a>
+                        </li>
+                        <li class="nav-left-item" >
+                            <a href="#">Giảm Giá</a>
+                        </li>
+                        <li class="nav-left-item" >
+                            <a href="#">Bán Chạy</a>
+                        </li>
+                        <li class="nav-left-item" >
+                            <a href="#">Danh Mục</a>
+                        </li>
+                        <li class="nav-left-item" >
+                            <a href="#">Bài Đăng</a>
+                        </li>
+                        <li class="nav-left-item" >
+                            <a href="#">Liên Hệ</a>
+                        </li>
+                    </ul>
+                    <div class="header-navigation-left-cart-search d-flex d-md-none">
+                        {{!-- <div class="header-navigation-left-search">
+                            <form>
+                                <input type="text">
+                                <button class="button button--primary" >
+                                    <ion-icon name="search"></ion-icon>
+                                </button>
+                            </form>
+                            <button class="button button--transparent button-close-search-navigation">
+                                    <ion-icon name="close"></ion-icon>
+                            </button>
+                            <button class="button button--primary button-search-navigation" >
+                                    <ion-icon name="search"></ion-icon>
+                            </button>
+                        </div> --}}
+                        <div class="header-user-control-cart header-navigation-left-cart">
+                            <button class="button button--primary" >
+                                <ion-icon name="cart"></ion-icon>
+                            </button>
+                            <div class="header-user-control-cart__quantily">
+                                <span>0</span>
+                                &nbsp;&nbsp;Sản Phẩm
+                            </div>
+                            <div class="cart-popup">
+                                <div class="cart-popup__recent">
+                                    <span class="cart-popup__recent-title">Sản Phẩm Vừa Thêm</span>
+                                    <ul class="cart-popup__recent-list" >
+                                        <li class="cart-popup__recent-item" >
+                                            <div class="cart-popup__recent-item__imgBox">
+                                                <a href="#" >
+                                                    <img src="/img/products/product_1.jpg" alt="">
+                                                </a> 
+                                            </div>
+                                            <div class="cart-popup__recent-item__info">
+                                                <a href="#" class="title"><span >Tập viết bìa lớn</span></a>
+                                                <div class="start-review">
+                                                    <ion-icon name="star-outline"></ion-icon>
+                                                    <ion-icon name="star-outline"></ion-icon>
+                                                    <ion-icon name="star-outline"></ion-icon>
+                                                    <ion-icon name="star-outline"></ion-icon>
+                                                    <ion-icon name="star-outline"></ion-icon>
+                                                </div>
+                                                <div class="quantily-price">
+                                                    <div class="price">
+                                                        <span>10.000</span>
+                                                    </div>
+                                                    <div class="quantily">
+                                                        <span class="quantily__label" >SL: </span>
+                                                        <span class="quantily__value" >1</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                             <button class="button button--transparent cart-popup__recent-item__closeBtn">
+                                                <ion-icon name="close"></ion-icon>
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="cart-popup__total">
+                                    <div class="cart-popup__total-label">Tổng Cộng: </div>
+                                    <span class="cart-popup__total-value" >10.000</span>
+                                    <span class="cart-popup__total-currency" >VND</span>
+                                </div>
+                                <div class="cart-popup__option">
+                                    <div class="button button--square-trans">
+                                        <a href="#">Giỏ Hàng</a>
+                                    </div>
+                                    <div class="button button--square-trans">
+                                        <a href="#">Thanh Toán</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="header-navigation-right d-none d-lg-flex col-lg-3">
+                    <ul class="nav-right-list">
+                        <li class="nav-right-item">
+                            <a href="https://www.facebook.com/">
+                                <ion-icon name="logo-facebook"></ion-icon>
+                            </a>
+                        </li>
+                        <li class="nav-right-item" >
+                            <a href="#">
+                                <ion-icon name="logo-twitter"></ion-icon>
+                            </a>
+                        </li>
+                        <li class="nav-right-item" >
+                            <a href="#">
+                                <ion-icon name="logo-instagram"></ion-icon>
+                            </a>
+                        </li>
+                        <li class="nav-right-item" >
+                            <a href="#">
+                                <ion-icon name="logo-google"></ion-icon>
+                            </a>
+                        </li>
+                        <li class="nav-right-item" >
+                            <a href="#">
+                                <ion-icon name="logo-tumblr"></ion-icon>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+</header>
+
+<script>
+    const btnSearchEle = document.querySelector('.button-search');
+    {{!-- const btnCloseSearchEle = document.querySelector('.button-close-search'); --}}
+    const btnSearchNavEle = document.querySelector('.button-search-navigation');
+    const btnCloseSearchNavEle = document.querySelector('.button-close-search-navigation');
+
+    btnSearchEle.addEventListener('click', (e) => {
+        const groupSearchEle = document.querySelector('.header-user-control-search');
+        
+        groupSearchEle.classList.add('active');
+    })
+     
+    {{!-- btnCloseSearchEle.addEventListener('click', (e) => {
+        const groupSearchEle = document.querySelector('.header-user-control-search');
+        
+        groupSearchEle.classList.remove('active');
+    })
+
+    btnSearchNavEle.addEventListener('click', (e) => {
+        const groupSearchNavEle = document.querySelector('.header-navigation-left-search');
+        
+        groupSearchNavEle.classList.add('active');
+    })
+
+
+    btnCloseSearchNavEle.addEventListener('click', (e) => {
+        const groupSearchNavEle = document.querySelector('.header-navigation-left-search');
+        
+        groupSearchNavEle.classList.remove('active');
+    }) --}}
+</script>

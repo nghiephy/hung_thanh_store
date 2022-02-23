@@ -1,0 +1,34 @@
+{
+  "name": "hung_thanh_store",
+  "version": "1.0.0",
+  "description": "quan ly cua hang van phong pham",
+  "main": "/src/index.js",
+  "scripts": {
+    "start": "nodemon --inspect src/index.js",
+    "watch": "sass --watch src/resources/scss:src/public/css",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nghiephy/hung_thanh_store.git"
+  },
+  "keywords": [
+    "stationery",
+    "shop"
+  ],
+  "author": "nghiep_nguyen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nghiephy/hung_thanh_store/issues"
+  },
+  "homepage": "https://github.com/nghiephy/hung_thanh_store#readme",
+  "dependencies": {
+    "express": "^4.17.2",
+    "express-handlebars": "^6.0.2"
+  },
+  "devDependencies": {
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.15",
+    "sass": "^1.45.1"
+  }
+}
