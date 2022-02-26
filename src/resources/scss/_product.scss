@@ -34,15 +34,20 @@
             }
         }
         &-imgslide {
-            display: flex;
-            display: flex;
+            display: flex!important;
             justify-content: center;
             align-items: center;
             margin: 0 auto;
+            .owl-stage {
+                width: unset!important;
+                .owl-item {
+                    width: unset!important;
+                }
+            }
         }
         &-imgitem {
             display: inline-block;
-            margin-right: 8px;
+            // margin-right: 8px;
             width: 50px;
             height: 50px;
             padding: 5px;
@@ -57,5 +62,183 @@
                 opacity: 1;
             }
         }
+        &-phone {
+            margin-top: 20px;
+            display: block;
+            width: 350px;
+            padding: 10px;
+            border-radius: 4px;
+            background-color: $hover-color;
+            .title {
+                color: $white-color;
+            }
+            .form-phone {
+                display: inline-block;
+                margin-top: 8px;
+                font-size: 1.4rem;
+                input {
+                    padding: 6px 8px;
+                    outline: none;
+                    border: none;
+                    border-radius: 4px;
+                }
+                button {
+                   color: $hover-dark-color;
+                   background-color: $white-color;
+                   padding: 4px 8px;
+                   border: none;
+                   outline: none; 
+                   margin-left: 10px;
+                   border-radius: 4px;
+                   font-weight: 500;
+                }
+            }
+        }
+        &-contact {
+            margin-top: 20px;
+            &__item {
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                margin-top: 10px;
+                img {
+                    width: 25px;
+                    height: 25px;
+                    margin-right: 10px;
+                }
+                span, a {
+                    font-size: 1.4rem;
+                }
+            }
+        }
+    }
+    &_body {
+        &-title {
+            font-size: 2.2rem;
+            margin: 14px 0;
+        }
+        &-pricebox {
+            margin-top: 16px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
+        &-price {
+            font-size: 2.4rem;
+            color: $hover-dark-color;
+            margin-right: 12px;
+            font-weight: bold;
+        }
+        &-old-price {
+            font-size: 1.4rem;
+            text-decoration: line-through;
+            margin-right: 8px;
+        }
+        &-sale {
+            padding: 5px;
+            background-color: $hover-color;
+            color: $white-color;
+            border-radius: 2px;
+            font-size: 1.4rem;
+        }
+        &-quantily {
+            margin-top: 16px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            .label {
+                font-size: 1.4rem;
+                margin-right: 5px;
+            }
+            input {
+                font-size: 1.4rem;
+                padding: 6px;
+                width: 60px;
+                border: none;
+                text-align: center;
+                background-color: $gray-light;
+                border-radius: 4px;
+                margin: 0 10px;
+            }
+            button {
+                position: relative;
+                border-radius: 50%;
+                border: none;
+                outline: none;
+                background-color: $hover-color;
+                width: 25px;
+                height: 25px;
+                text-align: center;
+                ion-icon {
+                    color: $white-color;
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    font-size: 1.8rem;
+                }
+            }
+        }
+        &-action {
+            margin-top: 30px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            &-buy {
+               margin-right: 20px;
+            }
+            .like-btn {
+                margin-left: 20px;
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                font-size: 1.4rem;
+                cursor: pointer;
+
+                ion-icon {
+                    font-size: 2.4rem;
+                    margin-right: 5px;
+                }
+                &:hover {
+                    color: $hover-color;
+                }
+            }
+        }
+    }
+    &-slidebar {
+        .list-policy {
+            margin-top: 40px;
+        }
+        .card-policy {
+            margin-top: 20px;
+            background-color: $gray-light;
+            border-radius: 2px;
+            padding: 16px;
+            
+            .title {
+                font-size: 1.4rem;
+                width: 30%;
+                text-align: center;
+            }
+            .line {
+                height: 1px;
+                width: 100%;
+                background-color: #cbc8c8;
+                margin: 20px 0;
+            }
+            &__item {
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+            }
+        }
+    }
+    
+}
+.delivery-banner {
+    margin-top: 40px;
+    background-color: $white-color;
+    .banner {
+        padding: 20px 10px;
     }
 }

@@ -45,11 +45,65 @@
             border-color: $red-color;
         }
     }
+    &--type1 {
+        padding: 8px 26px;
+        color: $hover-dark-color;
+        border-color: $hover-color;
+        background-color: $white-color;
+        outline: none;
+        border-radius: 4px;
+        font-size: 1.4rem;
+        text-transform: uppercase;
+        &:hover {
+            background-color: $hover-color;
+            color: $white-color;
+        }
+    }
+    &--type2 {
+        padding: 8px 26px;
+        color: $white-color;
+        border-color: $hover-color;
+        background-color: $hover-color;
+        outline: none;
+        border-radius: 4px;
+        font-size: 1.4rem;
+        text-transform: uppercase;
+        &:hover {
+            opacity: 0.8;
+        }
+    }
     &:focus {
         outline: none!important;
     }
 }
+// Hide arrows from input number
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
 
 .wrapper {
     background-color: rgba(0,0,0,0.05);
+}
+
+.item-annouce {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 10px;
+    img {
+        width: 25px;
+        height: 25px;
+        margin-right: 10px;
+    }
+    span, a {
+        font-size: 1.4rem;
+    }
 }

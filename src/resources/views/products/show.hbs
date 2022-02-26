@@ -34,18 +34,122 @@
                             </div>
                         </div>
                         <div class="product_gallery-phone">
-                            <h3>Để lại SĐT mua hàng công ty giá tốt</h3>
-                            <form action="#">
-                                <input type="number" name="phone" id="phone">
+                            <h3 class="title" >Để lại SĐT mua hàng công ty giá tốt</h3>
+                            <form class="form-phone" action="#">
+                                <input type="number" name="phone" id="phone" placeholder="Để lại số điện thoại">
                                 <button type="submit">GỬI</button>
                             </form>
                         </div>
+                        <div class="product_gallery-contact">
+                            <div class="product_gallery-contact__item order-phone">
+                                <img src="/img/icon/phone.png" alt="">
+                                <span>Hotline đặt hàng:</span>&nbsp;&nbsp;
+                                <a href="tel:0901 234 567">0901 234 567</a>
+                            </div>
+                            <div class="product_gallery-contact__item gmail">
+                                <img src="/img/icon/gmail.png" alt="">
+                                <span>Email:</span>&nbsp;&nbsp;
+                                <a href="mailto:support@hungthanh-bookstore.com">support@hungthanh-bookstore.com</a>
+                            </div>
+                        </div>
                     </div>
                     <div class="product_body col-lg-7">
-                        Body
+                        <h1 class="product_body-title"> Bìa đựng tài liệu cứng</h1>
+                        <div class="product_body-pricebox">
+                            <span class="product_body-price">61.400 đ</span>
+                            <span class="product_body-old-price">66.100 đ</span>
+                            <span class="product_body-sale">-7%</span>
+                        </div>
+                        <form action="">
+                           <div class="product_body-quantily">
+                                <span class="label" >Số lượng: </span>
+                                <button class="product_body-quantily-btnminus" >
+                                    <ion-icon name="remove"></ion-icon>
+                                </button>
+                                <input type="number" name="" id="" placeholder="1">
+                                <button class="product_body-quantily-btnplus" >
+                                    <ion-icon name="add"></ion-icon>
+                                </button>
+                            </div>
+                            
+                            <div class="product_body-action">
+                                <button class="button--type1 product_body-action-buy" >Mua ngay</button>
+                                <button class="button--type2 product_body-action-whistlist" >Thêm vào giỏ hàng</button>
+                                <div class="like-btn">
+                                    <ion-icon name="heart-outline"></ion-icon>
+                                    <span>Yêu thích</span>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="product-slidebar">
+                            <div class="list-policy">
+                                <ul>
+                                    <li class="item-annouce" >
+                                         <img src="/img/icon/loudspeaker.png" alt="">
+                                        <span><strong>Nhận báo giá rẻ hơn </strong><a href="#">Tại đây</a></span>
+                                    </li>
+                                    <li class="item-annouce" >
+                                         <img src="/img/icon/free-delivery.png" alt="">
+                                        <span><strong>MIỄN PHÍ</strong> vận chuyển nội ô <strong>Cái Răng - Ninh Kiều</strong></span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="card-policy">
+                                <div class="card-policy__item">
+                                    <div class="title"><strong>Chính sách chiết khấu</strong></div>
+                                    <ul>
+                                        <li class="item-annouce">
+                                            <img src="/img/icon/sale-tag.png" alt="">
+                                            <span>Giảm <strong>5%</strong> và quà tặng khi mua từ <strong>1 triệu</strong></span>
+                                        </li>
+                                        <li class="item-annouce">
+                                            <img src="/img/icon/sale-tag.png" alt="">
+                                            <span>Giảm <strong>7%</strong> và quà tặng khi mua từ <strong>3 triệu</strong></span>
+                                        </li>
+                                        <li class="item-annouce">
+                                            <img src="/img/icon/sale-tag.png" alt="">
+                                            <span>Giảm <strong>10%</strong> và quà tặng khi mua từ <strong>5 triệu</strong></span>
+                                        </li>
+                                        <li class="item-annouce">
+                                            <img src="/img/icon/sale-tag.png" alt="">
+                                            <span>Giảm <strong>15%</strong> và quà tặng khi mua từ <strong>6 triệu</strong></span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="line"></div>
+                                <div class="card-policy__item">
+                                    <div class="title"><strong>Lợi ích khi mua hàng</strong></div>
+                                    <ul>
+                                        <li class="item-annouce">
+                                            <img src="/img/icon/check.png" alt="">
+                                            <span><strong>Quà tặng hấp dẫn</strong> thay đổi theo từng tháng</span>
+                                        </li>
+                                        <li class="item-annouce">
+                                            <img src="/img/icon/check.png" alt="">
+                                            <span><strong>Đổi trả dễ dàng</strong> theo yêu cầu</span>
+                                        </li>
+                                        <li class="item-annouce">
+                                            <img src="/img/icon/check.png" alt="">
+                                            <span>Ưu tiên khách hàng <strong>V.I.P</strong></strong></span>
+                                        </li>
+                                        <li class="item-annouce">
+                                            <img src="/img/icon/check.png" alt="">
+                                            <span>Giao hàng nhanh sau <strong>2h</strong></strong></span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
+                    
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="delivery-banner">
+        <div class="banner container">
+            <img src="/img/banner/delivery-banner.svg" alt="">
         </div>
     </div>
 </section>
@@ -75,11 +179,12 @@
                         nav:true,
                     },
                     1200:{
-                        items:6,
+                        items:5,
                         nav:true,
                     }
                 }
             });
-        }
-    }
+        });
+    });
 </script>
+<script src="/js/product/show.js"></script>
