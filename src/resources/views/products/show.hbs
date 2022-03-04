@@ -20,8 +20,10 @@
             <div class="product mt-4">
                 <div class="row">
                     <div class="product_gallery col-lg-5">
-                        <div class="product_gallery-imgBox">
-                            <img src="/img/products/product_1.jpg" alt="">
+                        <div class="product_gallery-imgBox-wrap" >
+                            <div class="product_gallery-imgBox">
+                                <img src="/img/products/but-mau.jpg" alt="">
+                            </div>
                         </div>
                         <div class="owl-carousel product_gallery-imgslide">
                             <div class="product_gallery-imgitem active">
@@ -229,6 +231,24 @@
                 }
             });
         });
+
+        var options1 = {
+            width: 200,
+            height: 200,
+            zoomWidth: 300,
+            offset: {vertical: 0, horizontal: 10}
+        };
+
+        var options2 = {
+            width: 300,
+            zoomWidth: 400,
+            zoomStyle: {
+                'z-index': 10,
+            },
+            offset: {vertical: 0, horizontal: 5}
+        };
+
+        new ImageZoom(document.querySelector(".product_gallery-imgBox"), options2);
     });
 </script>
 <script src="/js/product/show.js"></script>

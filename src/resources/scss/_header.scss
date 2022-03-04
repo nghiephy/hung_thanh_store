@@ -259,6 +259,15 @@
                 flex-basis: auto;
                 margin-left: 20px;
                 position: relative;
+                &-wrap {
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+                    color: black;
+                    &:hover {
+                        color: black;
+                    }
+                }
                 &__quantily {
                     padding: 5px;
                     text-transform: uppercase;

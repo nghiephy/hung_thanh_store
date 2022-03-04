@@ -437,6 +437,15 @@ img {
   margin-left: 20px;
   position: relative;
 }
+.header-user-control-cart-wrap {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  color: black;
+}
+.header-user-control-cart-wrap:hover {
+  color: black;
+}
 .header-user-control-cart__quantily {
   padding: 5px;
   text-transform: uppercase;
@@ -1471,9 +1480,20 @@ img {
   background-color: white;
   border-radius: 4px;
 }
-.product_gallery-imgBox img {
-  height: 100%;
+.product_gallery-imgBox-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.product_gallery-imgBox {
+  display: block;
   margin: 0 auto;
+  height: 100%;
+}
+.product_gallery-imgBox img {
+  display: block;
+  height: 100%;
+  width: 100%;
 }
 .product_gallery-imgslide {
   display: flex !important;
@@ -1687,6 +1707,11 @@ img {
   display: flex;
   position: relative;
 }
+@media (max-width: 479px) {
+  .detail-comment .tab-list {
+    font-size: 1.4rem;
+  }
+}
 .detail-comment .tab-item {
   position: relative;
   cursor: pointer;
@@ -1695,9 +1720,14 @@ img {
   text-align: center;
   padding: 0 25px;
   line-height: 50px;
-  color: #f08ead;
+  color: #ce567e;
   transition: all 0.5s ease;
   border-radius: 8px;
+}
+@media (max-width: 479px) {
+  .detail-comment .tab-item {
+    padding: 0 10px;
+  }
 }
 .detail-comment .tab-item:hover {
   background-color: #fff7fa;
@@ -1729,6 +1759,11 @@ img {
   background-color: #c23564;
   transition: all 0.3s ease;
 }
+@media (max-width: 479px) {
+  .detail-comment .tab-line {
+    height: 3px;
+  }
+}
 .detail-comment .tab-item__icon {
   margin-right: 2px;
   font-size: 2.2rem;
@@ -1753,6 +1788,127 @@ img {
 }
 .detail-comment .tab-pane-item.active {
   display: block;
+}
+
+.modal-login {
+  padding: 30px;
+  background-color: white;
+  border-radius: 5px;
+  min-width: 500px;
+  position: relative;
+}
+.modal-login .modal__theme-exit {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: block;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+.modal-login .modal__theme-exit ion-icon {
+  width: 100%;
+  height: 100%;
+  font-size: 2rem;
+  color: #9b9b9b;
+}
+.modal-login .modal__theme-exit:hover ion-icon {
+  color: black;
+}
+.modal-login-form .title {
+  font-size: 2.4rem;
+  font-weight: bold;
+}
+.modal-login-form .form-group input {
+  width: 100%;
+  font-size: 1.4rem;
+  padding: 14px 14px;
+  margin-bottom: 20px;
+  border: 1px solid #e1e1e1;
+  border-radius: 4px;
+}
+.modal-login-form .form-group input:focus {
+  border-color: #f06292;
+  box-shadow: 0 0 0 0.2rem rgba(229, 73, 16, 0.25);
+}
+.modal-login-form .btn-login {
+  display: block;
+  width: 100%;
+  font-size: 2rem;
+  color: white;
+  background-color: #ce567e;
+  border-radius: 4px;
+  padding: 6px 0;
+}
+.modal-login-form .btn-login:hover {
+  background-color: #b65575;
+}
+.modal-login-form .reset-password {
+  display: block;
+  text-align: center;
+  font-size: 1.4rem;
+  color: #ce567e;
+  font-weight: bold;
+}
+.modal-login-form .register {
+  font-size: 1.4rem;
+  text-align: center;
+  display: block;
+  width: 100%;
+}
+.modal-login-form .register a {
+  font-size: 1.4rem;
+  color: #ce567e;
+  font-weight: bold;
+}
+.modal-login-form .divider {
+  text-align: center;
+  font-size: 1.4rem;
+  color: #9b9b9b;
+  position: relative;
+  margin-bottom: 30px;
+}
+.modal-login-form .divider::after {
+  background-position: right 2em top 50%;
+  background-image: url("/img/divider.png");
+  background-repeat: no-repeat;
+  content: "";
+  display: table-cell;
+  position: absolute;
+  top: 50%;
+  width: 50%;
+  height: 2px;
+}
+.modal-login-form .divider::before {
+  background-position: left 4.6rem top 50%;
+  background-image: url("/img/divider.png");
+  background-repeat: no-repeat;
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 50%;
+  height: 2px;
+}
+.modal-login-form .social-login {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.modal-login-form .social-login .button {
+  min-width: 200px;
+  padding: 8px 10px;
+  background-color: white;
+  border-radius: 4px;
+  border: 1px solid #e1e1e1;
+}
+.modal-login-form .social-login .button img {
+  display: block;
+  margin: 0 auto;
+  width: 25px;
+  height: 25px;
+}
+.modal-login-form .social-login .button:hover {
+  background-color: #f4f4f4;
 }
 
 .button {
@@ -1809,6 +1965,11 @@ img {
   background-color: #f06292;
   color: white;
 }
+@media (max-width: 479px) {
+  .button--type1 {
+    padding: 5px;
+  }
+}
 .button--type2 {
   padding: 8px 26px;
   color: white;
@@ -1821,6 +1982,11 @@ img {
 }
 .button--type2:hover {
   opacity: 0.8;
+}
+@media (max-width: 479px) {
+  .button--type2 {
+    padding: 5px;
+  }
 }
 .button:focus {
   outline: none !important;
@@ -1855,6 +2021,48 @@ input[type=number] {
 }
 .item-annouce span, .item-annouce a {
   font-size: 1.4rem;
+}
+
+.js-image-zoom__zoomed-image {
+  z-index: 99;
+}
+
+/* Modal css */
+.modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  display: none;
+}
+
+.modal.active {
+  display: flex;
+}
+
+.modal__overlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+}
+
+.modal__body {
+  background-color: var(--primary-bg);
+  margin: 10% auto auto auto;
+  border-radius: 8px;
+  z-index: 2;
+}
+
+.modal__item {
+  display: none;
+}
+
+.modal__item.active {
+  display: block;
 }
 
 /*# sourceMappingURL=app.css.map */

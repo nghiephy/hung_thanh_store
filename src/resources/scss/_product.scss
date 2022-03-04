@@ -27,10 +27,19 @@
     background-color: $white-color;
     border-radius: 4px;
     &_gallery {
+        &-imgBox-wrap {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
         &-imgBox {
+            display: block;
+            margin: 0 auto;
+            height: 100%;
             img {
+                display: block;
                 height: 100%;
-                margin: 0 auto;
+                width: 100%;
             }
         }
         &-imgslide {
@@ -252,6 +261,9 @@
         font-size: 1.8rem;
         display: flex;
         position: relative;
+        @include mobile-sm {
+            font-size: 1.4rem;
+        }
     }
     .tab-item {
         position: relative;
@@ -261,9 +273,12 @@
         text-align: center;
         padding: 0 25px;
         line-height: 50px;
-        color: #f08ead;
+        color: $hover-dark-color;
         transition: all .5s ease;
         border-radius: 8px;
+        @include mobile-sm {
+            padding: 0 10px;
+        }
     }
     
     .tab-item:hover {
@@ -299,6 +314,9 @@
         border-radius: 15px;
         background-color: #c23564;
         transition: all .3s ease;
+        @include mobile-sm {
+            height: 3px;
+        }
     }
     
     .tab-item__icon {

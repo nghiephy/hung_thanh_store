@@ -12,10 +12,10 @@
                 </div>
             </div>
             <div class="header-top-config">
-                <div class="header-top-config-item">
+                <div class="modal-label header-top-config-item" data-modal-id="modal-login">
                     <span>Đăng nhập</span>
                 </div>
-                <div class="header-top-config-item">
+                <div class=" modal-label header-top-config-item" data-modal-id="modal-register">
                     <span>Đăng ký</span>
                 </div>
             </div>
@@ -94,64 +94,66 @@
                             </button>
                         </div> --}}
 
-                        <div class="header-user-control-cart">
-                            <button class="button button--primary" >
-                                <ion-icon name="cart"></ion-icon>
-                            </button>
-                            <div class="header-user-control-cart__quantily">
-                                <span>0</span>
-                                &nbsp;&nbsp;Sản Phẩm
-                            </div>
-                            <div class="cart-popup">
-                                <div class="cart-popup__recent">
-                                    <span class="cart-popup__recent-title">Sản Phẩm Vừa Thêm</span>
-                                    <ul class="cart-popup__recent-list" >
-                                        <li class="cart-popup__recent-item" >
-                                            <div class="cart-popup__recent-item__imgBox">
-                                                <a href="#" >
-                                                    <img src="/img/products/product_1.jpg" alt="">
-                                                </a> 
-                                            </div>
-                                            <div class="cart-popup__recent-item__info">
-                                                <a href="#" class="title"><span >Tập viết bìa lớn</span></a>
-                                                <div class="start-review">
-                                                    <ion-icon name="star-outline"></ion-icon>
-                                                    <ion-icon name="star-outline"></ion-icon>
-                                                    <ion-icon name="star-outline"></ion-icon>
-                                                    <ion-icon name="star-outline"></ion-icon>
-                                                    <ion-icon name="star-outline"></ion-icon>
+                        <a href="/cart" class="header-user-control-cart-wrap">
+                            <div class="header-user-control-cart">
+                                <button class="button button--primary" >
+                                    <ion-icon name="cart"></ion-icon>
+                                </button>
+                                <div class="header-user-control-cart__quantily">
+                                    <span>0</span>
+                                    &nbsp;&nbsp;Sản Phẩm
+                                </div>
+                                <div class="cart-popup">
+                                    <div class="cart-popup__recent">
+                                        <span class="cart-popup__recent-title">Sản Phẩm Vừa Thêm</span>
+                                        <ul class="cart-popup__recent-list" >
+                                            <li class="cart-popup__recent-item" >
+                                                <div class="cart-popup__recent-item__imgBox">
+                                                    <a href="#" >
+                                                        <img src="/img/products/product_1.jpg" alt="">
+                                                    </a>
                                                 </div>
-                                                <div class="quantily-price">
-                                                    <div class="price">
-                                                        <span>10.000</span>
+                                                <div class="cart-popup__recent-item__info">
+                                                    <a href="#" class="title"><span >Tập viết bìa lớn</span></a>
+                                                    <div class="start-review">
+                                                        <ion-icon name="star-outline"></ion-icon>
+                                                        <ion-icon name="star-outline"></ion-icon>
+                                                        <ion-icon name="star-outline"></ion-icon>
+                                                        <ion-icon name="star-outline"></ion-icon>
+                                                        <ion-icon name="star-outline"></ion-icon>
                                                     </div>
-                                                    <div class="quantily">
-                                                        <span class="quantily__label" >SL: </span>
-                                                        <span class="quantily__value" >1</span>
+                                                    <div class="quantily-price">
+                                                        <div class="price">
+                                                            <span>10.000</span>
+                                                        </div>
+                                                        <div class="quantily">
+                                                            <span class="quantily__label" >SL: </span>
+                                                            <span class="quantily__value" >1</span>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                             <button class="button button--transparent cart-popup__recent-item__closeBtn">
-                                                <ion-icon name="close"></ion-icon>
-                                            </button>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="cart-popup__total">
-                                    <div class="cart-popup__total-label">Tổng Cộng: </div>
-                                    <span class="cart-popup__total-value" >10.000</span>
-                                    <span class="cart-popup__total-currency" >VND</span>
-                                </div>
-                                <div class="cart-popup__option">
-                                    <div class="button button--square-trans">
-                                        <a href="#">Giỏ Hàng</a>
+                                                 <button class="button button--transparent cart-popup__recent-item__closeBtn">
+                                                    <ion-icon name="close"></ion-icon>
+                                                </button>
+                                            </li>
+                                        </ul>
                                     </div>
-                                    <div class="button button--square-trans">
-                                        <a href="#">Thanh Toán</a>
+                                    <div class="cart-popup__total">
+                                        <div class="cart-popup__total-label">Tổng Cộng: </div>
+                                        <span class="cart-popup__total-value" >10.000</span>
+                                        <span class="cart-popup__total-currency" >VND</span>
+                                    </div>
+                                    <div class="cart-popup__option">
+                                        <div class="button button--square-trans">
+                                            <a href="/cart">Giỏ Hàng</a>
+                                        </div>
+                                        <div class="button button--square-trans">
+                                            <a href="#">Thanh Toán</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
             </div> 
             </div>
@@ -162,7 +164,7 @@
                     </div>
                     <ul class="nav-left-list d-none d-md-flex">
                         <li class="nav-left-item">
-                            <a href="#">Trang Chủ</a>
+                            <a href="/">Trang Chủ</a>
                         </li>
                         <li class="nav-left-item" >
                             <a href="#">Giảm Giá</a>
