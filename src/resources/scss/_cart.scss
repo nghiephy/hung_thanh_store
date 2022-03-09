@@ -65,8 +65,17 @@
     background-color: $white-color;
     border-radius: 5px;
     border: 1px solid $border-color;
+    &__head {
+        @include mobile {
+            display: none;
+        }
+    }
     &__row {
-        border-bottom: 1px solid $gray-light;
+        border-bottom: 1px solid $border-color;
+        @include mobile {
+            width: 100%;
+            display: block;
+        }
     }
     &__col {
         font-weight: 600;
@@ -74,8 +83,29 @@
         vertical-align: bottom;
         font-size: 1.4rem;
         padding: 2rem 1rem;
+        @include mobile {
+            padding: 10px 8px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            .label-mobile {
+                width: 30%;
+                margin: 0;
+                font-size: 1.4rem;
+            }
+        }
+        @include tablet-desktop {
+            .label-mobile {
+                display: none!important;
+            }
+        }
         &--head {
             padding: 1rem;
+        }
+        &--product {
+            @include mobile {
+                display: block;
+            }
         }
         &--price {
             vertical-align: top;
@@ -101,6 +131,9 @@
             input {
                 width: 44px;
             }
+            @include mobile {
+                align-items: center;
+            }
         }
         &--total {
             vertical-align: top;
@@ -117,6 +150,9 @@
             display: flex;
             justify-content: flex-start;
             align-items: flex-start;
+            @include mobile {
+                justify-content: center;
+            }
             &__image {
                 display: inline-block;
                 width: 80px;
