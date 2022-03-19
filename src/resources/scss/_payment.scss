@@ -1,0 +1,177 @@
+.payment-body {
+    .title {
+        h2 {
+            color: $hover-dark-color;
+            font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            font-size: 2.2rem;
+        }
+    }
+    .section-info {
+        padding: 20px;
+        background-color: $white-color;
+        border-radius: 4px;
+        margin-bottom: 20px;
+        .title {
+            font-size: 1.8rem;
+            color: $hover-dark-color;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        .anouncement {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+        .form-wrap {
+            form {
+                input {
+                    font-size: 1.4rem;
+                    padding: 6px 12px;
+                }
+            }
+        }
+        .form-select {
+            font-size: 1.4rem;
+            padding: 6px 12px;
+            color: $text-color;
+        }
+    }
+    .invoice-info {
+        .title {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            label {
+                user-select: none;
+                font-weight: 500;
+            }
+            .checkbox-invoice {
+                margin-right: 10px;
+                cursor: pointer;
+                width: 16px;
+                height: 16px;
+                accent-color: $hover-color;
+            }
+        }
+        .form-invoice {
+            font-size: 1.4rem;
+            display: none;
+            transition: all .2s ease-in;
+            &.active {
+                display: block;
+            }
+            .form-group {
+                label {
+                    font-weight: 500;
+                }
+                input, textarea {
+                    font-size: 1.4rem;
+                    padding: 6px 12px;
+                }
+            }
+            .notes-section {
+                &__title {
+                    font-weight: bold;
+                    font-size: 1.4rem;
+                }
+                &__item {
+                    span {
+                        font-size: 1.4rem;
+                    }
+                }
+            }
+        }
+    }
+    .payment-method {
+        .payment-list {
+            padding-left: 0;
+            list-style: none;
+            .payment-option {
+                margin-bottom: 18px;
+                .radio-group {
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+                    .radio-input {
+                        width: 16px;
+                        height: 16px;
+                        accent-color: $hover-color;
+                    }
+                    label {
+                        margin-left: 10px;
+                        display: flex;
+                        justify-content: flex-start;
+                        align-items: center;
+                        font-size: 1.4rem;
+                        img {
+                            width: 25px;
+                            height: 25px;
+                            margin-right: 10px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .order-info {
+        &__title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: $hover-dark-color;
+            a {
+                font-size: 1.4rem;
+                font-style: italic;
+                color: $hover-dark-color;
+                font-weight: normal;
+            }
+        }
+        &__list {
+            .payment-quantity {
+                position: relative;
+                .quantity {
+                    color: $text-color;
+                    position: absolute;
+                    top: 50%;
+                    right: 0;
+                    transform: translateY(-50%);
+                }
+            }
+        }
+        .cart-table {
+            border: none;
+        }
+        .card--summary {
+            .card-body {
+                font-size: 1.4rem;
+                .list-checkout {
+                    &__item {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        padding: 6px 0px;
+                        span:nth-child(2) {
+                            color: $hover-dark-color;
+                        }
+                        &.invisiable {
+                            display: none!important;
+                        }
+                    }
+                }
+            }
+        }
+        .card--note {
+            .card-body {
+                font-size: 1.4rem;
+            }
+        }
+        .card--buy {
+            .card-body {
+                button {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}

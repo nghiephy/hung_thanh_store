@@ -6,6 +6,7 @@
 @import 'home';
 @import 'product';
 @import 'cart';
+@import 'payment';
 @import 'main';
 
 .button {
@@ -96,6 +97,17 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+
+select {
+    -webkit-appearance: appearance;
+    /*webkit browsers */
+    -moz-appearance: appearance;
+    /*Firefox */
+    appearance: appearance;
+    /* modern browsers */
+    border-radius: 0;
+  
+  }
 
 .wrapper {
     background-color: rgba(0,0,0,0.05);

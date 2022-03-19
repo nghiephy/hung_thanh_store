@@ -13,6 +13,11 @@ class SiteController {
     cart(req, res, next) {
         res.render('cart');
     }
+
+    // [GET] /search
+    payment(req, res, next) {
+        res.render('payment');
+    }
 }
 
 module.exports = new SiteController();

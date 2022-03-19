@@ -1968,6 +1968,152 @@ img {
   margin-left: 20px;
 }
 
+.payment-body .title h2 {
+  color: #ce567e;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-size: 2.2rem;
+}
+.payment-body .section-info {
+  padding: 20px;
+  background-color: white;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+.payment-body .section-info .title {
+  font-size: 1.8rem;
+  color: #ce567e;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+.payment-body .section-info .anouncement {
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+}
+.payment-body .section-info .form-wrap form input {
+  font-size: 1.4rem;
+  padding: 6px 12px;
+}
+.payment-body .section-info .form-select {
+  font-size: 1.4rem;
+  padding: 6px 12px;
+  color: #555;
+}
+.payment-body .invoice-info .title {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.payment-body .invoice-info .title label {
+  user-select: none;
+  font-weight: 500;
+}
+.payment-body .invoice-info .title .checkbox-invoice {
+  margin-right: 10px;
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+  accent-color: #f06292;
+}
+.payment-body .invoice-info .form-invoice {
+  font-size: 1.4rem;
+  display: none;
+  transition: all 0.2s ease-in;
+}
+.payment-body .invoice-info .form-invoice.active {
+  display: block;
+}
+.payment-body .invoice-info .form-invoice .form-group label {
+  font-weight: 500;
+}
+.payment-body .invoice-info .form-invoice .form-group input, .payment-body .invoice-info .form-invoice .form-group textarea {
+  font-size: 1.4rem;
+  padding: 6px 12px;
+}
+.payment-body .invoice-info .form-invoice .notes-section__title {
+  font-weight: bold;
+  font-size: 1.4rem;
+}
+.payment-body .invoice-info .form-invoice .notes-section__item span {
+  font-size: 1.4rem;
+}
+.payment-body .payment-method .payment-list {
+  padding-left: 0;
+  list-style: none;
+}
+.payment-body .payment-method .payment-list .payment-option {
+  margin-bottom: 18px;
+}
+.payment-body .payment-method .payment-list .payment-option .radio-group {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.payment-body .payment-method .payment-list .payment-option .radio-group .radio-input {
+  width: 16px;
+  height: 16px;
+  accent-color: #f06292;
+}
+.payment-body .payment-method .payment-list .payment-option .radio-group label {
+  margin-left: 10px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 1.4rem;
+}
+.payment-body .payment-method .payment-list .payment-option .radio-group label img {
+  width: 25px;
+  height: 25px;
+  margin-right: 10px;
+}
+.payment-body .order-info__title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #ce567e;
+}
+.payment-body .order-info__title a {
+  font-size: 1.4rem;
+  font-style: italic;
+  color: #ce567e;
+  font-weight: normal;
+}
+.payment-body .order-info__list .payment-quantity {
+  position: relative;
+}
+.payment-body .order-info__list .payment-quantity .quantity {
+  color: #555;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+}
+.payment-body .order-info .cart-table {
+  border: none;
+}
+.payment-body .order-info .card--summary .card-body {
+  font-size: 1.4rem;
+}
+.payment-body .order-info .card--summary .card-body .list-checkout__item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0px;
+}
+.payment-body .order-info .card--summary .card-body .list-checkout__item span:nth-child(2) {
+  color: #ce567e;
+}
+.payment-body .order-info .card--summary .card-body .list-checkout__item.invisiable {
+  display: none !important;
+}
+.payment-body .order-info .card--note .card-body {
+  font-size: 1.4rem;
+}
+.payment-body .order-info .card--buy .card-body button {
+  width: 100%;
+}
+
 .modal-login {
   padding: 30px;
   background-color: white;
@@ -2180,6 +2326,16 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type=number] {
   -moz-appearance: textfield;
+}
+
+select {
+  -webkit-appearance: appearance;
+  /*webkit browsers */
+  -moz-appearance: appearance;
+  /*Firefox */
+  appearance: appearance;
+  /* modern browsers */
+  border-radius: 0;
 }
 
 .wrapper {
