@@ -1,11 +1,8 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     22/03/2022 10:32:08 AM                       */
+/* Created on:     19/03/2022 9:57:19 PM                        */
 /*==============================================================*/
 
-create database hung_thanh_bookstore;
-use hung_thanh_bookstore;
-ALTER DATABASE hung_thanh_bookstore CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 drop table if exists ADDRESS;
 
@@ -44,8 +41,10 @@ drop table if exists USERS;
 /*==============================================================*/
 create table ADDRESS
 (
-   ADDRESS_ID           int not null auto_increment,
-   USER_ID              int,
+   ADDRESS_ID           numeric(8,0) not null,
+   CUSTOMER_ID2         numeric(8,0),
+   ORDER_ID             numeric(8,0),
+   CUSTOMER_ID          numeric(8,0),
    VALUE                text,
    primary key (ADDRESS_ID)
 );
@@ -55,11 +54,12 @@ create table ADDRESS
 /*==============================================================*/
 create table CATEGORIES
 (
-   CATEGORY_ID          int not null auto_increment,
-   CAT_CATEGORY_ID      int,
+   CATEGORY_ID          numeric(8,0) not null,
+   CAT_CATEGORY_ID      numeric(8,0),
+   PRODUCT_ID           numeric(8,0),
    NAME                 text,
-   IMAGE				text,
    DESCRIPTION          text,
+   PARENT               numeric(8,0),
    primary key (CATEGORY_ID)
 );
 
@@ -68,8 +68,8 @@ create table CATEGORIES
 /*==============================================================*/
 create table CUSTOMERS
 (
-   CUSTOMER_ID          int not null auto_increment,
-   USER_ID              int,
+   CUSTOMER_ID          numeric(8,0) not null,
+   USER_ID              numeric(8,0),
    NAME                 text,
    BIRTHDAY             timestamp,
    EMAIL                text,
@@ -83,7 +83,7 @@ create table CUSTOMERS
 /*==============================================================*/
 create table DISCOUNTS
 (
-   DISCOUNT_ID          int not null auto_increment,
+   DISCOUNT_ID          numeric(8,0) not null,
    NAME                 text,
    VALUE                text,
    DESCRIPTION          text,
@@ -95,12 +95,11 @@ create table DISCOUNTS
 /*==============================================================*/
 create table DISCOUNTS_PRODUCTS
 (
-   DISCOUNT_ID          int,
-   PRODUCT_ID           int,
+   DISCOUNT_ID          numeric(8,0),
+   PRODUCT_ID           numeric(8,0),
    START_DATE           timestamp,
    END_DATE             timestamp,
-   ACTIVE               bool,
-   primary key (DISCOUNT_ID, PRODUCT_ID)
+   ACTIVE               bool
 );
 
 /*==============================================================*/
@@ -108,8 +107,8 @@ create table DISCOUNTS_PRODUCTS
 /*==============================================================*/
 create table EMPLOYEES
 (
-   EMPLOYEE_ID          int not null auto_increment,
-   USER_ID              int,
+   CUSTOMER_ID2         numeric(8,0) not null,
+   USER_ID              numeric(8,0),
    NAME                 text,
    BIRTHDAY             timestamp,
    EMAIL                text,
@@ -118,7 +117,7 @@ create table EMPLOYEES
    SALARY               numeric(8,0),
    BONUS                float,
    POSITION             text,
-   primary key (EMPLOYEE_ID)
+   primary key (CUSTOMER_ID2)
 );
 
 /*==============================================================*/
@@ -126,8 +125,8 @@ create table EMPLOYEES
 /*==============================================================*/
 create table IMAGES
 (
-   IMAGE_ID             int not null auto_increment,
-   PRODUCT_ID           int,
+   IMAGE_ID             numeric(8,0) not null,
+   PRODUCT_ID           numeric(8,0),
    PATH                 text,
    DESCRIPTION          text,
    primary key (IMAGE_ID)
@@ -138,10 +137,10 @@ create table IMAGES
 /*==============================================================*/
 create table ORDERS
 (
-   ORDER_ID             int not null auto_increment,
-   EMPLOYEE_ID          int,
-   ADDRESS_ID           int,
-   CUSTOMER_ID          int,
+   ORDER_ID             numeric(8,0) not null,
+   ADDRESS_ID           numeric(8,0),
+   CUSTOMER_ID          numeric(8,0),
+   CUSTOMER_ID2         numeric(8,0),
    COMMENT              text,
    INVOICE_DATE         timestamp,
    DELIVERY_DATE        timestamp,
@@ -156,12 +155,11 @@ create table ORDERS
 /*==============================================================*/
 create table ORDERS_PRODUCTS
 (
-   ORDER_ID             int,
-   PRODUCT_ID           int,
+   ORDER_ID             numeric(8,0),
+   PRODUCT_ID           numeric(8,0),
    QUANTITY             numeric(8,0),
    PRICE                numeric(8,0),
-   PRICE_WITH_TAX       float,
-   primary key (ORDER_ID, PRODUCT_ID)
+   PRICE_WITH_TAX       float
 );
 
 /*==============================================================*/
@@ -169,7 +167,7 @@ create table ORDERS_PRODUCTS
 /*==============================================================*/
 create table ORDER_STATUSES
 (
-   ORDER_STATUS_ID      int not null auto_increment,
+   ORDER_STATUS_ID      numeric(8,0) not null,
    NAME                 text,
    NOTIFICATION         text,
    primary key (ORDER_STATUS_ID)
@@ -180,9 +178,9 @@ create table ORDER_STATUSES
 /*==============================================================*/
 create table ORDER_STATUS_HISTORY
 (
-   ORDER_STATUS_HIS_ID  int not null auto_increment,
-   ORDER_ID             int,
-   ORDER_STATUS_ID      int,
+   ORDER_STATUS_HIS_ID  numeric(8,0) not null,
+   ORDER_ID             numeric(8,0),
+   ORDER_STATUS_ID      numeric(8,0),
    UPDATED_DATE         timestamp,
    primary key (ORDER_STATUS_HIS_ID)
 );
@@ -192,9 +190,9 @@ create table ORDER_STATUS_HISTORY
 /*==============================================================*/
 create table PRODUCTS
 (
-   PRODUCT_ID           int not null auto_increment,
-   CATEGORY_ID          int,
-   STOCK_ID             int,
+   PRODUCT_ID           numeric(8,0) not null,
+   CATEGORY_ID          numeric(8,0),
+   STOCK_ID             numeric(8,0),
    NAME                 text,
    SLUG                 text,
    DESCRIPTION          text,
@@ -210,8 +208,8 @@ create table PRODUCTS
 /*==============================================================*/
 create table STOCK
 (
-   STOCK_ID             int not null auto_increment,
-   PRODUCT_ID           int,
+   STOCK_ID             numeric(8,0) not null,
+   PRODUCT_ID           numeric(8,0),
    QUANTITY             numeric(8,0),
    CREATED_AT           timestamp,
    MODIFIED_AT          timestamp,
@@ -224,7 +222,7 @@ create table STOCK
 /*==============================================================*/
 create table TAXES
 (
-   TAX_ID               int not null auto_increment,
+   TAX_ID               numeric(8,0) not null,
    NAME                 text,
    VALUE                text,
    primary key (TAX_ID)
@@ -235,12 +233,11 @@ create table TAXES
 /*==============================================================*/
 create table TAXES_PRODUCTS
 (
-   PRODUCT_ID           int,
-   TAX_ID               int,
+   PRODUCT_ID           numeric(8,0),
+   TAX_ID               numeric(8,0),
    START_DATE           timestamp,
    END_DATE             timestamp,
-   ACTIVE               bool,
-   primary key (PRODUCT_ID, TAX_ID)
+   ACTIVE               bool
 );
 
 /*==============================================================*/
@@ -248,9 +245,9 @@ create table TAXES_PRODUCTS
 /*==============================================================*/
 create table USERS
 (
-   USER_ID              int not null auto_increment,
-   CUSTOMER_ID          int,
-   EMPLOYEE_ID          int,
+   USER_ID              numeric(8,0) not null,
+   CUSTOMER_ID          numeric(8,0),
+   CUSTOMER_ID2         numeric(8,0),
    USERNAME             text,
    PASSWORD             text,
    ACTIVE               bool,
@@ -259,8 +256,17 @@ create table USERS
    primary key (USER_ID)
 );
 
-alter table ADDRESS add constraint FK_RELATIONSHIP_20 foreign key (USER_ID)
-      references USERS (USER_ID) on delete restrict on update restrict;
+alter table ADDRESS add constraint FK_ADDRESS_EMPLOYEES foreign key (CUSTOMER_ID2)
+      references EMPLOYEES (CUSTOMER_ID2) on delete restrict on update restrict;
+
+alter table ADDRESS add constraint FK_ORDERS_ADDRESS2 foreign key (ORDER_ID)
+      references ORDERS (ORDER_ID) on delete restrict on update restrict;
+
+alter table ADDRESS add constraint FK_RELATIONSHIP_15 foreign key (CUSTOMER_ID)
+      references CUSTOMERS (CUSTOMER_ID) on delete restrict on update restrict;
+
+alter table CATEGORIES add constraint FK_LOAI foreign key (PRODUCT_ID)
+      references PRODUCTS (PRODUCT_ID) on delete restrict on update restrict;
 
 alter table CATEGORIES add constraint FK_SUB_CATEGORY foreign key (CAT_CATEGORY_ID)
       references CATEGORIES (CATEGORY_ID) on delete restrict on update restrict;
@@ -274,7 +280,7 @@ alter table DISCOUNTS_PRODUCTS add constraint FK_DISCOUNTS_PRO_DISCOUNTS foreign
 alter table DISCOUNTS_PRODUCTS add constraint FK_DISCOUNTS_PRO_PRODUCTS foreign key (PRODUCT_ID)
       references PRODUCTS (PRODUCT_ID) on delete restrict on update restrict;
 
-alter table EMPLOYEES add constraint FK_EMPLOYEES_USERS foreign key (USER_ID)
+alter table EMPLOYEES add constraint FK_RELATIONSHIP_20 foreign key (USER_ID)
       references USERS (USER_ID) on delete restrict on update restrict;
 
 alter table IMAGES add constraint FK_HAVE_IMAGES foreign key (PRODUCT_ID)
@@ -286,8 +292,8 @@ alter table ORDERS add constraint FK_ORDERS_ADDRESS foreign key (ADDRESS_ID)
 alter table ORDERS add constraint FK_ORDERS_CUSTOMERS foreign key (CUSTOMER_ID)
       references CUSTOMERS (CUSTOMER_ID) on delete restrict on update restrict;
 
-alter table ORDERS add constraint FK_ORDERS_EMPLOYEES foreign key (EMPLOYEE_ID)
-      references EMPLOYEES (EMPLOYEE_ID) on delete restrict on update restrict;
+alter table ORDERS add constraint FK_ORDERS_EMPLOYEES foreign key (CUSTOMER_ID2)
+      references EMPLOYEES (CUSTOMER_ID2) on delete restrict on update restrict;
 
 alter table ORDERS_PRODUCTS add constraint FK_ORDERS_PRO_ORDERS foreign key (ORDER_ID)
       references ORDERS (ORDER_ID) on delete restrict on update restrict;
@@ -301,7 +307,7 @@ alter table ORDER_STATUS_HISTORY add constraint FK_ORDER_STA_HIS_ORDERS foreign 
 alter table ORDER_STATUS_HISTORY add constraint FK_ORDER_STA_HIS_ORDER_STA foreign key (ORDER_STATUS_ID)
       references ORDER_STATUSES (ORDER_STATUS_ID) on delete restrict on update restrict;
 
-alter table PRODUCTS add constraint FK_LOAI foreign key (CATEGORY_ID)
+alter table PRODUCTS add constraint FK_LOAI2 foreign key (CATEGORY_ID)
       references CATEGORIES (CATEGORY_ID) on delete restrict on update restrict;
 
 alter table PRODUCTS add constraint FK_PRODUCTS_STOCK foreign key (STOCK_ID)
@@ -316,31 +322,9 @@ alter table TAXES_PRODUCTS add constraint FK_TAXES_PRO_PRODUCTS foreign key (PRO
 alter table TAXES_PRODUCTS add constraint FK_TAXES_PRO_TAXES foreign key (TAX_ID)
       references TAXES (TAX_ID) on delete restrict on update restrict;
 
-alter table USERS add constraint FK_EMPLOYEES_USERS2 foreign key (EMPLOYEE_ID)
-      references EMPLOYEES (EMPLOYEE_ID) on delete restrict on update restrict;
-
 alter table USERS add constraint FK_RELATIONSHIP_19 foreign key (CUSTOMER_ID)
       references CUSTOMERS (CUSTOMER_ID) on delete restrict on update restrict;
 
--- Add values for table categories --
-insert into categories(CAT_CATEGORY_ID, NAME, IMAGE, DESCRIPTION)
-values
-	(null, 'Đồ Dùng Học Sinh', '/img/category/do-dung-hoc-sinh.png', 'Tổng Hợp Đồ Dùng Học Tập Cho Học Sinh Các Cấp'),
-    (null, 'Giấy In Ấn - Photo', '/img/category/giay-in-an-photo.png', 'Chuyên Cung Cấp Các Loại Giấy In, Giấy A4 Chất Lượng Chiết khấu Cao'),
-    (null, 'Bìa - Kệ - Rỗ', '/img/category/ro-bia-ke.png', 'Bìa Đựng Hồ Sơ - Kệ, Rổ - Hộp Cắm Bút Đa Dạng Mẫu Mã'),
-    (null, 'Sổ - Tập - Bao Thư', '/img/category/so-tap-bao-thu.png', 'Sổ - Tập - Namecard - Phiếu Thu Chi Giá Sĩ Giao Hàng Siêu Nhanh'),
-    (null, 'Bút - Mực Chất Lượng Cao', '/img/category/but-muc-chat-luong-cao.png', 'Bút - Mực Văn Phòng Đa Dạng, Chất Lượng Hàng Đầu'),
-    (null, 'Dụng Cụ Văn Phòng Chất Lượng', '/img/category/dung-cu-van-phong.png', 'Dụng Cụ Văn Phòng Đẹp, Đa Dạng, Chất Lượng Uy Tín Giao Hàng Nhanh Chóng'),
-    (null, 'Băng Keo - Dao - Kéo', '/img/category/bang-keo-dao-keo.png', 'Băng keo - Dao - Kéo - Bàn Cắt Giấy Chất Lượng Giá Tốt Nhất'),
-    (null, 'Máy Tính Casio', '/img/category/may-tinh-casio.png', 'Điểm Danh Các Dòng Máy Tính Casio Dành Cho Học Sinh Và Dân Văn Phòng'),
-    (null, 'Bách Hoá Online', '/img/category/bach-hoa-online.png', 'Bách Hoá Văn Phòng Giá Mẫu Mã Đa Dạng Giá Tốt Nhất'),
-    (null, 'Bảng Văn Phòng', '/img/category/bang-van-phong.png', 'Bảng là loại văn phòng phẩm cực kỳ quen thuộc với chúng ta ngay từ khi còn ngồi trên ghế nhà trường. Những con chữ từ bảng vào tâm trí chúng ta từ lúc nhỏ cho đến khi làm việc tại các công ty, đoàn thể. Ngoài loại bảng dùng để viết hay học, hiện nay có rất nhiều biến thể đáp ứng nhiều mong muốn của người sử dụng. Hãy cùng Văn phòng phẩm FAST nghía qua nhé!'),
-    (null, 'Dịch Vụ Khắc Dấu Uy Tín', '/img/category/dich-vu-khac-dau-uy-tin.png', 'Dịch Vụ Khắc Dấu Theo Yêu Cầu Nhanh, Giao Hàng Tận Nơi'),
-    (null, 'Sản Phẩm Văn Phòng Khác', '/img/category/san-pham-van-phong-khac.png', 'Các Danh Mục Sản Phẩm Văn Phòng Phẩm Khác Nhiều Mẫu Mã Mới Giá Tốt Nhất Hiện Nay');
-
-set @autoid :=0; 
-update categories set category_id = @autoid := (@autoid+1);
-alter table categories Auto_Increment = 1;
-
-SET SQL_SAFE_UPDATES = 0;
+alter table USERS add constraint FK_RELATIONSHIP_21 foreign key (CUSTOMER_ID2)
+      references EMPLOYEES (CUSTOMER_ID2) on delete restrict on update restrict;
 

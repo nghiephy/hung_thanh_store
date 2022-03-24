@@ -3,6 +3,7 @@ const express = require('express');
 const morgan = require('morgan');
 const handlebars = require('express-handlebars');
 const routes = require('./routes');
+const helper = require('./util/helpers');
 
 const port = 3000;
 const app = express();
@@ -10,6 +11,7 @@ const hbs = handlebars.create({
     extname: '.hbs',
     helpers: {
         sum: (a, b) => a + b,
+        eachCategories: helper.eachCategories,
     },
 });
 

@@ -87,62 +87,22 @@
                 <h2 class="home-category-title" >Danh mục văn phòng phẩm</h2>
                 <div class="home-category-list-wrap">
                     <div class="owl-carousel home-category-list">
-                        <div class="home-category-item">
-                            <a href="#"class="home-category-item-top">
-                                <div class="imgBox">
-                                    <img src="/img/category/do-dung-hoc-sinh.png" alt="">
-                                </div>
-                                <span>Đồ Dùng Học Sinh</span>
-                            </a>
-                            <a href="#"class="home-category-item-bottom">
-                                <div class="imgBox">
-                                    <img src="/img/category/giay-in-an-photo.png" alt="">
-                                </div>
-                                <span>Giấy In Ấn - Photo</span>
-                            </a>
-                        </div>
-                        <div class="home-category-item">
-                            <a href="#"class="home-category-item-top">
-                                <div class="imgBox">
-                                    <img src="/img/category/may-tinh-casio.png" alt="">
-                                </div>
-                                <span>Đồ Dùng Học Sinh</span>
-                            </a>
-                            <a href="#"class="home-category-item-bottom">
-                                <div class="imgBox">
-                                    <img src="/img/category/bang-van-phong.png" alt="">
-                                </div>
-                                <span>Giấy In Ấn - Photo</span>
-                            </a>
-                        </div>
-                        <div class="home-category-item">
-                            <a href="#"class="home-category-item-top">
-                                <div class="imgBox">
-                                    <img src="/img/category/pin-cac-loai.png" alt="">
-                                </div>
-                                <span>Đồ Dùng Học Sinh</span>
-                            </a>
-                            <a href="#"class="home-category-item-bottom">
-                                <div class="imgBox">
-                                    <img src="/img/category/giay-in-anh.png" alt="">
-                                </div>
-                                <span>Giấy In Ấn - Photo</span>
-                            </a>
-                        </div>
-                        <div class="home-category-item">
-                            <a href="#"class="home-category-item-top">
-                                <div class="imgBox">
-                                    <img src="/img/category/thiet-bi-dien-tu.png" alt="">
-                                </div>
-                                <span>Đồ Dùng Học Sinh</span>
-                            </a>
-                            <a href="#"class="home-category-item-bottom">
-                                <div class="imgBox">
-                                    <img src="/img/category/san-pham-thien-long.png" alt="">
-                                </div>
-                                <span>Giấy In Ấn - Photo</span>
-                            </a>
-                        </div>
+                        {{#eachCategories categories}}
+                            <div class="home-category-item">
+                                <a href="#"class="home-category-item-top">
+                                    <div class="imgBox">
+                                        <img src="{{firstItem.IMAGE}}" alt="{{firstItem.NAME}}">
+                                    </div>
+                                    <span>{{firstItem.NAME}}</span>
+                                </a>
+                                <a href="#"class="home-category-item-bottom">
+                                    <div class="imgBox">
+                                        <img src="{{secondItem.IMAGE}}" alt="{{secondItem.NAME}}">
+                                    </div>
+                                    <span>{{secondItem.NAME}}</span>
+                                </a>
+                            </div>
+                        {{/eachCategories}}
                     </div>
                 </div>
             </div>

@@ -1,7 +1,15 @@
+var Categories = require('../models/Category');
+
 class SiteController {
     // [GET] /
     index(req, res, next) {
-        res.render('home');
+        Categories.get_all(function(categories) {
+            // var resultArray = Object.values(JSON.parse(JSON.stringify(categories)));
+            // console.log(categories);
+            res.render('home', {
+                categories: categories,
+            });
+        })
     }
 
     // [GET] /search

@@ -24,7 +24,8 @@
   "homepage": "https://github.com/nghiephy/hung_thanh_store#readme",
   "dependencies": {
     "express": "^4.17.2",
-    "express-handlebars": "^6.0.2"
+    "express-handlebars": "^6.0.2",
+    "mysql": "^2.18.1"
   },
   "devDependencies": {
     "morgan": "^1.10.0",

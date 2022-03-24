@@ -1191,7 +1191,7 @@ img {
   justify-content: flex-start;
   align-items: center;
   flex-direction: column;
-  height: 120px;
+  height: 130px;
 }
 .home-category-item-top span, .home-category-item-bottom span {
   font-size: 1.3rem;
