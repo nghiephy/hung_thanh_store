@@ -3,10 +3,10 @@
         <div class="container">
             <ul class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a href="#">Văn phòng phẩm</a>
+                    <a href="/">Văn phòng phẩm</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="#">{{products.[0].CAT_NAME}}</a>
+                    <a href="">{{products.[0].CAT_NAME}}</a>
                 </li>
             </ul>
         </div>
@@ -16,7 +16,9 @@
         <div class="container">
             <div class="header">
                 <h3 class="title" >{{products.[0].CAT_NAME}}</h3>
-                <p class="description" >{{products.[0].CAT_DESCRIPTION}}</p>
+                <div class="description" >
+                    {{{products.[0].CAT_DESCRIPTION}}}
+                </div>
             </div>
             <div class="content">
                 <div class="content-filter">

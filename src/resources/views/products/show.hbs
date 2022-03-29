@@ -22,19 +22,22 @@
                     <div class="product_gallery col-lg-5">
                         <div class="product_gallery-imgBox-wrap" >
                             <div class="product_gallery-imgBox">
-                                <img src="/img/products/but-mau.jpg" alt="">
+                                <img src="" alt="">
                             </div>
                         </div>
                         <div class="owl-carousel product_gallery-imgslide">
-                            <div class="product_gallery-imgitem active">
-                                <img src="/img/products/product_1.jpg" alt="">
-                            </div>
-                            <div class="product_gallery-imgitem">
+                            {{#each this.images}}
+                                <div class="product_gallery-imgitem" data-imgPath="{{IMG_PATH}}">
+                                    <img src="{{IMG_PATH}}" alt="{{IMG_DESCRIPTION}}">
+                                </div>
+                            {{/each}}
+                            
+                            {{!-- <div class="product_gallery-imgitem">
                                 <img src="/img/products/compa.jpg" alt="">
                             </div>
                             <div class="product_gallery-imgitem">
                                 <img src="/img/products/but-mau.jpg" alt="">
-                            </div>
+                            </div> --}}
                         </div>
                         <div class="product_gallery-phone">
                             <h3 class="title" >Để lại SĐT mua hàng công ty giá tốt</h3>
@@ -57,11 +60,11 @@
                         </div>
                     </div>
                     <div class="product_body col-lg-7">
-                        <h1 class="product_body-title"> Bìa đựng tài liệu cứng</h1>
+                        <h1 class="product_body-title">{{this.product.NAME}}</h1>
                         <div class="product_body-pricebox">
-                            <span class="product_body-price">61.400 đ</span>
-                            <span class="product_body-old-price">66.100 đ</span>
-                            <span class="product_body-sale">-7%</span>
+                            <span class="product_body-price">{{this.product.PRICE_PER_UNIT}}&nbsp;đ</span>
+                            <span class="product_body-old-price">{{this.product.PRICE_PER_UNIT}}&nbsp;đ</span>
+                            <span class="product_body-sale">-0%</span>
                         </div>
                         <form action="">
                            <div class="product_body-quantily">
@@ -166,23 +169,7 @@
             </div>
             <div class="tab-pane">
                 <div class="tab-pane-item active">
-                    - Thương hiệu: DELI 
-
-                    - Xuất xứ: Trung Quốc
-
-                    - Loại đầu bút: 1 cây / 1 màu ( hộp 12 màu )
-
-                    - Bảo quản: Nơi khô ráo, tránh lửa
-
-                    Liên hệ với chúng tôi khi cần:
-
-                    CÔNG TY TNHH TM DV FAST
-
-                    Email: vanphongphamfast@gmail.com
-
-                    Hotline: 0964 399 099
-
-                    FAST chuyên cung cấp Văn Phòng Phẩm, thiết bị văn phòng, đồ gia dụng sỉ và lẻ giá tốt nhất tại Hồ Chí Minh, giao hàng nhanh tại các quận huyện trong thành phố Hồ Chí Minh: Quận 1, Quận 2, Quận 3, Quận 4, Quận 5, Quận 6, Quận 7, Quận 8, Quận 9, Quận 10, Quận 11, Quận 12 , Quận Tận Phú, Quận Tân Bình, Quận Bình Thạnh, Quận Phú Nhuận, Quận Gò Vấp , TP Thủ Đức, Quận Bình Tân, Nhà Bè, Hóc Môn, Bình Chánh…và các tỉnh khác trên toàn Quốc
+                    {{{this.product.DESCRIPTION}}}
                 </div>
                 <div class="tab-pane-item">
                     <h3 class="tab-pane__title" >Angular</h3>
@@ -200,55 +187,9 @@
     
 </section>
 
+<script src="/js/product/show.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        $(document).ready(function() {
-            $(".owl-carousel.product_gallery-imgslide").owlCarousel({
-                margin:10,
-                responsiveClass:true,
-                dots: false,
-                responsive:{
-                    0:{
-                        items:2,
-                        nav:true,
-                    },
-                    480:{
-                        items:3,
-                        nav:true,
-                    },
-                    800:{
-                        items:4,
-                        nav:true,
-                    },
-                    900:{
-                        items:5,
-                        nav:true,
-                    },
-                    1200:{
-                        items:5,
-                        nav:true,
-                    }
-                }
-            });
-        });
-
-        var options1 = {
-            width: 200,
-            height: 200,
-            zoomWidth: 300,
-            offset: {vertical: 0, horizontal: 10}
-        };
-
-        var options2 = {
-            width: 300,
-            zoomWidth: 400,
-            zoomStyle: {
-                'z-index': 10,
-            },
-            offset: {vertical: 0, horizontal: 5}
-        };
-
-        new ImageZoom(document.querySelector(".product_gallery-imgBox"), options2);
+        
     });
 </script>
-<script src="/js/product/show.js"></script>

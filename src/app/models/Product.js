@@ -31,4 +31,42 @@ Product.get_pro_via_category = function (categoryName, result) {
     });
 }
 
+Product.get_pro_via_slug = function (slug, result) {
+    var data = {};
+
+    const getDataProductPromise = new Promise((resolve, reject) => {
+        db.query(`select * from products where products.slug = '${slug}';`, function(err, product) {
+            if(err) {
+                reject(err);
+            }else{
+                data.product = product;
+                resolve(product);
+            }
+        });
+    });
+    const getImagesListPromise = new Promise((resolve, reject) => {
+        db.query(`select images.PATH as IMG_PATH, images.DESCRIPTION as IMG_DESCRIPTION from products join images on images.PRODUCT_ID = products.PRODUCT_ID where products.slug = '${slug}';`, function(err, images) {
+            if(err) {
+                reject(err);
+            }else{
+                resolve(images);
+            }
+        });
+    });
+
+    getDataProductPromise
+        .then(product => {
+            data.product = product[0];
+            return getImagesListPromise;
+        })
+        .then(images => {
+            data.images = images;
+            result(data);
+        })
+        .catch(err => {
+            result(err);
+        })
+
+}
+
 module.exports = Product;

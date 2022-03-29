@@ -31,6 +31,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            height: 310px;
         }
         &-imgBox {
             display: block;
@@ -331,6 +332,7 @@
     }
     
     .tab-pane-item {
+        font-size: 1.4rem;
         display: none;
     }
     

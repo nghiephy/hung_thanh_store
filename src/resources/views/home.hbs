@@ -89,13 +89,13 @@
                     <div class="owl-carousel home-category-list">
                         {{#eachCategories categories}}
                             <div class="home-category-item">
-                                <a href="#"class="home-category-item-top">
+                                <a href="/categories/{{firstItem.SLUG}}"class="home-category-item-top">
                                     <div class="imgBox">
                                         <img src="{{firstItem.IMAGE}}" alt="{{firstItem.NAME}}">
                                     </div>
                                     <span>{{firstItem.NAME}}</span>
                                 </a>
-                                <a href="#"class="home-category-item-bottom">
+                                <a href="/categories/{{secondItem.SLUG}}"class="home-category-item-bottom">
                                     <div class="imgBox">
                                         <img src="{{secondItem.IMAGE}}" alt="{{secondItem.NAME}}">
                                     </div>

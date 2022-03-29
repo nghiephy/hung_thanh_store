@@ -331,14 +331,14 @@ alter table USERS add constraint FK_RELATIONSHIP_19 foreign key (CUSTOMER_ID)
 /*==============================================================*/
 insert into categories(CAT_CATEGORY_ID, NAME, IMAGE, SLUG, BANNER, DESCRIPTION)
 values
-	(null, 'Đồ Dùng Học Sinh', '/img/category/do-dung-hoc-sinh.png', 'do-dung-hoc-sinh', '\img\banner\category\BANNER_DSHS_1200x250px.jpg', 'Tổng Hợp Đồ Dùng Học Tập Cho Học Sinh Các Cấp'),
-    (null, 'Giấy In Ấn - Photo', '/img/category/giay-in-an-photo.png', 'giay-in-an---photo', '\img\banner\category\BANNER_PAPER_1200x250px.jpg', 'Chuyên Cung Cấp Các Loại Giấy In, Giấy A4 Chất Lượng Chiết khấu Cao'),
+	(null, 'Đồ Dùng Học Sinh', '/img/category/do-dung-hoc-sinh.png', 'do-dung-hoc-sinh', '\img\banner\category\BANNER_DSHS_1200x250px.jpg', '<h3>Tổng Hợp Đồ Dùng Học Tập Cho Học Sinh Các Cấp</h3><p>Sắm đồ dùng học tập cho con luôn làm nhiều ba mẹ phải vắt óc suy nghĩ, nhất là những ai có con đầu lòng - còn nhiều bỡ ngỡ. Nắm được nỗi lo trên, Văn phòng phẩm FAST chuyên cung cấp tổng hợp các đồ dùng Giấy kiểm tra 4 ô ly Hòa bình - 1 lốc 200 tờ, Hộp Bút Simili Hình Cá Sấu 20x7x9cm, Hộp bút vải Pubg 20x7x9cm, Hộp bút vải có khóa mật mã 20x6x8cm, Bảng bộ học sinh Phi Mã - 2 mặt trắng đen (kèm bút lông + mút lau), Compa màu Hồng, Bút Chì Màu Deli 6518 Hộp Giấy - Kèm Cọ Tán Màu ( 24 màu)....</p>'),
+    (null, 'Giấy In Ấn - Photo', '/img/category/giay-in-an-photo.png', 'giay-in-an---photo', '\img\banner\category\BANNER_PAPER_1200x250px.jpg', '<h3>Chuyên Cung Cấp Các Loại Giấy In, Giấy A4 Chất Lượng Chiết khấu Cao</h3><p>Đặc biệt, với các loại giấy in A4, vì đây là loại giấy phục vụ rất nhiều cho công việc in ấn trong văn phòng hiện nay. Vậy nên, khi chọn mua các loại giấy A4 dùng trong in ấn bạn cần biết tiêu chuẩn để có thể mua đúng loại giấy bạn cần dùng. Fast chuyên cung cấp các loại giấy in ấn Giấy A4 Excel 70 Gsm, Giấy A4 Double A 70 Gsm, Giấy in bill tính tiền 8F (80x45mm), Giấy kraft (tờ) size A0, Decal Tomy mũi tên - 1cm - hình vuông, Decal A3 đế xanh giấy nhám (xấp 100 tờ), Giấy in bill tính tiền 8F dầy đặc biệt (80x65mm), Giấy scan Gateway 73gsm A4 (250 tờ), Giấy A0 - tờ, Giấy Fort màu 80 A3 Gsm....</p>'),
     (null, 'Bìa - Kệ - Rỗ', '/img/category/ro-bia-ke.png', 'bia---ke---ro', null, 'Bìa Đựng Hồ Sơ - Kệ, Rổ - Hộp Cắm Bút Đa Dạng Mẫu Mã'),
     (null, 'Sổ - Tập - Bao Thư', '/img/category/so-tap-bao-thu.png', 'so---tap---bao-thu', null, 'Sổ - Tập - Namecard - Phiếu Thu Chi Giá Sĩ Giao Hàng Siêu Nhanh'),
     (null, 'Bút - Mực Chất Lượng Cao', '/img/category/but-muc-chat-luong-cao.png', 'but---muc-chat-luong-cao', null, 'Bút - Mực Văn Phòng Đa Dạng, Chất Lượng Hàng Đầu'),
     (null, 'Dụng Cụ Văn Phòng Chất Lượng', '/img/category/dung-cu-van-phong.png', 'dung-cu-van-phong-chat-luong', null, 'Dụng Cụ Văn Phòng Đẹp, Đa Dạng, Chất Lượng Uy Tín Giao Hàng Nhanh Chóng'),
     (null, 'Băng Keo - Dao - Kéo', '/img/category/bang-keo-dao-keo.png', 'bang-keo---dao-keo', null, 'Băng keo - Dao - Kéo - Bàn Cắt Giấy Chất Lượng Giá Tốt Nhất'),
-    (null, 'Máy Tính Casio', '/img/category/may-tinh-casio.png', 'may-tinh-casio', '\img\banner\category\BANNER_CASIO_1200x250px.jpg', 'Điểm Danh Các Dòng Máy Tính Casio Dành Cho Học Sinh Và Dân Văn Phòng'),
+    (null, 'Máy Tính Casio', '/img/category/may-tinh-casio.png', 'may-tinh-casio', '\img\banner\category\BANNER_CASIO_1200x250px.jpg', '<h3>Điểm Danh Các Dòng Máy Tính Casio Dành Cho Học Sinh Và Dân Văn Phòng</h3><p>Máy tính cầm tay hiện nay hỗ trợ rất tốt trong việc tính toán. Fast chuyên cung cấp các loại máy tính Casio Máy tính Casio MX 12B, Máy tính Casio AX 12B, Máy tính Casio AX 120B, Máy tính Deli 12 số 1239, Máy tính Casio GX 12B, MÁY TÍNH CASIO FX-500MS, MÁY TÍNH CASIO JW200SC - 6 MÀU....</p>'),
     (null, 'Bách Hoá Online', '/img/category/bach-hoa-online.png', 'bach-hoa-online', null, 'Bách Hoá Văn Phòng Giá Mẫu Mã Đa Dạng Giá Tốt Nhất'),
     (null, 'Bảng Văn Phòng', '/img/category/bang-van-phong.png', 'bang-van-phong', null, 'Bảng là loại văn phòng phẩm cực kỳ quen thuộc với chúng ta ngay từ khi còn ngồi trên ghế nhà trường. Những con chữ từ bảng vào tâm trí chúng ta từ lúc nhỏ cho đến khi làm việc tại các công ty, đoàn thể. Ngoài loại bảng dùng để viết hay học, hiện nay có rất nhiều biến thể đáp ứng nhiều mong muốn của người sử dụng. Hãy cùng Văn phòng phẩm FAST nghía qua nhé!'),
     (null, 'Dịch Vụ Khắc Dấu Uy Tín', '/img/category/dich-vu-khac-dau-uy-tin.png', 'dich-vu-khac-dau-uy-tin', null, 'Dịch Vụ Khắc Dấu Theo Yêu Cầu Nhanh, Giao Hàng Tận Nơi'),
@@ -354,14 +354,14 @@ alter table categories Auto_Increment = 1;
 /*==============================================================*/
 insert into products(CATEGORY_ID, NAME, SLUG, DESCRIPTION, BASIC_UNIT, PRICE_PER_UNIT, BRAND, ORIGIN)
 values
-	(1, 'Bút Sáp Màu Deli EC21000 - 12 màu', null, 'Loại đầu bút: 1 cây / 1 màu ( hộp 12 màu )', 'Hộp', 61400, 'DELI', 'Trung Quốc'),
-    (1, 'Bộ Cọ Vẽ Chuyên Nghiệp Deli 1 set / 6 Cây - 73885', null, null, 'Bộ', 155250, 'DELI', 'Trung Quốc'),
-    (1, 'Bìa kê tay / bìa lót tập - quyển vở', null, null, 'Cái', 7200, 'Đang cập nhật', 'Việt Nam'),
-    (1, 'Sticker 60 miếng Con số - 5 xấp hình ngẫu nhiên', null, null, 'Bộ', 160700, 'Đang cập nhật', 'Việt Nam'),
-    (8, 'Máy tính Casio MX 120B', null, null, 'Cái', 294000, 'Casio', 'Việt Nam'),
-    (8, 'Máy tính Casio bỏ túi HL-815L - Đen', null, null, 'Cái', 201600, 'Casio', 'Việt Nam'),
-    (8, 'Máy tính Casio MX 12B - Hồng', null, null, 'Cái', 207500, 'Casio', 'Việt Nam'),
-    (2, 'Giấy A4 Excel 70 Gsm', null, null, 'Raem', 77400, 'Excel', 'Việt Nam');
+	(1, 'Bút Sáp Màu Deli EC21000 - 12 màu', 'but-sap-mau-deli-ec21000---12-mau', 'Loại đầu bút: 1 cây / 1 màu ( hộp 12 màu )', 'Hộp', 61400, 'DELI', 'Trung Quốc'),
+    (1, 'Bộ Cọ Vẽ Chuyên Nghiệp Deli 1 set / 6 Cây', 'bo-co-ve-chuyen-nghiep-deli-1-set---6-cay', null, 'Bộ', 155250, 'DELI', 'Trung Quốc'),
+    (1, 'Bìa kê tay / bìa lót tập - quyển vở', 'bia-ke-tay---bia-lot-tap---quyen-vo', null, 'Cái', 7200, 'Đang cập nhật', 'Việt Nam'),
+    (1, 'Sticker 60 miếng Con số - 5 xấp hình ngẫu nhiên', 'sticker-60-mieng-con-so---5-xap-hinh-ngau-nhien', null, 'Bộ', 160700, 'Đang cập nhật', 'Việt Nam'),
+    (8, 'Máy tính Casio MX 120B', 'may-tinh-casio-mx-120b', null, 'Cái', 294000, 'Casio', 'Việt Nam'),
+    (8, 'Máy tính Casio bỏ túi HL-815L - Đen', 'may-tinh-casio-bo-tui-hl-815l---den', null, 'Cái', 201600, 'Casio', 'Việt Nam'),
+    (8, 'Máy tính Casio MX 12B - Hồng', 'may-tinh-casio-mx-12b---hong', null, 'Cái', 207500, 'Casio', 'Việt Nam'),
+    (2, 'Giấy A4 Excel 70 Gsm', 'giay-a4-excel-70-gsm', null, 'Raem', 77400, 'Excel', 'Việt Nam');
 
 
 /*==============================================================*/
@@ -409,6 +409,17 @@ select banner
 from categories
 where categories.name = 'Đồ Dùng Học Sinh';
 
+## Query: get information product via slug
+select *
+from products
+where products.slug = 'bia-ke-tay---bia-lot-tap---quyen-vo';
+
+## Query: get image list product via slug
+select images.PATH as IMG_PATH, images.DESCRIPTION as IMG_DESCRIPTION
+from products
+join images on images.PRODUCT_ID = products.PRODUCT_ID
+where products.slug = 'bia-ke-tay---bia-lot-tap---quyen-vo';
+
 /*==============================================================*/
 /* DEFINE USEFUL FUNCTION                                               */
 /*==============================================================*/
@@ -437,7 +448,7 @@ DROP PROCEDURE IF EXISTS getProductViaCategory //
 CREATE PROCEDURE 
   getProductViaCategory( categoryName text )
 BEGIN  
-	select products.*, categories.BANNER, categories.SLUG, categories.NAME as CAT_NAME, images.PATH as IMAGE_PATH
+	select products.*, categories.BANNER, categories.SLUG as CAT_SLUG, categories.NAME as CAT_NAME, images.PATH as IMAGE_PATH
 	from products
 	join categories on products.category_id = categories.category_id
     join images on products.product_id = images.product_id
