@@ -1,173 +1,61 @@
-<section class="home">
-    {{!-- Slider section --}}
-    <div class="home-sldier-bg">
-        <div class="container">
-            <div class="home-banner">
-                <div class="row">
-                    <div class="col-lg-8 col-md-8 col-sm-12">
-                        <div class="owl-carousel home-banner-slider">
-                            <div class="home-banner-slider-item">
-                                <a href="#">
-                                    <img src="/img/banner/slider/banner-home01.jpg" alt="slider-1">
-                                </a>
-                            </div>
-                            <div class="home-banner-slider-item">
-                                <a href="#">
-                                    <img src="/img/banner/slider/banner-home02.jpg" alt="slider-2">
-                                </a>
-                            </div>
-                            <div class="home-banner-slider-item">
-                                <a href="#">
-                                    <img src="/img/banner/slider/banner-home03.jpg" alt="slider-3">
-                                </a>
-                            </div>
-                            <div class="home-banner-slider-item">
-                                <a href="#">
-                                    <img src="/img/banner/slider/banner-home04.jpg" alt="slider-4">
-                                </a>
-                            </div>
-                            <div class="home-banner-slider-item">
-                                <a href="#">
-                                    <img src="/img/banner/slider/banner-home05.jpg" alt="slider-5">
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="home-banner-label col-lg-4 col-md-4 d-none d-md-flex">
-                        <a href="#" class="home-banner-label-item">
-                            <img src="/img/banner/banner_01.jpg" alt="banner-1">
-                        </a>
-                        <a href="#" class="home-banner-label-item" >
-                            <img src="/img/banner/banner_02.jpg" alt="banner-2">
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="home-policy">
-                <ul class="home-policy-list">
-                    <li class="home-policy-item">
-                        <a href="#">
-                            <ion-icon name="alarm"></ion-icon>
-                            <span>Giao hàng trong ngày</span>
-                        </a>
-                    </li>
-                    <li class="home-policy-item" >
-                        <a href="#">
-                            <ion-icon name="car"></ion-icon>
-                            <span>Miễn phí giao hàng</span>
-                        </a>
-                    </li>
-                    <li class="home-policy-item" >
-                        <a href="#">
-                            <ion-icon name="card"></ion-icon>
-                            <span>Giảm giá</span>
-                        </a>
-                    </li>
-                    <li class="home-policy-item" >
-                         <a href="#">
-                            <ion-icon name="gift"></ion-icon>
-                            <span>Quà tặng</span>
-                        </a>
-                    </li>
-                    <li class="home-policy-item" >
-                        <a href="#">
-                            <ion-icon name="refresh"></ion-icon>
-                            <span>Đổi trả nhanh chóng</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    
-    {{!-- Category section --}}
-    <div class="home-category-wrap">
-        <div class="container">
-            <div class="home-category">
-                <h2 class="home-category-title" >Danh mục văn phòng phẩm</h2>
-                <div class="home-category-list-wrap">
-                    <div class="owl-carousel home-category-list">
-                        {{#eachCategories categories}}
-                            <div class="home-category-item">
-                                <a href="#"class="home-category-item-top">
-                                    <div class="imgBox">
-                                        <img src="{{firstItem.IMAGE}}" alt="{{firstItem.NAME}}">
-                                    </div>
-                                    <span>{{firstItem.NAME}}</span>
-                                </a>
-                                <a href="#"class="home-category-item-bottom">
-                                    <div class="imgBox">
-                                        <img src="{{secondItem.IMAGE}}" alt="{{secondItem.NAME}}">
-                                    </div>
-                                    <span>{{secondItem.NAME}}</span>
-                                </a>
-                            </div>
-                        {{/eachCategories}}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    {{!-- Products section --}}
-    {{#each products}}
-        {{> product_section this }}
-    {{/each}}
-    {{!-- <div class="home-products-wrap">
+  <div class="home-products-wrap">
         <div class="container">
             <a href="#" class="home-products-banner">
-                <img src="/img/banner/category/BANNER_DSHS_1200x250px.jpg" alt="">
+                <img src="{{this.[0].BANNER}}" alt="">
             </a>
             <div class="home-products-slide">
                 <div class="home-products-slide-header">
-                    <h2 class="heading">Đồ dùng học sinh</h2>
-                    <a href="#"class="more-btn">
+                    <h2 class="heading">{{this.[0].CAT_NAME}}</h2>
+                    <a href="/categories/{{this.[0].SLUG}}"class="more-btn">
                         Xem thêm
                         <ion-icon name="caret-forward"></ion-icon>
                     </a>
                 </div>
                 <div class="home-products-slide-body">
                     <div class="owl-carousel home-products-slide-body-list">
-                        <div class="home-products-slide-body-item">
-                            <a href="#" class="imgLink">
-                                <div class="imgBox">
-                                    <img src="/img/products/product_1.jpg" alt="">
-                                </div>
-                            </a>
-                            <div class="item-info">
-                                <a href="#" class="item-info__title">
-                                    <h3>Tập vẽ mỹ thuật A4 - 15 tờ vô cùng dễ sử dụng và tiết kiệm</h3>
+                        {{#each this}}
+                            <div class="home-products-slide-body-item">
+                                <a href="/products/show" class="imgLink">
+                                    <div class="imgBox">
+                                        <img src="{{IMAGE_PATH}}" alt="{{NAME}}">
+                                    </div>
                                 </a>
-                                <div class="item-info__price">
-                                    <div class="item-info__price-origin">
-                                        <span class="price" >85.300 đ</span>
-                                        <span class="like" >
-                                            <ion-icon class="heart-outline" name="heart-outline"></ion-icon> 
-                                            <ion-icon class="heart" name="heart"></ion-icon> 
-                                        </span>
+                                <div class="item-info">
+                                    <a href="#" class="item-info__title">
+                                        <h3>{{NAME}}</h3>
+                                    </a>
+                                    <div class="item-info__price">
+                                        <div class="item-info__price-origin">
+                                            <span class="price" >{{PRICE_PER_UNIT}}&nbsp;đ</span>
+                                            <span class="like" >
+                                                <ion-icon class="heart-outline" name="heart-outline"></ion-icon> 
+                                                <ion-icon class="heart" name="heart"></ion-icon> 
+                                            </span>
+                                        </div>
+                                        <div class="item-info__price-sale">
+                                            <span class="percent">-0%</span>
+                                            <span class="price" >{{PRICE_PER_UNIT}}&nbsp;đ</span>
+                                        </div>
                                     </div>
-                                    <div class="item-info__price-sale">
-                                        <span class="percent">-10%</span>
-                                        <span class="price" >8.530 đ</span>
+                                    <div class="item-info__delivery">
+                                        Miễn phí giao hàng Cần Thơ
                                     </div>
                                 </div>
-                                <div class="item-info__delivery">
-                                    Miễn phí giao hàng Cần Thơ
+                                <div class="item-options">
+                                    <a href="#"class="buy-now" >Mua ngay</a>
+                                    <div class="option-right">
+                                        <a href="#">
+                                            <ion-icon name="eye"></ion-icon>
+                                        </a>
+                                        <a href="#">
+                                            <ion-icon name="cart"></ion-icon>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="item-options">
-                                <a href="#"class="buy-now" >Mua ngay</a>
-                                <div class="option-right">
-                                    <a href="#">
-                                        <ion-icon name="eye"></ion-icon>
-                                    </a>
-                                    <a href="#">
-                                        <ion-icon name="cart"></ion-icon>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="home-products-slide-body-item">
+                        {{/each}}
+                        
+                        {{!-- <div class="home-products-slide-body-item">
                             <a href="#" class="imgLink">
                                 <div class="imgBox">
                                     <img src="/img/products/bang-con.png" alt="">
@@ -400,103 +288,9 @@
                                     </a>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
         </div>
-    </div> --}}
-</section>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const heartBtns = document.querySelectorAll(".item-info__price-origin .like");
-
-       heartBtns.forEach((heartBtn) => {
-           heartBtn.addEventListener('click', () => {
-               heartBtn.classList.toggle('active');
-           })
-       })
-
-        {{!-- Handle all slider in home layout --}}
-        $(document).ready(function(){
-            $(".home-banner-slider.owl-carousel").owlCarousel({
-                loop:true,
-                margin:10,
-                responsiveClass:true,
-                dots: false,
-                autoplay:true,
-                autoplayTimeout: 3500,
-                autoplaySpeed: 1000,
-                autoplayHoverPause:true,
-                responsive:{
-                    0:{
-                        items:1,
-                        nav:true
-                    },
-                    600:{
-                        items:1,
-                        nav:true
-                    },
-                    1000:{
-                        items:1,
-                        nav:true,
-                        loop:true
-                    }
-                }
-            });
-        
-            $(".home-category-list.owl-carousel").owlCarousel({
-                margin:10,
-                responsiveClass:true,
-                dots: false,
-                responsive:{
-                    0:{
-                        items:3,
-                        nav:true
-                    },
-                    600:{
-                        items:5,
-                        nav:true
-                    },
-                    1000:{
-                        items:8,
-                        nav:true,
-                        loop:true
-                    }
-                }
-            });
-
-            $(".owl-carousel.home-products-slide-body-list").owlCarousel({
-                margin:10,
-                responsiveClass:true,
-                dots: false,
-                responsive:{
-                    0:{
-                        items:2,
-                        nav:true,
-                    },
-                    480:{
-                        items:3,
-                        nav:true,
-                    },
-                    800:{
-                        items:4,
-                        nav:true,
-                    },
-                    900:{
-                        items:5,
-                        nav:true,
-                    },
-                    1200:{
-                        items:6,
-                        nav:true,
-                        {{!-- loop:true, --}}
-                        slideBy: 2,
-                    }
-                }
-            });
-        })
-    })
-    
-</script>
+    </div>

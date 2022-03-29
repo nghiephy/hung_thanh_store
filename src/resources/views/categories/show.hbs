@@ -1,0 +1,86 @@
+<section class="category-detail">
+    <div class="breadcrumb-wrap">
+        <div class="container">
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="#">Văn phòng phẩm</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="#">{{products.[0].CAT_NAME}}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="category-detail-body mt-4">
+        <div class="container">
+            <div class="header">
+                <h3 class="title" >{{products.[0].CAT_NAME}}</h3>
+                <p class="description" >{{products.[0].CAT_DESCRIPTION}}</p>
+            </div>
+            <div class="content">
+                <div class="content-filter">
+                    <ul>
+                        <li>
+                            <a href="#">Phổ biến</a>
+                        </li>
+                        <li>
+                            <a href="#">Giá cao</a>
+                        </li>
+                        <li>
+                            <a href="#">Giá thấp</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="content-body">
+                    <div class="row">
+                        {{#each products}}
+                            <div class="col-xl-2 col-lg-2 col-md-3 col-sm-12">
+                                <div class="home-products-slide-body-item">
+                                    <a href="/products/show" class="imgLink">
+                                        <div class="imgBox">
+                                            <img src="{{IMAGE_PATH}}" alt="{{NAME}}">
+                                        </div>
+                                    </a>
+                                    <div class="item-info">
+                                        <a href="#" class="item-info__title">
+                                            <h3>{{NAME}}</h3>
+                                        </a>
+                                        <div class="item-info__price">
+                                            <div class="item-info__price-origin">
+                                                <span class="price" >{{PRICE_PER_UNIT}}&nbsp;đ</span>
+                                                <span class="like" >
+                                                    <ion-icon class="heart-outline" name="heart-outline"></ion-icon> 
+                                                    <ion-icon class="heart" name="heart"></ion-icon> 
+                                                </span>
+                                            </div>
+                                            <div class="item-info__price-sale">
+                                                <span class="percent">-0%</span>
+                                                <span class="price" >{{PRICE_PER_UNIT}}&nbsp;đ</span>
+                                            </div>
+                                        </div>
+                                        <div class="item-info__delivery">
+                                            Miễn phí giao hàng Cần Thơ
+                                        </div>
+                                    </div>
+                                    <div class="item-options">
+                                        <a href="#"class="buy-now" >Mua ngay</a>
+                                        <div class="option-right">
+                                            <a href="#">
+                                                <ion-icon name="eye"></ion-icon>
+                                            </a>
+                                            <a href="#">
+                                                <ion-icon name="cart"></ion-icon>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {{/each}}
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

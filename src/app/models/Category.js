@@ -17,4 +17,24 @@ Category.get_all = function (result) {
     });
 }
 
+Category.get_banner = function (categoryName, result) {
+    db.query(`SELECT BANNER FROM CATEGORIES where CATEGORIES.NAME = '${categoryName}';`, function(err, banner) {
+        if(err) {
+            result(err);
+        }else{
+            result(banner);
+        }
+    });
+}
+
+Category.get_pro_via_slug_cat = function (categorySlug, result) {
+    db.query(`call getProductViaSlugCat ('${categorySlug}');`, function(err, products) {
+        if(err) {
+            result(err);
+        }else{
+            result(products);
+        }
+    });
+}
+
 module.exports = Category;

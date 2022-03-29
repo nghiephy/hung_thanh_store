@@ -2114,6 +2114,41 @@ img {
   width: 100%;
 }
 
+.category-detail-body .header {
+  margin-top: 30px;
+}
+.category-detail-body .header .title {
+  font-size: 2rem;
+  color: #ce567e;
+  font-weight: 600;
+}
+.category-detail-body .header .description {
+  margin-top: 10px;
+  font-size: 1.4rem;
+}
+.category-detail-body .content-filter {
+  margin-bottom: 10px;
+}
+.category-detail-body .content-filter ul {
+  list-style: none;
+  padding-left: 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.category-detail-body .content-filter ul li {
+  margin-left: 14px;
+}
+.category-detail-body .content-filter ul li a {
+  width: 100%;
+  height: 100%;
+  font-size: 1.4rem;
+  color: black;
+}
+.category-detail-body .content-filter ul li a:hover {
+  color: #ce567e;
+}
+
 .modal-login {
   padding: 30px;
   background-color: white;

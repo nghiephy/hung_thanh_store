@@ -66,6 +66,7 @@ create table CATEGORIES
    CAT_CATEGORY_ID      int,
    NAME                 text,
    IMAGE				text,
+   SLUG					text,
    DESCRIPTION          text,
    primary key (CATEGORY_ID)
 );
@@ -328,20 +329,20 @@ alter table USERS add constraint FK_RELATIONSHIP_19 foreign key (CUSTOMER_ID)
 /*==============================================================*/
 /* Add values for table categories                                                */
 /*==============================================================*/
-insert into categories(CAT_CATEGORY_ID, NAME, IMAGE, BANNER, DESCRIPTION)
+insert into categories(CAT_CATEGORY_ID, NAME, IMAGE, SLUG, BANNER, DESCRIPTION)
 values
-	(null, 'Đồ Dùng Học Sinh', '/img/category/do-dung-hoc-sinh.png', '\img\banner\category\BANNER_DSHS_1200x250px.jpg', 'Tổng Hợp Đồ Dùng Học Tập Cho Học Sinh Các Cấp'),
-    (null, 'Giấy In Ấn - Photo', '/img/category/giay-in-an-photo.png', null, 'Chuyên Cung Cấp Các Loại Giấy In, Giấy A4 Chất Lượng Chiết khấu Cao'),
-    (null, 'Bìa - Kệ - Rỗ', '/img/category/ro-bia-ke.png', null, 'Bìa Đựng Hồ Sơ - Kệ, Rổ - Hộp Cắm Bút Đa Dạng Mẫu Mã'),
-    (null, 'Sổ - Tập - Bao Thư', '/img/category/so-tap-bao-thu.png', null, 'Sổ - Tập - Namecard - Phiếu Thu Chi Giá Sĩ Giao Hàng Siêu Nhanh'),
-    (null, 'Bút - Mực Chất Lượng Cao', '/img/category/but-muc-chat-luong-cao.png', null, 'Bút - Mực Văn Phòng Đa Dạng, Chất Lượng Hàng Đầu'),
-    (null, 'Dụng Cụ Văn Phòng Chất Lượng', '/img/category/dung-cu-van-phong.png', null, 'Dụng Cụ Văn Phòng Đẹp, Đa Dạng, Chất Lượng Uy Tín Giao Hàng Nhanh Chóng'),
-    (null, 'Băng Keo - Dao - Kéo', '/img/category/bang-keo-dao-keo.png', null, 'Băng keo - Dao - Kéo - Bàn Cắt Giấy Chất Lượng Giá Tốt Nhất'),
-    (null, 'Máy Tính Casio', '/img/category/may-tinh-casio.png', '\img\banner\category\BANNER_CASIO_1200x250px.jpg', 'Điểm Danh Các Dòng Máy Tính Casio Dành Cho Học Sinh Và Dân Văn Phòng'),
-    (null, 'Bách Hoá Online', '/img/category/bach-hoa-online.png', null, 'Bách Hoá Văn Phòng Giá Mẫu Mã Đa Dạng Giá Tốt Nhất'),
-    (null, 'Bảng Văn Phòng', '/img/category/bang-van-phong.png', null, 'Bảng là loại văn phòng phẩm cực kỳ quen thuộc với chúng ta ngay từ khi còn ngồi trên ghế nhà trường. Những con chữ từ bảng vào tâm trí chúng ta từ lúc nhỏ cho đến khi làm việc tại các công ty, đoàn thể. Ngoài loại bảng dùng để viết hay học, hiện nay có rất nhiều biến thể đáp ứng nhiều mong muốn của người sử dụng. Hãy cùng Văn phòng phẩm FAST nghía qua nhé!'),
-    (null, 'Dịch Vụ Khắc Dấu Uy Tín', '/img/category/dich-vu-khac-dau-uy-tin.png', null, 'Dịch Vụ Khắc Dấu Theo Yêu Cầu Nhanh, Giao Hàng Tận Nơi'),
-    (null, 'Sản Phẩm Văn Phòng Khác', '/img/category/san-pham-van-phong-khac.png', null, 'Các Danh Mục Sản Phẩm Văn Phòng Phẩm Khác Nhiều Mẫu Mã Mới Giá Tốt Nhất Hiện Nay');
+	(null, 'Đồ Dùng Học Sinh', '/img/category/do-dung-hoc-sinh.png', 'do-dung-hoc-sinh', '\img\banner\category\BANNER_DSHS_1200x250px.jpg', 'Tổng Hợp Đồ Dùng Học Tập Cho Học Sinh Các Cấp'),
+    (null, 'Giấy In Ấn - Photo', '/img/category/giay-in-an-photo.png', 'giay-in-an---photo', '\img\banner\category\BANNER_PAPER_1200x250px.jpg', 'Chuyên Cung Cấp Các Loại Giấy In, Giấy A4 Chất Lượng Chiết khấu Cao'),
+    (null, 'Bìa - Kệ - Rỗ', '/img/category/ro-bia-ke.png', 'bia---ke---ro', null, 'Bìa Đựng Hồ Sơ - Kệ, Rổ - Hộp Cắm Bút Đa Dạng Mẫu Mã'),
+    (null, 'Sổ - Tập - Bao Thư', '/img/category/so-tap-bao-thu.png', 'so---tap---bao-thu', null, 'Sổ - Tập - Namecard - Phiếu Thu Chi Giá Sĩ Giao Hàng Siêu Nhanh'),
+    (null, 'Bút - Mực Chất Lượng Cao', '/img/category/but-muc-chat-luong-cao.png', 'but---muc-chat-luong-cao', null, 'Bút - Mực Văn Phòng Đa Dạng, Chất Lượng Hàng Đầu'),
+    (null, 'Dụng Cụ Văn Phòng Chất Lượng', '/img/category/dung-cu-van-phong.png', 'dung-cu-van-phong-chat-luong', null, 'Dụng Cụ Văn Phòng Đẹp, Đa Dạng, Chất Lượng Uy Tín Giao Hàng Nhanh Chóng'),
+    (null, 'Băng Keo - Dao - Kéo', '/img/category/bang-keo-dao-keo.png', 'bang-keo---dao-keo', null, 'Băng keo - Dao - Kéo - Bàn Cắt Giấy Chất Lượng Giá Tốt Nhất'),
+    (null, 'Máy Tính Casio', '/img/category/may-tinh-casio.png', 'may-tinh-casio', '\img\banner\category\BANNER_CASIO_1200x250px.jpg', 'Điểm Danh Các Dòng Máy Tính Casio Dành Cho Học Sinh Và Dân Văn Phòng'),
+    (null, 'Bách Hoá Online', '/img/category/bach-hoa-online.png', 'bach-hoa-online', null, 'Bách Hoá Văn Phòng Giá Mẫu Mã Đa Dạng Giá Tốt Nhất'),
+    (null, 'Bảng Văn Phòng', '/img/category/bang-van-phong.png', 'bang-van-phong', null, 'Bảng là loại văn phòng phẩm cực kỳ quen thuộc với chúng ta ngay từ khi còn ngồi trên ghế nhà trường. Những con chữ từ bảng vào tâm trí chúng ta từ lúc nhỏ cho đến khi làm việc tại các công ty, đoàn thể. Ngoài loại bảng dùng để viết hay học, hiện nay có rất nhiều biến thể đáp ứng nhiều mong muốn của người sử dụng. Hãy cùng Văn phòng phẩm FAST nghía qua nhé!'),
+    (null, 'Dịch Vụ Khắc Dấu Uy Tín', '/img/category/dich-vu-khac-dau-uy-tin.png', 'dich-vu-khac-dau-uy-tin', null, 'Dịch Vụ Khắc Dấu Theo Yêu Cầu Nhanh, Giao Hàng Tận Nơi'),
+    (null, 'Sản Phẩm Văn Phòng Khác', '/img/category/san-pham-van-phong-khac.png', 'san-pham-van-phong-khac', null, 'Các Danh Mục Sản Phẩm Văn Phòng Phẩm Khác Nhiều Mẫu Mã Mới Giá Tốt Nhất Hiện Nay');
 
 -- Reset auto_increment = 1 --
 set @autoid :=0; 
@@ -357,7 +358,10 @@ values
     (1, 'Bộ Cọ Vẽ Chuyên Nghiệp Deli 1 set / 6 Cây - 73885', null, null, 'Bộ', 155250, 'DELI', 'Trung Quốc'),
     (1, 'Bìa kê tay / bìa lót tập - quyển vở', null, null, 'Cái', 7200, 'Đang cập nhật', 'Việt Nam'),
     (1, 'Sticker 60 miếng Con số - 5 xấp hình ngẫu nhiên', null, null, 'Bộ', 160700, 'Đang cập nhật', 'Việt Nam'),
-    (8, 'Máy tính Casio MX 120B', null, null, 'Cái', 294000, 'Casio', 'Việt Nam');
+    (8, 'Máy tính Casio MX 120B', null, null, 'Cái', 294000, 'Casio', 'Việt Nam'),
+    (8, 'Máy tính Casio bỏ túi HL-815L - Đen', null, null, 'Cái', 201600, 'Casio', 'Việt Nam'),
+    (8, 'Máy tính Casio MX 12B - Hồng', null, null, 'Cái', 207500, 'Casio', 'Việt Nam'),
+    (2, 'Giấy A4 Excel 70 Gsm', null, null, 'Raem', 77400, 'Excel', 'Việt Nam');
 
 
 /*==============================================================*/
@@ -369,7 +373,10 @@ values
     (2, 500, '2022-03-25 00:00:55', null, null),
     (3, 400, '2022-03-25 00:01:55', null, null),
     (4, 300, '2022-04-25 00:03:55', null, null),
-    (5, 300, '2022-04-25 00:04:55', null, null);
+    (5, 300, '2022-04-25 00:04:55', null, null),
+    (6, 500, '2022-04-28 00:04:55', null, null),
+    (7, 200, '2022-04-28 00:05:55', null, null),
+    (8, 200, '2022-04-29 00:05:55', null, null);
 
 
 /*==============================================================*/
@@ -384,12 +391,29 @@ values
     (4, '/img/products/sticker-60-mieng-con-so---5-xap-hinh-ngau-nhien-1.jpg', 'Sticker 60 miếng Con số - 5 xấp hình ngẫu nhiên'),
     (4, '/img/products/sticker-60-mieng-con-so---5-xap-hinh-ngau-nhien-2.jpg', 'Sticker 60 miếng Con số - 5 xấp hình ngẫu nhiên'),
     (5, '/img/products/may-tinh-casio-mx-120b-1.jfif', 'Máy tính Casio MX 120B'),
-    (5, '/img/products/may-tinh-casio-mx-120b-2.png', 'Máy tính Casio MX 120B');
+    (5, '/img/products/may-tinh-casio-mx-120b-2.png', 'Máy tính Casio MX 120B'),
+    (6, '/img/products/may-tinh-bo-tui-casio-hl-815-1.jpg', 'Máy tính Casio bỏ túi HL-815L - Đen'),
+    (6, '/img/products/may-tinh-bo-tui-casio-hl-815-2.jpg', 'Máy tính Casio bỏ túi HL-815L - Đen'),
+    (7, '/img/products/may-tinh-casio-mx-12b-hong-1.png', 'Máy tính Casio MX 12B - Hồng'),
+    (7, '/img/products/may-tinh-casio-mx-12b-hong-2.png', 'Máy tính Casio MX 12B - Hồng'),
+    (7, '/img/products/may-tinh-casio-mx-12b-hong-3.png', 'Máy tính Casio MX 12B - Hồng'),
+    (8, '/img/products/giay-a4-excel-70-gsm-1.png', 'Giấy A4 Excel 70 Gsm'),
+    (8, '/img/products/giay-a4-excel-70-gsm-2.png', 'Giấy A4 Excel 70 Gsm');
 
 
--- Define Function --
+/*==============================================================*/
+/* QUERY TEMPLATE                                              */
+/*==============================================================*/
+## Query: get path banner category via category name
+select banner
+from categories
+where categories.name = 'Đồ Dùng Học Sinh';
+
+/*==============================================================*/
+/* DEFINE USEFUL FUNCTION                                               */
+/*==============================================================*/
 delimiter $$
-CREATE FUNCTION `isHaveEnoughMoney` ( id_customer int, minusMoney int)
+CREATE FUNCTION `getProductViaCategory` ( categoryName text)
 RETURNS boolean
 deterministic
 BEGIN
@@ -402,4 +426,43 @@ BEGIN
         return false;
 	end if;
 END$$
+
+/*==============================================================*/
+/* DEFINE USEFUL PROCEDURE                                               */
+/*==============================================================*/
+
+-- procedure get products via name of category
+DELIMITER //
+DROP PROCEDURE IF EXISTS getProductViaCategory //
+CREATE PROCEDURE 
+  getProductViaCategory( categoryName text )
+BEGIN  
+	select products.*, categories.BANNER, categories.SLUG, categories.NAME as CAT_NAME, images.PATH as IMAGE_PATH
+	from products
+	join categories on products.category_id = categories.category_id
+    join images on products.product_id = images.product_id
+	where categories.name = categoryName
+    group by product_id;
+END//
+DELIMITER ;
+-- test
+call getProductViaCategory ('Đồ Dùng Học Sinh');
+
+-- procedure get products via slug of category
+DELIMITER //
+DROP PROCEDURE IF EXISTS getProductViaSlugCat //
+CREATE PROCEDURE 
+  getProductViaSlugCat( slug text )
+BEGIN  
+	select products.*, categories.NAME as CAT_NAME, categories.DESCRIPTION as CAT_DESCRIPTION, images.PATH as IMAGE_PATH
+	from products
+	join categories on products.category_id = categories.category_id
+    join images on products.product_id = images.product_id
+	where categories.slug = slug
+    group by product_id;
+END//
+DELIMITER ;
+-- test
+call getProductViaSlugCat ('do-dung-hoc-sinh');
+
 
