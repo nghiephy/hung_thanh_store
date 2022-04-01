@@ -71,6 +71,14 @@ class SiteController {
     payment(req, res, next) {
         res.render('payment');
     }
+
+    // [POST] /payment
+    handlePayment(req, res, next) {
+        console.log(req.body);
+        res.json([{
+            cart: req.body.cart,
+        }]);
+    }
 }
 
 module.exports = new SiteController();

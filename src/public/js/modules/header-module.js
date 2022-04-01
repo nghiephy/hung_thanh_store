@@ -76,9 +76,14 @@ export function deleteCarProHeader() {
             loadCartListHeader();
             deleteCarProHeader();
 
-            const listProducts = document.querySelector('.cart-table__body');
+            const listProducts = document.querySelector('.cart-table__body.cart');
+            const listProductsPayment = document.querySelector('.cart-table__body.payment');
+
             if(listProducts) {
                 loadDataToCart(listProducts);
+            }
+            if(listProductsPayment) {
+                loadInforOrder(listProductsPayment);
             }
         });
     });
@@ -230,4 +235,38 @@ function deleteCart(listProducts) {
             deleteCarProHeader();
         })
     })
+}
+
+function loadInforOrder(listProductEle) {
+    var cart = JSON.parse(window.localStorage.getItem('cart')) || [];
+    var totalPrice = cart.reduce((total, nextItem) => {
+        return total + parseInt(nextItem.total_price);
+    }, 0);
+    var htmls = cart.map(item => {
+        return `
+            <tr class="cart-table__row">
+                <td class="cart-table__col cart-table__col--product">
+                    <div class="cart-product">
+                        <a href="#" class="cart-product__image">
+                            <img src="${item.image}" alt="${item.slug}">
+                        </a>
+                        <div class="cart-product__title">${item.name}</div>
+                    </div>
+                </td>
+                <td class="cart-table__col cart-table__col--price">
+                    <div class="payment-quantity">
+                        <span class="price">${item.price_per_unit} đ</span>
+                        <span class="old-price">${item.price_per_unit} đ</span>
+                        <span class="quantity">x${item.quantity}</span>
+                    </div>
+                </td>
+            </tr>
+        `;
+    }).join(' ');
+    const totalPriceEle = document.querySelector('#checkout-total-price');
+    const finalTotalPriceEle = document.querySelector('#checkout-final-total-price');
+
+    listProductEle.innerHTML = htmls;
+    totalPriceEle.innerHTML = totalPrice+'&nbsp;đ';
+    finalTotalPriceEle.innerHTML = totalPrice+'&nbsp;đ';
 }

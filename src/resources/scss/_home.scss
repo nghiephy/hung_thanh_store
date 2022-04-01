@@ -361,12 +361,13 @@
                         align-items: center;
                         display: none;
                         .buy-now {
-                            font-size: 1.4rem;
+                            font-size: 1.3rem;
                             font-weight: 500;
                             height: 100%;
                             line-height: 50px;
-                            padding: 0 18px;
+                            padding: 0 10px;
                             color: $white-color;
+                            text-transform: uppercase;
                             cursor: pointer;
                             &:hover {
                                 background-color: $hover-dark-color;
@@ -380,7 +381,7 @@
                             a,button {
                                 height: 100%;
                                 font-size: 2rem;
-                                padding: 0 12px;
+                                padding: 0 10px;
                                 cursor: pointer;
                                 display: flex;
                                 justify-content: center;

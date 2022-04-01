@@ -130,6 +130,7 @@
         &__list {
             .payment-quantity {
                 position: relative;
+                min-width: 100px;
                 .quantity {
                     color: $text-color;
                     position: absolute;

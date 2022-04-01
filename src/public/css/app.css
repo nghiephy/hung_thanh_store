@@ -1406,12 +1406,13 @@ img {
   display: none;
 }
 .home-products-slide-body-item .item-options .buy-now {
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   font-weight: 500;
   height: 100%;
   line-height: 50px;
-  padding: 0 18px;
+  padding: 0 10px;
   color: white;
+  text-transform: uppercase;
   cursor: pointer;
 }
 .home-products-slide-body-item .item-options .buy-now:hover {
@@ -1426,7 +1427,7 @@ img {
 .home-products-slide-body-item .item-options .option-right a, .home-products-slide-body-item .item-options .option-right button {
   height: 100%;
   font-size: 2rem;
-  padding: 0 12px;
+  padding: 0 10px;
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -1915,6 +1916,7 @@ img {
 }
 .cart-table__col--price {
   vertical-align: top;
+  min-width: 120px;
 }
 .cart-table__col--price .price {
   font-size: 1.6rem;
@@ -2093,6 +2095,7 @@ img {
 }
 .payment-body .order-info__list .payment-quantity {
   position: relative;
+  min-width: 100px;
 }
 .payment-body .order-info__list .payment-quantity .quantity {
   color: #555;

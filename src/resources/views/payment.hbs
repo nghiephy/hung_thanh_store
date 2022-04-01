@@ -3,7 +3,7 @@
         <div class="container">
             <ul class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a href="#">Trang chủ</a>
+                    <a href="/">Trang chủ</a>
                 </li>
                 <li class="breadcrumb-item">
                     <a href="#">Thanh toán</a>
@@ -25,43 +25,43 @@
                             <span>Nếu bạn đã có tài khoản. Vui lòng <a href="#">Đăng nhập</a> / <a href="#">Đăng ký</a> để có thể nhận được các chương trình khuyến mãi hấp dẫn từ Hung-Thanh-Bookstore.</span>
                         </div>
                         <div class="form-wrap">
-                            <form action="">
+                            <form id="form-infor-payment" action="" method="POST">
                                 <div class="col-auto mt-4">
                                     <label for="name-payment-form" class="visually-hidden">Họ và tên</label>
-                                    <input type="text" class="form-control" id="name-payment-form" placeholder="Họ và tên">
+                                    <input type="text" class="form-control" id="name-payment-form" name="name" placeholder="Họ và tên">
                                 </div>
                                 <div class="row gx-5 mt-4">
                                     <div class="col-auto col-lg-6 col-md-6 col-sm-12">
                                         <label for="email-payment-form" class="visually-hidden">Email</label>
-                                        <input type="email" class="form-control" id="email-payment-form" placeholder="Email">
+                                        <input type="email" class="form-control" id="email-payment-form" name="email" placeholder="Email">
                                     </div>
                                     <div class="col-auto col-lg-6 col-md-6 col-sm-12">
                                         <label for="phone-payment-form" class="visually-hidden">Số điện thoại</label>
-                                        <input type="phone" class="form-control" id="phone-payment-form" placeholder="Số điện thoại">
+                                        <input type="phone" class="form-control" id="phone-payment-form" name="phone" placeholder="Số điện thoại">
                                     </div>
                                 </div>
                                 <div class="col-auto mt-4">
                                     <label for="address-payment-form" class="visually-hidden">Địa chỉ</label>
-                                    <input type="text" class="form-control" id="address-payment-form" placeholder="Địa chỉ">
+                                    <input type="text" class="form-control" id="address-payment-form" name="address" placeholder="Địa chỉ">
                                 </div>
                                 <div class="row gx-5 mt-4">
                                     <div class="col-lg-4 col-md-4 col-sm-12">
                                         <div class="form-group">
-                                            <select class="form-control form-select" id="city" aria-label="Default select example">
+                                            <select name="city" class="form-control form-select" id="city" aria-label="Default select example">
                                                 <option value="" selected >Chọn Tỉnh/Thành phố</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-sm-12">
                                         <div class="form-group ">
-                                            <select class="form-control form-select" id="district" aria-label="Default select example">
+                                            <select name="district" class="form-control form-select" id="district" aria-label="Default select example">
                                                 <option value="" selected >Chọn Quận/Huyện</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-sm-12">
                                         <div class="form-group">
-                                            <select class="form-control form-select" id="ward" aria-label="Default select example">
+                                            <select name="ward" class="form-control form-select" id="ward" aria-label="Default select example">
                                                 <option value="" selected >Chọn Phường/Xã</option>
                                             </select>
                                         </div>
@@ -138,8 +138,8 @@
                         </div>
 
                         <table class="order-info__list cart-table">
-                            <tbody class="cart-table__body">
-                                <tr class="cart-table__row">
+                            <tbody class="cart-table__body payment">
+                                {{!-- <tr class="cart-table__row">
                                     <td class="cart-table__col cart-table__col--product">
                                         <div class="cart-product">
                                             <a href="#" class="cart-product__image">
@@ -155,24 +155,7 @@
                                             <span class="quantity">x2</span>
                                         </div>
                                     </td>
-                                </tr>
-                                <tr class="cart-table__row">
-                                    <td class="cart-table__col cart-table__col--product">
-                                        <div class="cart-product">
-                                            <a href="#" class="cart-product__image">
-                                                <img src="/img/products/compa.jpg" alt="">
-                                            </a>
-                                            <div class="cart-product__title">Compa chất lượng cao</div>
-                                        </div>
-                                    </td>
-                                    <td class="cart-table__col cart-table__col--price">
-                                        <div class="payment-quantity">
-                                            <span class="price">70.000 đ</span>
-                                            <span class="old-price">80.000 đ</span>
-                                            <span class="quantity">x2</span>
-                                        </div>
-                                    </td>
-                                </tr>
+                                </tr> --}}
                             </tbody>
                         </table>
 
@@ -181,7 +164,7 @@
                                 <div class="list-checkout">
                                     <div class="list-checkout__item">
                                         <span>Tổng tiền (2 sản phẩm)</span>
-                                        <span style="font-weight: bold; color: black;" >12.400 đ</span>
+                                        <span id="checkout-total-price" style="font-weight: bold; color: black;" >12.400 đ</span>
                                     </div>
                                     <div class="list-checkout__item">
                                         <span>Chiết khấu (0%)</span>
@@ -189,11 +172,11 @@
                                     </div>
                                     <div class="list-checkout__item">
                                         <span>Thuế GTGT</span>
-                                        <span>992 đ</span>
+                                        <span>0 đ</span>
                                     </div>
                                     <div class="list-checkout__item">
                                         <span style="font-weight: bold;" >Tổng thanh toán</span>
-                                        <span style="font-weight: bold; font-size: 1.8rem;" >13.392 đ</span>
+                                        <span id="checkout-final-total-price" style="font-weight: bold; font-size: 1.8rem;" >13.392 đ</span>
                                     </div>
                                 </div>
                             </div>
@@ -208,7 +191,7 @@
 
                         <div class="card--buy mt-4">
                             <div class="card-body">
-                                <button class="button button--type2" >Đặt hàng</button>
+                                <button id="order-btn" class="button button--type2" >Đặt hàng</button>
                             </div>
                         </div>
                     </div>
@@ -218,5 +201,6 @@
     </div>
 </section>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
 <script src="/js/payment.js"></script>

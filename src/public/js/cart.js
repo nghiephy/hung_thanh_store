@@ -3,6 +3,7 @@ import { loadCartHeader,loadCartListHeader, deleteCarProHeader } from './modules
 loadDataToCart();
 updateQuantity();
 deleteCart();
+handleOrder();
 
 function loadDataToCart() {
     var cart = JSON.parse(window.localStorage.getItem('cart')) || [];
@@ -150,4 +151,12 @@ function deleteCart() {
             deleteCarProHeader();
         })
     })
+}
+
+function handleOrder() {
+    const orderBtn = document.querySelector('#card-summary-order-btn');
+
+    orderBtn.addEventListener('click', (e) => {
+        window.location.replace("/payment");
+    });
 }
