@@ -470,7 +470,7 @@ img {
   position: absolute;
   top: 140%;
   right: 0;
-  width: 320px;
+  width: 360px;
   border-radius: 4px;
   background-color: white;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
@@ -492,6 +492,8 @@ img {
 .header-user-control-cart .cart-popup__recent-list {
   padding-left: 0;
   list-style: none;
+  max-height: 450px;
+  overflow-y: auto;
 }
 .header-user-control-cart .cart-popup__recent-item {
   display: flex;
@@ -1421,7 +1423,7 @@ img {
   justify-content: center;
   align-items: stretch;
 }
-.home-products-slide-body-item .item-options .option-right a {
+.home-products-slide-body-item .item-options .option-right a, .home-products-slide-body-item .item-options .option-right button {
   height: 100%;
   font-size: 2rem;
   padding: 0 12px;
@@ -1432,12 +1434,17 @@ img {
   color: white;
 }
 @media (max-width: 767px) {
-  .home-products-slide-body-item .item-options .option-right a {
+  .home-products-slide-body-item .item-options .option-right a, .home-products-slide-body-item .item-options .option-right button {
     padding: 0 8px;
   }
 }
-.home-products-slide-body-item .item-options .option-right a:hover {
+.home-products-slide-body-item .item-options .option-right a:hover, .home-products-slide-body-item .item-options .option-right button:hover {
   background-color: #ce567e;
+}
+.home-products-slide-body-item .item-options .option-right button {
+  outline: none;
+  border: none;
+  background-color: #f06292;
 }
 .home-products-slide-body-item:hover {
   border: 1px solid #f06292;
@@ -1621,7 +1628,7 @@ img {
   border-radius: 4px;
   margin: 0 10px;
 }
-.product_body-quantily button {
+.product_body-quantily .quantity-btn {
   position: relative;
   border-radius: 50%;
   border: none;
@@ -1630,8 +1637,9 @@ img {
   width: 25px;
   height: 25px;
   text-align: center;
+  cursor: pointer;
 }
-.product_body-quantily button ion-icon {
+.product_body-quantily .quantity-btn ion-icon {
   color: white;
   position: absolute;
   top: 50%;
@@ -1655,6 +1663,7 @@ img {
   align-items: center;
   font-size: 1.4rem;
   cursor: pointer;
+  user-select: none;
 }
 .product_body-action .like-btn ion-icon {
   font-size: 2.4rem;
@@ -1966,6 +1975,7 @@ img {
   height: 100%;
 }
 .cart-table__col .cart-product__title {
+  color: black;
   font-size: 1.4rem;
   margin-left: 20px;
 }
@@ -2321,6 +2331,7 @@ img {
   border-color: #ed1c24;
 }
 .button--type1 {
+  user-select: none;
   padding: 8px 26px;
   color: #ce567e;
   border-color: #f06292;
@@ -2340,6 +2351,7 @@ img {
   }
 }
 .button--type2 {
+  user-select: none;
   padding: 8px 26px;
   color: white;
   border-color: #f06292;
@@ -2442,6 +2454,124 @@ select {
 
 .modal__item.active {
   display: block;
+}
+
+/* Toast custom css */
+.my-toast {
+  z-index: 999;
+  min-width: 400px;
+  max-width: 450px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  padding: 20px 0;
+  border-radius: 2px;
+  border-left: 4px solid;
+  box-shadow: 0 5px 8px rgba(0, 0, 0, 0.08);
+  transition: all linear 0.3s;
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(calc(100% + 32px));
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+  }
+}
+.my-toast + .my-toast {
+  margin-top: 24px;
+}
+
+.my-toast__icon {
+  font-size: 24px;
+}
+
+.my-toast__close,
+.my-toast__icon {
+  padding: 0 16px;
+}
+
+.my-toast__body {
+  flex-grow: 1;
+}
+
+.my-toast__title {
+  font-weight: 600;
+  font-size: 16px;
+  color: #333;
+}
+
+.my-toast__msg {
+  font-size: 14px;
+  color: #888;
+  margin-top: 4px;
+  line-height: 1.5;
+}
+
+.my-toast__close {
+  font-size: 20px;
+  color: rgba(0, 0, 0, 0.3);
+}
+
+.my-toast__close:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+.my-toast--success {
+  border-color: #47d764;
+}
+
+.my-toast--success .my-toast__icon {
+  color: #47d764;
+}
+
+.my-toast--info {
+  border-color: #2f86eb;
+}
+
+.my-toast--info .my-toast__icon {
+  color: #2f86eb;
+}
+
+.my-toast--warning {
+  border-color: #ffc021;
+}
+
+.my-toast--warning .my-toast__icon {
+  color: #ffc021;
+}
+
+.my-toast--error {
+  border-color: #ff5555;
+}
+
+.my-toast--error .my-toast__icon {
+  color: #ff5555;
+}
+
+#my-toast {
+  position: fixed;
+  top: 32px;
+  right: 32px;
+  z-index: 99;
+}
+
+.show-my-toast {
+  padding: 24px 0 32px;
+  margin: auto;
+  width: 500px;
+  display: flex;
+  justify-content: center;
 }
 
 /*# sourceMappingURL=app.css.map */

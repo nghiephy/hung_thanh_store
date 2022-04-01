@@ -15,13 +15,20 @@
                     <div class="owl-carousel home-products-slide-body-list">
                         {{#each this}}
                             <div class="home-products-slide-body-item">
+                                <form style="display: none;" class="form-product-home" id="form-product-home" method="POST" action="#">
+                                    <input type="number" name="quantity" id="quantity-input" value="1">
+                                    <input  type="hidden" name="name" id="name" value="{{NAME}}">
+                                    <input  type="hidden" name="price_per_unit" id="price_per_unit" value="{{PRICE_PER_UNIT}}">
+                                    <input  type="hidden" name="slug" id="slug" value="{{SLUG}}">
+                                    <input  type="hidden" name="image" id="image" value="{{IMAGE_PATH}}">
+                                </form>
                                 <a href="/products/{{SLUG}}" class="imgLink">
                                     <div class="imgBox">
                                         <img src="{{IMAGE_PATH}}" alt="{{NAME}}">
                                     </div>
                                 </a>
                                 <div class="item-info">
-                                    <a href="#" class="item-info__title">
+                                    <a href="/products/{{SLUG}}" class="item-info__title">
                                         <h3>{{NAME}}</h3>
                                     </a>
                                     <div class="item-info__price">
@@ -47,9 +54,9 @@
                                         <a href="#">
                                             <ion-icon name="eye"></ion-icon>
                                         </a>
-                                        <a href="#">
+                                        <button class="home-add-cart-btn" id="home-add-cart-btn" >
                                             <ion-icon name="cart"></ion-icon>
-                                        </a>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -60,3 +67,11 @@
             </div>
         </div>
     </div>
+
+    {{!-- <script>
+        function addToCartHome() {
+        
+            console.log("12221");
+            
+        }   
+    </script> --}}

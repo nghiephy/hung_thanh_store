@@ -49,7 +49,7 @@ class SiteController {
             products.push(casio);
 
             homeObjectData.products = products;
-            console.log(products);
+            // console.log(products);
             res.render('home', {
                 ...homeObjectData
             });

@@ -292,7 +292,7 @@
                     position: absolute;
                     top: 140%;
                     right: 0;
-                    width: 320px;
+                    width: 360px;
                     border-radius: 4px;
                     background-color: $white-color;
                     box-shadow: 0 0 5px rgb(0 0 0 / 10%);
@@ -314,7 +314,8 @@
                         &-list {
                             padding-left: 0;
                             list-style: none;
-
+                            max-height: 450px;
+                            overflow-y: auto;
                         }
                         &-item {
                             display: flex;

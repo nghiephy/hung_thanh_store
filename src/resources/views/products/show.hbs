@@ -66,27 +66,32 @@
                             <span class="product_body-old-price">{{this.product.PRICE_PER_UNIT}}&nbsp;đ</span>
                             <span class="product_body-sale">-0%</span>
                         </div>
-                        <form action="">
+                        <div >
                            <div class="product_body-quantily">
                                 <span class="label" >Số lượng: </span>
-                                <button class="product_body-quantily-btnminus" >
+                                <div id="sub-quantity-btn" class="product_body-quantily-btnminus quantity-btn" >
                                     <ion-icon name="remove"></ion-icon>
-                                </button>
-                                <input type="number" name="" id="" value="1">
-                                <button class="product_body-quantily-btnplus" >
+                                </div>
+                                <form id="form-product" method="POST" action="#">
+                                    <input type="number" name="quantity" id="quantity-input" value="1">
+                                    <input  type="hidden" name="name" id="name" value="{{this.product.NAME}}">
+                                    <input  type="hidden" name="price_per_unit" id="price_per_unit" value="{{this.product.PRICE_PER_UNIT}}">
+                                    <input  type="hidden" name="slug" id="slug" value="{{this.product.SLUG}}">
+                                    <input  type="hidden" name="image" id="image" value="{{this.images.[0].IMG_PATH}}">
+                                </form>
+                                <div id="add-quantity-btn" class="product_body-quantily-btnplus quantity-btn" >
                                     <ion-icon name="add"></ion-icon>
-                                </button>
+                                </div>
                             </div>
-                            
                             <div class="product_body-action">
                                 <button class="button--type1 product_body-action-buy" >Mua ngay</button>
-                                <button class="button--type2 product_body-action-whistlist" >Thêm vào giỏ hàng</button>
+                                <button id="add-whistlist-btn" class="button--type2 product_body-action-whistlist" >Thêm vào giỏ hàng</button>
                                 <div class="like-btn">
                                     <ion-icon name="heart-outline"></ion-icon>
                                     <span>Yêu thích</span>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                         <div class="product-slidebar">
                             <div class="list-policy">
                                 <ul>
@@ -147,8 +152,6 @@
                             </div>
                         </div>
                     </div>
-
-                    
                 </div>
             </div>
         </div>
@@ -187,7 +190,7 @@
     
 </section>
 
-<script src="/js/product/show.js"></script>
+<script type="module" src="/js/product/show.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         

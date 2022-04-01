@@ -34,13 +34,15 @@
                     </thead>
 
                     <tbody class="cart-table__body">
-                        <tr class="cart-table__row">
+                        {{!-- <tr class="cart-table__row">
                             <td class="cart-table__col cart-table__col--product">
                                 <div class="cart-product">
                                     <a href="#" class="cart-product__image">
                                         <img src="/img/products/compa.jpg" alt="">
                                     </a>
-                                    <div class="cart-product__title">Compa chất lượng cao</div>
+                                    <a class="cart-product__title" href="">
+                                        <div>Compa chất lượng cao</div>
+                                    </a>
                                 </div>
                             </td>
                             <td class="cart-table__col cart-table__col--price">
@@ -53,13 +55,13 @@
                             <td class="cart-table__col cart-table__col--quantity">
                                 <h3 class="label-mobile" >Số lượng: </h3>
                                 <div class="product_body-quantily">
-                                    <button class="product_body-quantily-btnminus" >
+                                    <div class="product_body-quantily-btnminus quantity-btn" data-slug="">
                                         <ion-icon name="remove"></ion-icon>
-                                    </button>
+                                    </div>
                                     <input type="number" name="" id="" value="1">
-                                    <button class="product_body-quantily-btnplus" >
+                                    <div class="product_body-quantily-btnplus quantity-btn" >
                                         <ion-icon name="add"></ion-icon>
-                                    </button>
+                                    </div>
                                 </div>
                             </td>
                             <td class="cart-table__col cart-table__col--total">
@@ -70,44 +72,7 @@
                                 <h3 class="label-mobile" >Hàng động: </h3>
                                 <a href="#">Xoá</a>
                             </td>
-                        </tr>
-                        <tr class="cart-table__row">
-                            <td class="cart-table__col cart-table__col--product">
-                                <div class="cart-product">
-                                    <a href="#" class="cart-product__image">
-                                        <img src="/img/products/compa.jpg" alt="">
-                                    </a>
-                                    <div class="cart-product__title">Compa chất lượng cao</div>
-                                </div>
-                            </td>
-                            <td class="cart-table__col cart-table__col--price">
-                                <h3 class="label-mobile" >Giá: </h3>
-                                <div>
-                                    <span class="price">70.000 đ</span>
-                                    <span class="old-price">80.000 đ</span>
-                                </div>
-                            </td>
-                            <td class="cart-table__col cart-table__col--quantity">
-                                <h3 class="label-mobile" >Số lượng: </h3>
-                                <div class="product_body-quantily">
-                                    <button class="product_body-quantily-btnminus" >
-                                        <ion-icon name="remove"></ion-icon>
-                                    </button>
-                                    <input type="number" name="" id="" value="1">
-                                    <button class="product_body-quantily-btnplus" >
-                                        <ion-icon name="add"></ion-icon>
-                                    </button>
-                                </div>
-                            </td>
-                            <td class="cart-table__col cart-table__col--total">
-                                <h3 class="label-mobile" >Số tiền: </h3>
-                                <span class="price">70.000 đ</span>
-                            </td>
-                            <td class="cart-table__col cart-table__col--action">
-                                <h3 class="label-mobile" >Hàng động: </h3>
-                                <a href="#">Xoá</a>
-                            </td>
-                        </tr>
+                        </tr> --}}
                     </tbody>
                 </table>
                 <div class="container list-policy-wrap">
@@ -125,7 +90,7 @@
                         <div class="card-summary col-xl-4 col-lg-5 col-md-7 col-sm-12">
                             <div class="card-info">
                                 <span>Tổng tiền (2 sản phẩm): </span>
-                                <span class="price" >644.000 đ</span>
+                                <span id="card-summary-old-price" class="price" >644.000</span> 
                             </div>
                             <div class="card-info">
                                 <span>Chiết khấu (0%): </span>
@@ -133,7 +98,7 @@
                             </div>
                             <div class="card-info">
                                 <span><strong>Thành tiền: </strong></span>
-                                <span class="price ">644.000 đ</span>
+                                <span id="card-summary-total-price" class="price">644.000</span> 
                             </div>
                             <button class="button--type2">Tiến hành đặt hàng</button>
                         </div>
@@ -144,6 +109,4 @@
     </div>
 </section>
 
-<script>
-    
-</script>
+<script type="module" src="/js/cart.js"></script>

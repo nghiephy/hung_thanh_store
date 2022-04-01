@@ -2,6 +2,7 @@ const path = require('path');
 const express = require('express');
 const morgan = require('morgan');
 const handlebars = require('express-handlebars');
+var bodyParser = require('body-parser');
 const routes = require('./routes');
 const helper = require('./util/helpers');
 
@@ -14,6 +15,12 @@ const hbs = handlebars.create({
         eachCategories: helper.eachCategories,
     },
 });
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// parse application/json
+app.use(bodyParser.json());
 
 // HTTP logger
 app.use(morgan('combined'))
