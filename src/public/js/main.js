@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const modalEle = document.querySelector('.modal');
         const modalExitBtns = document.querySelectorAll('.modal__theme-exit');
         const modalLabelList = document.querySelectorAll('.modal-label');
+        const closeSuccessModalBtn = document.querySelector('.successful-body__button button');
         let modalItem;
         
         modalLabelList.forEach(modalLabel => {
@@ -38,6 +39,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 modalItem.classList.remove('active');
                 modalEle.classList.remove('active');
             }) 
+        })
+
+        closeSuccessModalBtn.addEventListener('click', (e) => {
+            modalItem.classList.remove('active');
+            modalEle.classList.remove('active');
+            window.location.replace("/");
         })
 
     }
