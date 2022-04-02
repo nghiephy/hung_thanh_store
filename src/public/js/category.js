@@ -49,4 +49,23 @@ document.addEventListener('DOMContentLoaded', function() {
         
     });
     
+    const orderByEles = $('.content-filter__item');
+    const formOrderBy = document.querySelector('#form-orderby');
+    const activeValue = document.querySelector('.content-filter__list').getAttribute('data-active');
+    const strSelector = `[data-orderby="${activeValue}"]`;
+    const activeItem = document.querySelector(strSelector);
+    const url = document.querySelector('#breadcrumb-slug-cat a').getAttribute('href');
+    var orderBy = '';
+    
+    $.each(orderByEles, (index, item) => {
+        item.addEventListener('click', (e) => {
+            orderBy = item.dataset.orderby;
+            formOrderBy.querySelector('input').value = orderBy;
+
+            formOrderBy.submit();
+        })
+    });
+
+    activeItem.classList.toggle('active');
 });
+

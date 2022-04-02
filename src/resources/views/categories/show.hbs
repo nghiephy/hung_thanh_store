@@ -5,8 +5,8 @@
                 <li class="breadcrumb-item">
                     <a href="/">Văn phòng phẩm</a>
                 </li>
-                <li class="breadcrumb-item">
-                    <a href="">{{products.[0].CAT_NAME}}</a>
+                <li id="breadcrumb-slug-cat" class="breadcrumb-item">
+                    <a href="/categories/{{products.[0].CAT_SLUG}}">{{products.[0].CAT_NAME}}</a>
                 </li>
             </ul>
         </div>
@@ -20,16 +20,19 @@
                     {{{products.[0].CAT_DESCRIPTION}}}
                 </div>
             </div>
+            <form id="form-orderby" action="" style="display: none;">
+                <input type="text" name="orderBy" id="" value="popular">
+            </form>
             <div class="content">
                 <div class="content-filter">
-                    <ul>
-                        <li class="active">
+                    <ul class="content-filter__list" data-active="{{active}}">
+                        <li class="content-filter__item" data-orderby="popular">
                             <a href="#">Phổ biến</a>
                         </li>
-                        <li>
+                        <li class="content-filter__item" data-orderby="high">
                             <a href="#">Giá cao</a>
                         </li>
-                        <li>
+                        <li class="content-filter__item" data-orderby="low">
                             <a href="#">Giá thấp</a>
                         </li>
                     </ul>

@@ -465,7 +465,7 @@ DROP PROCEDURE IF EXISTS getProductViaSlugCat //
 CREATE PROCEDURE 
   getProductViaSlugCat( slug text )
 BEGIN  
-	select products.*, categories.NAME as CAT_NAME, categories.DESCRIPTION as CAT_DESCRIPTION, images.PATH as IMAGE_PATH
+	select products.*, categories.NAME as CAT_NAME, categories.SLUG as CAT_SLUG, categories.DESCRIPTION as CAT_DESCRIPTION, images.PATH as IMAGE_PATH
 	from products
 	join categories on products.category_id = categories.category_id
     join images on products.product_id = images.product_id

@@ -40,6 +40,9 @@
                                 color: $hover-dark-color;
                             }
                         }
+                        &.active a {
+                            color: $hover-dark-color;
+                        }
                     }
                 }
             }
