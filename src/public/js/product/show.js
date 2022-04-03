@@ -30,12 +30,17 @@ document.addEventListener('DOMContentLoaded', function() {
                     zoomStyle: {
                         'z-index': 10,
                     },
-                    zoomLensStyle: {
-                        'opacity': 0,
-                        'background-color': 'transparent',
-                    },
+                    // zoomLensStyle: {
+                    //     'opacity': 0,
+                    //     'background-color': 'transparent',
+                    // },
                     offset: {vertical: 0, horizontal: 5}
                 };
+                const zoomedImageEle = document.querySelector('.js-image-zoom__zoomed-image');
+                const zoomedAreaEle = document.querySelector('.js-image-zoom__zoomed-area');
+
+                zoomedImageEle.remove();
+                zoomedAreaEle.remove();
                 const firt = new ImageZoom(document.querySelector(".product_gallery-imgBox"), options2);
                 
             });
@@ -118,7 +123,7 @@ document.addEventListener('DOMContentLoaded', function() {
             zoomStyle: {
                 'z-index': 10,
             },
-            offset: {vertical: 0, horizontal: 5}
+            offset: {vertical: 0, horizontal: 10}
         };
 
         new ImageZoom(document.querySelector(".product_gallery-imgBox"), options2);

@@ -1,0 +1,95 @@
+<section class="search-wrap" >
+    <div class="breadcrumb-wrap">
+        <div class="container">
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/">Văn phòng phẩm</a>
+                </li>
+                <li id="breadcrumb-slug-cat" class="breadcrumb-item">
+                    <a href="/search">Tìm kiếm</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="category-detail-body mt-4">
+        <div class="container">
+            <div class="header">
+                <h3 class="title" >Từ khoá tìm kiếm: " {{keyword}} "</h3>
+            </div>
+            <form id="form-orderby" action="" style="display: none;">
+                <input type="text" name="orderBy" id="" value="popular">
+            </form>
+            <div class="content">
+                <div class="content-filter">
+                    <ul class="content-filter__list" data-active="{{active}}">
+                        <li class="content-filter__item" data-orderby="popular">
+                            <a href="#">Phổ biến</a>
+                        </li>
+                        <li class="content-filter__item" data-orderby="high">
+                            <a href="#">Giá cao</a>
+                        </li>
+                        <li class="content-filter__item" data-orderby="low">
+                            <a href="#">Giá thấp</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="content-body">
+                    <div class="row">
+                        {{#each products}}
+                            <div class="col-xl-2 col-lg-2 col-md-3 col-sm-12">
+                                <form style="display: none;" class="form-product-category" id="form-product-category" method="POST" action="#">
+                                    <input type="number" name="quantity" id="quantity-input" value="1">
+                                    <input  type="hidden" name="name" id="name" value="{{NAME}}">
+                                    <input  type="hidden" name="price_per_unit" id="price_per_unit" value="{{PRICE_PER_UNIT}}">
+                                    <input  type="hidden" name="slug" id="slug" value="{{SLUG}}">
+                                    <input  type="hidden" name="image" id="image" value="{{IMAGE_PATH}}">
+                                </form>
+                                <div class="home-products-slide-body-item">
+                                    <a href="/products/{{SLUG}}" class="imgLink">
+                                        <div class="imgBox">
+                                            <img src="{{IMAGE_PATH}}" alt="{{NAME}}">
+                                        </div>
+                                    </a>
+                                    <div class="item-info">
+                                        <a href="/products/{{SLUG}}" class="item-info__title">
+                                            <h3>{{NAME}}</h3>
+                                        </a>
+                                        <div class="item-info__price">
+                                            <div class="item-info__price-origin">
+                                                <span class="price" >{{PRICE_PER_UNIT}}&nbsp;đ</span>
+                                                <span class="like" >
+                                                    <ion-icon class="heart-outline" name="heart-outline"></ion-icon> 
+                                                    <ion-icon class="heart" name="heart"></ion-icon> 
+                                                </span>
+                                            </div>
+                                            <div class="item-info__price-sale">
+                                                <span class="percent">-0%</span>
+                                                <span class="price" >{{PRICE_PER_UNIT}}&nbsp;đ</span>
+                                            </div>
+                                        </div>
+                                        <div class="item-info__delivery">
+                                            Miễn phí giao hàng Cần Thơ
+                                        </div>
+                                    </div>
+                                    <div class="item-options">
+                                        <a href="#"class="buy-now" >Mua ngay</a>
+                                        <div class="option-right">
+                                            <a href="/products/{{SLUG}}">
+                                                <ion-icon name="eye"></ion-icon>
+                                            </a>
+                                            <button class="category-add-cart-btn" id="category-add-cart-btn">
+                                                <ion-icon name="cart"></ion-icon>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {{/each}}
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

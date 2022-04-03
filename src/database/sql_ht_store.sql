@@ -420,6 +420,15 @@ from products
 join images on images.PRODUCT_ID = products.PRODUCT_ID
 where products.slug = 'bia-ke-tay---bia-lot-tap---quyen-vo';
 
+## Query: search products via keyword
+
+select products.*, images.PATH as IMAGE_PATH
+from products
+join categories on products.category_id = categories.category_id
+join images on products.product_id = images.product_id
+where products.name like '%tap%'
+group by product_id;
+
 /*==============================================================*/
 /* DEFINE USEFUL FUNCTION                                               */
 /*==============================================================*/
@@ -475,5 +484,6 @@ END//
 DELIMITER ;
 -- test
 call getProductViaSlugCat ('do-dung-hoc-sinh');
+
 
 

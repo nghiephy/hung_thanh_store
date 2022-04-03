@@ -1333,6 +1333,7 @@ img {
   -webkit-line-clamp: 2;
   text-overflow: ellipsis;
   overflow: hidden;
+  height: 3.6rem;
 }
 .home-products-slide-body-item .item-info__title :hover {
   color: #f06292;

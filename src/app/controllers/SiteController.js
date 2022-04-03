@@ -59,15 +59,22 @@ class SiteController {
 
     // [GET] /search
     search(req, res, next) {
-        res.send('search');
+        Products.search_pro_by_name(req.query.q, function(products) {
+            res.render('search', {
+                products,
+                keyword: req.query.q,
+            });
+        });
+
+        
     }
 
-    // [GET] /search
+    // [GET] /cart
     cart(req, res, next) {
         res.render('cart');
     }
 
-    // [GET] /search
+    // [GET] /payment
     payment(req, res, next) {
         res.render('payment');
     }

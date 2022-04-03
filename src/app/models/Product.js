@@ -69,4 +69,14 @@ Product.get_pro_via_slug = function (slug, result) {
 
 }
 
+Product.search_pro_by_name = function (productName, result) {
+    db.query(`select products.*, images.PATH as IMAGE_PATH from products join categories on products.category_id = categories.category_id join images on products.product_id = images.product_id where products.name like '%${productName}%' group by product_id;`, function(err, products) {
+        if(err) {
+            result(err);
+        }else{
+            result(products);
+        }
+    });
+}
+
 module.exports = Product;
