@@ -38,7 +38,7 @@
                     <div class="row">
                         {{#each products}}
                             <div class="col-xl-2 col-lg-2 col-md-3 col-sm-12">
-                                <form style="display: none;" class="form-product-category" id="form-product-category" method="POST" action="#">
+                                <form style="display: none;" class="form-product-search" id="form-product-search" method="POST" action="#">
                                     <input type="number" name="quantity" id="quantity-input" value="1">
                                     <input  type="hidden" name="name" id="name" value="{{NAME}}">
                                     <input  type="hidden" name="price_per_unit" id="price_per_unit" value="{{PRICE_PER_UNIT}}">
@@ -78,7 +78,7 @@
                                             <a href="/products/{{SLUG}}">
                                                 <ion-icon name="eye"></ion-icon>
                                             </a>
-                                            <button class="category-add-cart-btn" id="category-add-cart-btn">
+                                            <button class="search-add-cart-btn" id="search-add-cart-btn">
                                                 <ion-icon name="cart"></ion-icon>
                                             </button>
                                         </div>
@@ -93,3 +93,5 @@
         </div>
     </div>
 </section>
+
+<script type="module" src="/js/search.js"></script>

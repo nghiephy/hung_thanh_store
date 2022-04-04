@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Update zoomed_image when change src attribute for imageBox element
                 var options2 = {
                     width: 300,
+                    height: 300,
                     zoomWidth: 400,
                     zoomStyle: {
                         'z-index': 10,
@@ -119,6 +120,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         var options2 = {
             width: 300,
+            height: 300,
             zoomWidth: 400,
             zoomStyle: {
                 'z-index': 10,
