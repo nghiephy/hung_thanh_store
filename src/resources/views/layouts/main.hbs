@@ -33,17 +33,19 @@
                 <div class="modal__theme-exit">
                   <ion-icon name="close"></ion-icon>
                 </div>
-                <form class="modal-login-form" action="#">
-                  <h2 class="mb-4 title" >Đăng nhập</h2>
+                <form class="modal-login-form" id="modal-login-form" action="#">
+                  <h2 class="mb-5 title" >Đăng nhập</h2>
                   <div class="form-group">
-                    <input type="text" name="email" id="" placeholder="Email">
+                    <input type="text" name="username" id="username_login" placeholder="Tài khoản">
+                    <span class="form-message"></span>
                   </div>
                   <div class="form-group">
-                    <input type="text" name="password" id="" placeholder="Password">
+                    <input type="password" name="password" id="password_login" placeholder="Mật khẩu">
+                    <span class="form-message"></span>
                   </div>
                   <button class="btn-login button mb-4" type="submit">Đăng nhập</button>
                   <a class="reset-password mb-4" href="#">Cài lại mật khẩu</a>
-                  <span class="register mb-4" >Bạn chưa có tài khoản? <a href="#">Đăng ký</a></span>
+                  <span class="register mb-4" >Bạn chưa có tài khoản? <a href="#" class="modal-label" data-modal-id="modal-register" >Đăng ký</a></span>
                   <div class="divider">
                     Hoặc 
                   </div>
@@ -62,23 +64,31 @@
                 <div class="modal__theme-exit">
                   <ion-icon name="close"></ion-icon>
                 </div>
-                <form class="modal-login-form" action="#">
+                <form id="modal-register-form" class="modal-login-form" method="POST" action="/user/register">
                   <h2 class="mb-4 title" >Đăng ký</h2>
                   <div class="form-group">
-                    <input type="text" name="name" id="" placeholder="Họ tên">
+                    <input type="text" name="name" id="name_register" placeholder="Họ tên">
+                    <span class="form-message"></span>
                   </div>
                   <div class="form-group">
-                    <input type="email" name="email" id="" placeholder="Email">
+                    <input type="email" name="email" id="email_register" placeholder="Email">
+                    <span class="form-message"></span>
                   </div>
                   <div class="form-group">
-                    <input type="text" name="password" id="" placeholder="Mật khẩu">
+                    <input type="text" name="username" id="username_register" placeholder="Tài khoản">
+                    <span class="form-message"></span>
                   </div>
                   <div class="form-group">
-                    <input type="text" name="password" id="" placeholder="Xác nhận mật khẩu">
+                    <input type="password" name="password" id="password_register" placeholder="Mật khẩu">
+                    <span class="form-message"></span>
+                  </div>
+                  <div class="form-group">
+                    <input type="password" name="re_password" id="re_password_register" placeholder="Xác nhận mật khẩu">
+                    <span class="form-message"></span>
                   </div>
                   <button class="btn-login button mb-4" type="submit">Đăng ký</button>
                   <a class="reset-password mb-4" href="#">Cài lại mật khẩu</a>
-                  <span class="register mb-4" >Bạn đã có tài khoản? <a href="#">Đăng nhập</a></span>
+                  <span class="register mb-4" >Bạn đã có tài khoản? <a href="#" class="modal-label" data-modal-id="modal-login" >Đăng nhập</a></span>
                   <div class="divider">
                     Hoặc 
                   </div>
@@ -134,6 +144,7 @@
       nomodule
       src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
     ></script>
+    <script src="/js/validator.js"></script>
     <script src="/js/toast.js"></script>
     <script type="module" src="/js/main.js"></script>
 </body>

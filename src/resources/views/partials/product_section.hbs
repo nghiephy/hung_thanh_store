@@ -15,12 +15,12 @@
                     <div class="owl-carousel home-products-slide-body-list">
                         {{#each this}}
                             <div class="home-products-slide-body-item">
-                                <form style="display: none;" class="form-product-home" id="form-product-home" method="POST" action="#">
-                                    <input type="number" name="quantity" id="quantity-input" value="1">
-                                    <input  type="hidden" name="name" id="name" value="{{NAME}}">
-                                    <input  type="hidden" name="price_per_unit" id="price_per_unit" value="{{PRICE_PER_UNIT}}">
-                                    <input  type="hidden" name="slug" id="slug" value="{{SLUG}}">
-                                    <input  type="hidden" name="image" id="image" value="{{IMAGE_PATH}}">
+                                <form style="display: none;" class="form-product-home" method="POST" action="#">
+                                    <input type="number" name="quantity" value="1">
+                                    <input  type="hidden" name="name" value="{{NAME}}">
+                                    <input  type="hidden" name="price_per_unit" value="{{PRICE_PER_UNIT}}">
+                                    <input  type="hidden" name="slug" value="{{SLUG}}">
+                                    <input  type="hidden" name="image" value="{{IMAGE_PATH}}">
                                 </form>
                                 <a href="/products/{{SLUG}}" class="imgLink">
                                     <div class="imgBox">

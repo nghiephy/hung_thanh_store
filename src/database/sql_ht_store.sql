@@ -256,11 +256,9 @@ create table TAXES_PRODUCTS
 create table USERS
 (
    USER_ID              int not null auto_increment,
-   CUSTOMER_ID          int,
-   EMPLOYEE_ID          int,
-   USERNAME             text,
+   USERNAME             varchar(255) unique,
    PASSWORD             text,
-   ACTIVE               bool,
+   ACTIVE               bool default true,
    USER_TYPE            text,
    CREATED_DATE         timestamp,
    primary key (USER_ID)
@@ -320,11 +318,11 @@ alter table TAXES_PRODUCTS add constraint FK_TAXES_PRO_PRODUCTS foreign key (PRO
 alter table TAXES_PRODUCTS add constraint FK_TAXES_PRO_TAXES foreign key (TAX_ID)
       references TAXES (TAX_ID) on delete restrict on update restrict;
 
-alter table USERS add constraint FK_EMPLOYEES_USERS2 foreign key (EMPLOYEE_ID)
-      references EMPLOYEES (EMPLOYEE_ID) on delete restrict on update restrict;
+-- alter table USERS add constraint FK_EMPLOYEES_USERS2 foreign key (EMPLOYEE_ID)
+--       references EMPLOYEES (EMPLOYEE_ID) on delete restrict on update restrict;
 
-alter table USERS add constraint FK_RELATIONSHIP_19 foreign key (CUSTOMER_ID)
-      references CUSTOMERS (CUSTOMER_ID) on delete restrict on update restrict;
+-- alter table USERS add constraint FK_RELATIONSHIP_19 foreign key (CUSTOMER_ID)
+--       references CUSTOMERS (CUSTOMER_ID) on delete restrict on update restrict;
 
 /*==============================================================*/
 /* Add values for table categories                                                */
@@ -344,10 +342,16 @@ values
     (null, 'Dịch Vụ Khắc Dấu Uy Tín', '/img/category/dich-vu-khac-dau-uy-tin.png', 'dich-vu-khac-dau-uy-tin', null, 'Dịch Vụ Khắc Dấu Theo Yêu Cầu Nhanh, Giao Hàng Tận Nơi'),
     (null, 'Sản Phẩm Văn Phòng Khác', '/img/category/san-pham-van-phong-khac.png', 'san-pham-van-phong-khac', null, 'Các Danh Mục Sản Phẩm Văn Phòng Phẩm Khác Nhiều Mẫu Mã Mới Giá Tốt Nhất Hiện Nay');
 
+-- Turn off sale mode before run below stament --
+SET SQL_SAFE_UPDATES = 0;
+
 -- Reset auto_increment = 1 --
 set @autoid :=0; 
-update categories set category_id = @autoid := (@autoid+1);
-alter table categories Auto_Increment = 1;
+update users set user_id = @autoid := (@autoid+1);
+alter table users Auto_Increment = 1;
+
+-- Turn on sale mode after run above stament --
+SET SQL_SAFE_UPDATES = 1;
 
 /*==============================================================*/
 /* Add values for table products                                                */
@@ -399,7 +403,31 @@ values
     (7, '/img/products/may-tinh-casio-mx-12b-hong-3.png', 'Máy tính Casio MX 12B - Hồng'),
     (8, '/img/products/giay-a4-excel-70-gsm-1.png', 'Giấy A4 Excel 70 Gsm'),
     (8, '/img/products/giay-a4-excel-70-gsm-2.png', 'Giấy A4 Excel 70 Gsm');
+    
+/*==============================================================*/
+/* Add values for table users                                                */
+/*==============================================================*/
+insert into users(USERNAME, PASSWORD, ACTIVE, USER_TYPE, CREATED_DATE)
+values
+	('nghiephy', '123456', 1, 'admin', '2022-04-4 00:00:01'),
+    ('haiyenln', '123456', 1, 'customer', '2022-04-4 00:00:01');
 
+
+/*==============================================================*/
+/* Add values for table employees                                                */
+/*==============================================================*/
+insert into employees(USER_ID, NAME, BIRTHDAY, EMAIL, GENDER, PHOTO, SALARY, BONUS, POSITION)
+values
+	('1', 'Nghiep Nguyen', '2000-01-01 00:00:00', 'nguyenlapnghiep44@gmail.com', '1', null, '1000', null, 'admin');
+
+
+/*==============================================================*/
+/* Add values for table customers                                                */
+/*==============================================================*/
+insert into customers(USER_ID, NAME, BIRTHDAY, EMAIL, GENDER, PHOTO)
+values
+	('2', 'Hai Yen', '2000-01-15 00:00:00', 'lenguyenhoanghaiyen15@gmail.com', '0', null);
+    
 
 /*==============================================================*/
 /* QUERY TEMPLATE                                              */

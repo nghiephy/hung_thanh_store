@@ -30,17 +30,29 @@
             font-weight: bold;
         }
         .form-group {
+            width: 100%;
+            margin-bottom: 20px;
+            &.invalid {
+                input {
+                    border: 1px solid $warning-color;
+                }
+            }
             input {
                 width: 100%;
                 font-size: 1.4rem;
                 padding: 14px 14px;
-                margin-bottom: 20px;
                 border: 1px solid $border-color;
                 border-radius: 4px;
+                margin-bottom: 4px;
                 &:focus {
                     border-color: $hover-color;
                     box-shadow: 0 0 0 0.2rem rgb(229 73 16 / 25%);
                 }
+            }
+            .form-message {
+                display: block;
+                font-size: 1.2rem;
+                color: $warning-color;
             }
         }
         .btn-login {

@@ -2,6 +2,8 @@ const path = require('path');
 const express = require('express');
 const morgan = require('morgan');
 const handlebars = require('express-handlebars');
+const cors = require('cors');
+const cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 const routes = require('./routes');
 const helper = require('./util/helpers');
@@ -15,6 +17,9 @@ const hbs = handlebars.create({
         eachCategories: helper.eachCategories,
     },
 });
+
+app.use(cors());
+app.use(cookieParser());
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));

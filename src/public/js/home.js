@@ -7,11 +7,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     addToCartHomeBtns.forEach((btnAddCart, indexBtn) => {
         btnAddCart.addEventListener('click', (e) => {
-            const quantity = forms[indexBtn].querySelector('#quantity-input').value;
-            const name = forms[indexBtn].querySelector('#name').value;
-            const price_per_unit = forms[indexBtn].querySelector('#price_per_unit').value;
-            const slug = forms[indexBtn].querySelector('#slug').value;
-            const image = forms[indexBtn].querySelector('#image').value;
+            const quantity = forms[indexBtn].querySelector('input[name="quantity"]').value;
+            const name = forms[indexBtn].querySelector('input[name="name"]').value;
+            const price_per_unit = forms[indexBtn].querySelector('input[name="price_per_unit"]').value;
+            const slug = forms[indexBtn].querySelector('input[name="slug"]').value;
+            const image = forms[indexBtn].querySelector('input[name="image"]').value;
             
             const product = {
                 name: name,
@@ -51,11 +51,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     buyNowBtns.forEach((buyNowBtn, indexBtn) => {
         buyNowBtn.addEventListener('click', (e) => {
-            const quantity = forms[indexBtn].querySelector('#quantity-input').value;
-            const name = forms[indexBtn].querySelector('#name').value;
-            const price_per_unit = forms[indexBtn].querySelector('#price_per_unit').value;
-            const slug = forms[indexBtn].querySelector('#slug').value;
-            const image = forms[indexBtn].querySelector('#image').value;
+            const quantity = forms[indexBtn].querySelector('input[name="quantity"]').value;
+            const name = forms[indexBtn].querySelector('input[name="name"]').value;
+            const price_per_unit = forms[indexBtn].querySelector('input[name="price_per_unit"]').value;
+            const slug = forms[indexBtn].querySelector('input[name="slug"]').value;
+            const image = forms[indexBtn].querySelector('input[name="image"]').value;
             
             const product = {
                 name: name,
