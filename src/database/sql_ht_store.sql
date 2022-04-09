@@ -514,4 +514,11 @@ DELIMITER ;
 call getProductViaSlugCat ('do-dung-hoc-sinh');
 
 
+select email 
+from customers
+union
+select email
+from employees;
+
+
 

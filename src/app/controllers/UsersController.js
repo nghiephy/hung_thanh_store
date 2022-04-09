@@ -62,13 +62,60 @@ class UsersController {
     
     }
 
+    //[POST] /user/login 
+    async loginUser(req, res, next) {
+        const username = req.body.username;
+        const password = req.body.password;
+
+        const checkUserVliadPromise = new Promise((resolve, reject) => {
+            User.getListUser(async (listUser) => {
+                const data = {
+                    isPasswordValid: false,
+                };
+                var userIndex = 0;
+
+                if(listUser.some((user, index) => {
+                    userIndex = index;
+                    return user.USERNAME === username;
+                })) {
+                    data.isUsernameValid = true;
+
+                    const isPass = await bcrypt.compare(
+                        password,
+                        listUser[userIndex].PASSWORD
+                    );
+
+                    if(isPass) {
+                        data.isPasswordValid = true;
+
+                        const {PASSWORD, ...other} = listUser[userIndex];
+                        data.dataUser = other;
+                    }
+                }else {
+                    data.isUsernameValid = false;
+                }
+
+                resolve(data);
+            });
+        });
+
+        const userValid = await checkUserVliadPromise;
+
+        if(userValid.isUsernameValid && userValid.isPasswordValid) {
+            res.status(200).json({data: userValid.dataUser});
+        }else {
+            res.status(404).json({data: "Username or password is not valid"});
+        }
+
+    }
+
     //[GET] /user/check_exits_user
     async checkExitsUser(req, res, next) {
         const username = req.query.username;
         const email = req.query.email;
 
         const getUsernamesPromise = new Promise((resolve, reject) => {
-            User.getListUser(function(listUser) {
+            User.getListUsername(function(listUser) {
                 const isExits = listUser.includes(username);
 
                 if(isExits) {

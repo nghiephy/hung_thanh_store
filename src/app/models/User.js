@@ -56,7 +56,7 @@ User.createUser = async function(username, password, timestamp, name, email, act
     }
 }
 
-User.getListUser = async function(result) {
+User.getListUsername = async function(result) {
     db.query(`SELECT USERNAME FROM USERS`, function(err, listUser) {
         if(err) {
             result(err);
@@ -86,6 +86,18 @@ User.getListEmail = async function(result) {
             })
 
             result(arrayEmail);
+        }
+    });
+}
+
+User.getListUser = async function(result) {
+    db.query(`SELECT * FROM USERS`, function(err, listUser) {
+        if(err) {
+            result(err);
+        }else {
+            listUser = Object.values(JSON.parse(JSON.stringify(listUser)));
+
+            result(listUser);
         }
     });
 }
