@@ -1,6 +1,10 @@
 
+const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
+
+dotenv.config();
 
 class UsersController {
 
@@ -102,7 +106,16 @@ class UsersController {
         const userValid = await checkUserVliadPromise;
 
         if(userValid.isUsernameValid && userValid.isPasswordValid) {
-            res.status(200).json({data: userValid.dataUser});
+            const token = jwt.sign({
+                ...userValid.dataUser
+            },
+            process.env.JWT_ACCESS_KEY,
+            {expiresIn: "31d"}
+            );
+            res.status(200).json({
+                data: userValid.dataUser,
+                token: token,
+            });
         }else {
             res.status(404).json({data: "Username or password is not valid"});
         }
@@ -164,6 +177,13 @@ class UsersController {
     //[GET] /user/welcome
     async welcomeUser(req, res, next) {
         res.render('user/welcome.hbs');
+    }
+
+    //[GET] /user/welcome
+    async getInforUser(req, res, next) {
+        res.status(200).json({
+            data: req.user,
+        });
     }
 }
 

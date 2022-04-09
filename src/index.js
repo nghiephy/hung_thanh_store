@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const handlebars = require('express-handlebars');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
+const dotenv = require('dotenv');
 var bodyParser = require('body-parser');
 const routes = require('./routes');
 const helper = require('./util/helpers');
@@ -17,6 +18,8 @@ const hbs = handlebars.create({
         eachCategories: helper.eachCategories,
     },
 });
+
+dotenv.config();
 
 app.use(cors());
 app.use(cookieParser());
