@@ -6,6 +6,13 @@ document.addEventListener('DOMContentLoaded', function() {
     deleteCarProHeader();
     formValidate();
 
+    //Handle submit form logout button
+    const buttonLogout = document.querySelector('#header-top-config-item-logout');
+    buttonLogout.addEventListener('click', (e) => {
+        const formLogout = document.querySelector('#header-logout-form');
+        formLogout.submit();
+    })
+
     // Load data into header layout
     function loadDataHeader() {
         loadCartHeader();
@@ -123,7 +130,47 @@ document.addEventListener('DOMContentLoaded', function() {
                 const username = dataForm.username;
                 const password = dataForm.password;
 
-                console.log(dataForm);
+                $.post("http://localhost:3000/user/login",{username, password}, function({data, status, backURL}) {
+                    
+                    // let form = document.createElement('form');
+                    // form.action = 'http://localhost:3000/user/login';
+                    // form.method = 'POST';
+                    // form.style.display = 'none';
+
+                    // form.innerHTML = `<input type="text" name="username" value="${username}">`;
+                    // form.innerHTML = `<input type="password" name="password" value="${password}">`;
+
+                    // document.body.append(form);
+                    // form.submit();
+                    window.location.replace(backURL);
+
+                    const topHeaderBeforeEle = document.querySelector('#header-top-config-before-login');
+                    const topHeaderAfterEle = document.querySelector('#header-top-config-after-login');
+                    
+                    topHeaderBeforeEle.classList.toggle('d-none');
+                    topHeaderAfterEle.classList.toggle('d-none');
+                    return true;
+                    
+                }).fail(function(jqxhr, settings, ex) {
+                    const {data, status} = jqxhr.responseJSON;
+
+                    if(data.isUsernameValid===false) {
+                        const usernameEle = document.querySelector('#username_login');              // it's mean username is not exits in DB
+                        const inputParent = getParent(usernameEle, '.form-group');
+                        const formMessageUsername = inputParent.querySelector('.form-message');
+
+                        inputParent.classList.add('invalid');
+                        formMessageUsername.innerHTML = "Tài khoản không tồn tại!";
+                    }
+                    if(data.isPasswordValid===false) {
+                        const passwordEle = document.querySelector('#password_login');              // it's mean password is not correct
+                        const inputParent = getParent(passwordEle, '.form-group');
+                        const formMessageUsername = inputParent.querySelector('.form-message');
+
+                        inputParent.classList.add('invalid');
+                        formMessageUsername.innerHTML = "Mật khẩu không đúng!";
+                    }
+                });
             },
             rules: [
                 Validator.isRequired('#username_login', 'Vui lòng nhập tài khoản đăng nhập!'),

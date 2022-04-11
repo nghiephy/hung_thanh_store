@@ -91,7 +91,9 @@ User.getListEmail = async function(result) {
 }
 
 User.getListUser = async function(result) {
-    db.query(`SELECT * FROM USERS`, function(err, listUser) {
+    const stmt = "select users.*, customers.name as NAME, customers.photo as PHOTO from users join customers on users.user_id = customers.user_id union select users.*, employees.name as NAME, employees.photo as PHOTO from users join employees on users.user_id = employees.user_id";
+
+    db.query(stmt, function(err, listUser) {
         if(err) {
             result(err);
         }else {

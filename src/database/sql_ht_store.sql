@@ -457,6 +457,13 @@ join images on products.product_id = images.product_id
 where products.name like '%tap%'
 group by product_id;
 
+select users.*, customers.name, customers.photo
+from users
+join customers on users.user_id = customers.user_id
+union 
+select users.*, employees.name, employees.photo 
+from users
+join employees on users.user_id = employees.user_id
 /*==============================================================*/
 /* DEFINE USEFUL FUNCTION                                               */
 /*==============================================================*/

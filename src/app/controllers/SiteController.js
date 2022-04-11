@@ -51,7 +51,8 @@ class SiteController {
             homeObjectData.products = products;
             // console.log(products);
             res.render('home', {
-                ...homeObjectData
+                ...homeObjectData,
+                user: req.user,
             });
         }
         loadProductAsync();
@@ -59,10 +60,13 @@ class SiteController {
 
     // [GET] /search
     search(req, res, next) {
+        const user = req.user;
+
         Products.search_pro_by_name(req.query.q, function(products) {
             res.render('search', {
                 products,
                 keyword: req.query.q,
+                user,
             });
         });
 
@@ -71,12 +75,19 @@ class SiteController {
 
     // [GET] /cart
     cart(req, res, next) {
-        res.render('cart');
+        const user = req.user;
+        res.render('cart', {
+            user,
+        });
     }
 
     // [GET] /payment
     payment(req, res, next) {
-        res.render('payment');
+        const user = req.user;
+
+        res.render('payment', {
+            user,
+        });
     }
 
     // [POST] /payment

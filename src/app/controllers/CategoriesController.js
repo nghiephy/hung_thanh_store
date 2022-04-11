@@ -3,6 +3,7 @@ var Categories = require('../models/Category');
 class CategoriesController {
     // [GET] /categories/:slug
     show(req, res, next) {
+        const user = req.user;
         const orderBy = req.query.orderBy;
         const getProViaSlugCatPromise = new Promise((resolve, reject) => {
             Categories.get_pro_via_slug_cat(req.params.slug, resolve);
@@ -21,6 +22,7 @@ class CategoriesController {
                 res.render('categories/show', {
                     products,
                     active: 'low',
+                    user,
                 });
             }else if(orderBy==='high') {
                 products.sort(function compareFn(a, b) {
@@ -31,11 +33,13 @@ class CategoriesController {
                 res.render('categories/show', {
                     products,
                     active: 'high',
+                    user,
                 });
             }else {
                 res.render('categories/show', {
                     products,
                     active: 'popular',
+                    user,
                 });
             }
         }

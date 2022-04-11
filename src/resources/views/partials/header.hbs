@@ -2,7 +2,7 @@
     <div class="header-top-wrap">
         <div class="container header-top">
             <div class="header-top-contact">
-                <div class="header-top-phone">
+                <div class="header-top-telephone">
                     <ion-icon name="call"></ion-icon>
                     <span>(420) 608 1345 96</span>
                 </div>
@@ -11,12 +11,25 @@
                     <span>support@hungthanh-bookstore.com</span>
                 </div>
             </div>
-            <div class="header-top-config">
+            <div id="header-top-config-before-login" class="header-top-config {{#if user.USERNAME includeZero=true}} d-none {{/if}}">
                 <div class="modal-label header-top-config-item" data-modal-id="modal-login">
                     <span>Đăng nhập</span>
                 </div>
                 <div class=" modal-label header-top-config-item" data-modal-id="modal-register">
                     <span>Đăng ký</span>
+                </div>
+            </div>
+            <div id="header-top-config-after-login" class="header-top-config {{#unless user.USERNAME includeZero=true}} d-none {{/unless}}">
+                <div class="modal-label header-top-config-item" data-modal-id="">
+                    <div class="imgBox">
+                        {{!-- <img src="{{#with user}}user.PHOTO{{else}}/img/avatar.jpg{{/with}}" alt="avata"> --}}
+                        <img src="{{#if user.PHOTO includeZero=true}}{{user.PHOTO}}{{else}}/img/avatar.jpg{{/if}}" alt="avata">
+                    </div>
+                    <span>{{user.NAME}}</span>
+                </div>
+                <div class="modal-label header-top-config-item" id="header-top-config-item-logout">
+                    <form id="header-logout-form" class="d-none" action="/user/logout" method="post"></form>
+                    <span>Đăng xuất</span>
                 </div>
             </div>
         </div>

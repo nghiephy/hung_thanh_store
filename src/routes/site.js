@@ -2,11 +2,12 @@ const express = require('express');
 const router = express.Router();
 
 const siteController = require('../app/controllers/SiteController');
+const middlewareController = require('../app/controllers/MiddlewareController');
 
-router.get('/search', siteController.search);
-router.get('/cart', siteController.cart);
-router.get('/payment', siteController.payment);
+router.get('/search', middlewareController.verifyUserLogin, siteController.search);
+router.get('/cart', middlewareController.verifyUserLogin, siteController.cart);
+router.get('/payment', middlewareController.verifyUserLogin, siteController.payment);
 router.post('/payment', siteController.handlePayment);
-router.get('/', siteController.index);
+router.get('/', middlewareController.verifyUserLogin, siteController.index);
 
 module.exports = router;

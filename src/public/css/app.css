@@ -189,8 +189,8 @@ img {
 }
 
 .header-top-wrap {
-  background-color: black;
-  color: #D7D7D7;
+  background-color: #c7d9e2;
+  color: black;
   font-size: 1.2rem;
   height: 40px;
 }
@@ -220,6 +220,19 @@ img {
 }
 .header-top-config-item {
   margin-left: 4px;
+}
+.header-top-config-item .imgBox {
+  padding: 0;
+  display: block;
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-right: 8px;
+}
+.header-top-config-item .imgBox img {
+  width: 100%;
+  height: 100%;
 }
 .header-top ion-icon {
   font-size: 1.8rem;

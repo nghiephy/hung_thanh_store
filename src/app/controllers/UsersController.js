@@ -66,8 +66,29 @@ class UsersController {
     
     }
 
+    // Generate access token
+    generateAccessToken(userValid) {
+        return jwt.sign({
+            ...userValid.dataUser
+        },
+        process.env.JWT_ACCESS_KEY,
+        {expiresIn: "30m"}
+        );
+    } 
+
+    // Generate refresh token
+    generateRefreshToken(userValid) {
+        return jwt.sign({
+            ...userValid.dataUser
+        },
+        process.env.JWT_REFRESH_KEY,
+        {expiresIn: "365d"}
+        );
+    }
+
     //[POST] /user/login 
     async loginUser(req, res, next) {
+        const backURL=req.header('Referer') || '/';
         const username = req.body.username;
         const password = req.body.password;
 
@@ -105,21 +126,47 @@ class UsersController {
 
         const userValid = await checkUserVliadPromise;
 
+        console.log(userValid);
+
         if(userValid.isUsernameValid && userValid.isPasswordValid) {
-            const token = jwt.sign({
-                ...userValid.dataUser
-            },
-            process.env.JWT_ACCESS_KEY,
-            {expiresIn: "31d"}
-            );
+            const controllerObj = new UsersController();
+            const accessToken = controllerObj.generateAccessToken(userValid);
+            const refreshToken = controllerObj.generateRefreshToken(userValid);
+
+            res.cookie("refreshToken", refreshToken, {
+                httpOnly: true,
+                secure: false,
+                path: "/",
+                sameSite: "strict",
+            });
+
+            res.cookie("accessToken", accessToken, {
+                httpOnly: true,
+                secure: false,
+                path: "/",
+                sameSite: "strict",
+            });
+
+            // res.render('user/welcome');
             res.status(200).json({
                 data: userValid.dataUser,
-                token: token,
+                status: true,
+                backURL,
             });
         }else {
-            res.status(404).json({data: "Username or password is not valid"});
+            const isUsernameValid = userValid.isUsernameValid;
+            const isPasswordValid = userValid.isPasswordValid;
+            res.status(401).json({data: {isUsernameValid, isPasswordValid}, status: false});
         }
 
+    }
+
+    //[POST] /user/logout
+    async logoutUser(req, res, next) {
+        res.clearCookie("accessToken");
+        res.clearCookie("refreshToken");
+
+        res.redirect("/");
     }
 
     //[GET] /user/check_exits_user
@@ -179,7 +226,7 @@ class UsersController {
         res.render('user/welcome.hbs');
     }
 
-    //[GET] /user/welcome
+    //[GET] /user/information
     async getInforUser(req, res, next) {
         res.status(200).json({
             data: req.user,
