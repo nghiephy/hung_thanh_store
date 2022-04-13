@@ -23,14 +23,20 @@ class CartsController {
 
     // [POST] /cart/delete-cart-item
     deleteCartItem(req, res, next) {
-        const user_id = req.user.USER_ID;
-        const product_id = req.body.product_id;
-
-        Cart.deleteCartItem(user_id, product_id, function(result) {
-            res.status(200).json({
-                result
+        try{
+            const user_id = req.user.USER_ID;
+            const product_id = req.body.product_id;
+    
+            Cart.deleteCartItem(user_id, product_id, function(result) {
+                res.status(200).json({
+                    result
+                });
             });
-        });
+        }catch(err) {
+            res.status(200).json({
+                message: "You're not authenticated!",
+            });
+        };
     }
 
     // [POST] /cart/update-cart-item
@@ -49,7 +55,7 @@ class CartsController {
         }catch(err) {
             res.status(200).json({
                 message: "You're not authenticated!",
-            })
+            });
         };
     }
 

@@ -10,9 +10,9 @@ document.addEventListener('DOMContentLoaded', async function() {
     });
 
     handleModal();
-    loadDataHeader();
     // deleteCarProHeader();
     formValidate();
+    // loadDataHeader();
 
     const accessToken = getCookie('accessToken');
     let decodedToken = null;
@@ -68,6 +68,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
             }
         }
+
         return config;
     }, err => {
         return Promise.reject(err);
@@ -75,7 +76,6 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     instance.interceptors.response.use( (response) => {
         const listProduct = response.data.listProduct;
-        const cartAnonymous = instance.getLocalCart;
 
         if(accessToken) {
             if(listProduct){
@@ -84,8 +84,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             else{
                 window.localStorage.setItem('cart', JSON.stringify([]));
             }
-        }else {
-            console.log(cartAnonymous);
         }
 
         return response;
@@ -96,6 +94,9 @@ document.addEventListener('DOMContentLoaded', async function() {
     await instance.get('/');
     if(accessToken)
         await instance.post('http://localhost:3000/cart/get-cart');
+
+    //Update header data when login successful
+    loadDataHeader();
 
     // Listen event click delete product in header cart after get-cart-list stored in localStorage
     deleteCarProHeader();
@@ -113,7 +114,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     function loadDataHeader() {
         loadCartHeader();
         loadCartListHeader();
-        localStorage.clear();
+        // localStorage.clear();
     } 
 
     // Handle modal display
@@ -270,7 +271,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                         // $.post("http://localhost:3000/cart/get-cart", {user_id: data.user_id} ,function(data) {
                         //     window.localStorage.setItem('cart', data);
                         // });
-                        instance.post('http://localhost:3000/cart/get-cart');
+                        await instance.post('http://localhost:3000/cart/get-cart');
+
+                        window.localStorage.removeItem('cart');
 
                         window.location.replace(backURL);
                         
