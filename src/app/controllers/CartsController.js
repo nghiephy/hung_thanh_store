@@ -35,16 +35,22 @@ class CartsController {
 
     // [POST] /cart/update-cart-item
     updateCartItem(req, res, next) {
-        const user_id = req.user.USER_ID;
-        const product_id = req.body.product_id;
-        const quantity = req.body.quantity;
-        const total_price = req.body.total_price;
+        try {
+            const user_id = req.user.USER_ID;
+            const product_id = req.body.product_id;
+            const quantity = req.body.quantity;
+            const total_price = req.body.total_price;
 
-        Cart.updateCartItem(user_id, product_id, quantity, total_price, function(result) {
-            res.status(200).json({
-                result
+            Cart.updateCartItem(user_id, product_id, quantity, total_price, function(result) {
+                res.status(200).json({
+                    result
+                });
             });
-        });
+        }catch(err) {
+            res.status(200).json({
+                message: "You're not authenticated!",
+            })
+        };
     }
 
     // [POST] /cart/save-cart
@@ -79,7 +85,7 @@ class CartsController {
             res.status(200).json({
                 message: "You're not authenticated!",
             })
-        }
+        };
     }
 
 }

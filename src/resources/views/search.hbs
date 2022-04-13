@@ -38,12 +38,13 @@
                     <div class="row">
                         {{#each products}}
                             <div class="col-xl-2 col-lg-2 col-md-3 col-sm-12">
-                                <form style="display: none;" class="form-product-search" id="form-product-search" method="POST" action="#">
-                                    <input type="number" name="quantity" id="quantity-input" value="1">
-                                    <input  type="hidden" name="name" id="name" value="{{NAME}}">
-                                    <input  type="hidden" name="price_per_unit" id="price_per_unit" value="{{PRICE_PER_UNIT}}">
-                                    <input  type="hidden" name="slug" id="slug" value="{{SLUG}}">
-                                    <input  type="hidden" name="image" id="image" value="{{IMAGE_PATH}}">
+                                <form style="display: none;" class="form-product-search" method="POST" action="#">
+                                    <input type="number" name="quantity" value="1">
+                                    <input  type="hidden" name="name" value="{{NAME}}">
+                                    <input  type="hidden" name="price_per_unit" value="{{PRICE_PER_UNIT}}">
+                                    <input  type="hidden" name="slug" value="{{SLUG}}">
+                                    <input  type="hidden" name="image" value="{{IMAGE_PATH}}">
+                                    <input  type="hidden" name="product_id" value="{{PRODUCT_ID}}">
                                 </form>
                                 <div class="home-products-slide-body-item">
                                     <a href="/products/{{SLUG}}" class="imgLink">

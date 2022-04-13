@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 PRODUCT_ID: parseInt(product_id),
                 QUANTITY: parseInt(quantity),
                 PRICE_PER_UNIT: parseFloat(price_per_unit),
-                TOTAL_PRICE: parseInt(price_per_unit)*quantity,
+                TOTAL_PRICE: parseFloat(price_per_unit)*quantity,
                 SLUG: slug,
                 IMAGE: image,
             }
@@ -90,7 +90,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 await instance.post('http://localhost:3000/cart/save-cart', {
                     dataCart: JSON.stringify([product]),
                 });
-                console.log("OK");
                 cart.push(product);
             }
 
@@ -109,7 +108,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     buyNowBtns.forEach((buyNowBtn, indexBtn) => {
-        buyNowBtn.addEventListener('click', (e) => {
+        buyNowBtn.addEventListener('click', async (e) => {
             const quantity = forms[indexBtn].querySelector('input[name="quantity"]').value;
             const name = forms[indexBtn].querySelector('input[name="name"]').value;
             const price_per_unit = forms[indexBtn].querySelector('input[name="price_per_unit"]').value;
@@ -122,7 +121,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 PRODUCT_ID: parseInt(product_id),
                 QUANTITY: parseInt(quantity),
                 PRICE_PER_UNIT: parseFloat(price_per_unit),
-                TOTAL_PRICE: parseInt(price_per_unit)*quantity,
+                TOTAL_PRICE: parseFloat(price_per_unit)*quantity,
                 SLUG: slug,
                 IMAGE: image,
             }
@@ -137,15 +136,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 cart[index].QUANTITY = parseInt(cart[index].QUANTITY) + parseInt(product.QUANTITY);
                 cart[index].TOTAL_PRICE += product.TOTAL_PRICE;
 
-                // await instance.post('http://localhost:3000/cart/update-cart-item', {
-                //     product_id: product.PRODUCT_ID,
-                //     quantity: cart[index].QUANTITY,
-                //     total_price: cart[index].TOTAL_PRICE,
-                // });
+                await instance.post('http://localhost:3000/cart/update-cart-item', {
+                    product_id: product.PRODUCT_ID,
+                    quantity: cart[index].QUANTITY,
+                    total_price: cart[index].TOTAL_PRICE,
+                });
             }else{
-                // await instance.post('http://localhost:3000/cart/save-cart', {
-                //     dataCart: JSON.stringify([product]),
-                // });
+                await instance.post('http://localhost:3000/cart/save-cart', {
+                    dataCart: JSON.stringify([product]),
+                });
                 cart.push(product);
             }
 

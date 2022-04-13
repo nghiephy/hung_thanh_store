@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     handleModal();
     loadDataHeader();
-    deleteCarProHeader();
+    // deleteCarProHeader();
     formValidate();
 
     const accessToken = getCookie('accessToken');
@@ -24,6 +24,9 @@ document.addEventListener('DOMContentLoaded', async function() {
     const afterLoginEle = document.querySelector('#header-top-config-after-login');
     const imgEle = afterLoginEle.querySelector('.imgBox img');
     const usernameEle = afterLoginEle.querySelector('.username-user');
+
+    const listProductOfAnonymous = window.localStorage.getItem('cart');
+
     if(decodedToken !== null && decodedToken.ACTIVE===1) {
         beforeLoginEle.classList.add('d-none');
         afterLoginEle.classList.remove('d-none');
@@ -72,15 +75,18 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     instance.interceptors.response.use( (response) => {
         const listProduct = response.data.listProduct;
-        console.log(response);
+        const cartAnonymous = instance.getLocalCart;
 
-        if(listProduct){
-            window.localStorage.setItem('cart', JSON.stringify(listProduct));
+        if(accessToken) {
+            if(listProduct){
+                window.localStorage.setItem('cart', JSON.stringify(listProduct));
+            }
+            else{
+                window.localStorage.setItem('cart', JSON.stringify([]));
+            }
+        }else {
+            console.log(cartAnonymous);
         }
-        else{
-            window.localStorage.setItem('cart', JSON.stringify([]));
-        }
-        
 
         return response;
     }, err => {
@@ -91,6 +97,8 @@ document.addEventListener('DOMContentLoaded', async function() {
     if(accessToken)
         await instance.post('http://localhost:3000/cart/get-cart');
 
+    // Listen event click delete product in header cart after get-cart-list stored in localStorage
+    deleteCarProHeader();
 
     //Handle submit form logout button
     const buttonLogout = document.querySelector('#header-top-config-item-logout');
@@ -315,10 +323,9 @@ document.addEventListener('DOMContentLoaded', async function() {
        window.localStorage.getItem('accessToken');
     }
 
-    // instance.getLocalCart = async () => {
-    //     const cart = window.localStorage.getItem('cart');
-    //     return cart;
-    // }
+    instance.getLocalCart = async () => {
+        return window.localStorage.getItem('cart');
+    }
 
 });
 

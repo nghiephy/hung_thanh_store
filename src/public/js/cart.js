@@ -1,5 +1,52 @@
 import { loadCartHeader,loadCartListHeader, deleteCarProHeader } from './modules/header-module.js';
 
+const instance = axios.create({
+    baseURL: '/',
+    timeout: 3*1000, 
+    headers: {
+        'Content-Type': 'application/json',
+    }
+});
+
+instance.interceptors.request.use( async (config) => {
+    if(config.url.indexOf('/user/login') >=0 || config.url.indexOf('/user/refresh') >=0) {
+        return config;
+    }
+
+    const accessToken = getCookie('accessToken');
+    let decodedToken;
+    if(accessToken){
+        decodedToken = jwt_decode(accessToken);
+
+        if(decodedToken.exp < Date.now()/1000) {
+            try {
+                console.log('AccessToken het han');
+                // const responseRefresh = (await instance.post('/user/refresh'));
+
+                // $.post("http://localhost:3000/user/refresh", function(data) {
+                //     location.reload();
+                // });
+
+                await instance.post('http://localhost:3000/user/refresh');
+                
+                return config;
+            }catch(err) {
+                return Promise.reject(err);
+            }
+        }
+    }
+    return config;
+}, err => {
+    return Promise.reject(err);
+});
+
+instance.interceptors.response.use( (response) => {
+    
+    return response;
+}, err => {
+    return Promise.reject(err);
+})
+
 loadDataToCart();
 updateQuantity();
 deleteCart();
@@ -72,7 +119,7 @@ function updateQuantity() {
     const plusQuantityBtns = document.querySelectorAll('.product_body-quantily-btnplus');
 
     minusQuantityBtns.forEach(item => {
-        item.addEventListener('click', (e) => {
+        item.addEventListener('click', async (e) => {
             const isExitsProduct = cart.findIndex(({SLUG}) => {
                 return SLUG == item.dataset.slug;
             })
@@ -84,12 +131,10 @@ function updateQuantity() {
                 cart[isExitsProduct].TOTAL_PRICE = newTotalPrice>parseInt(cart[isExitsProduct].PRICE_PER_UNIT)?newTotalPrice:parseInt(cart[isExitsProduct].PRICE_PER_UNIT);
 
                 // Save change quantity product cart to DB
-                $.post("http://localhost:3000/cart/update-cart-item", {
+                await instance.post('http://localhost:3000/cart/update-cart-item', {
                     product_id: cart[isExitsProduct].PRODUCT_ID,
                     quantity: cart[isExitsProduct].QUANTITY,
                     total_price: cart[isExitsProduct].TOTAL_PRICE,
-                }, function(data) {
-                        console.log(data);
                 });
             }
             // Save new cart to localstore and toast message for user
@@ -107,7 +152,7 @@ function updateQuantity() {
     });
 
     plusQuantityBtns.forEach(item => {
-        item.addEventListener('click', (e) => {
+        item.addEventListener('click', async (e) => {
             const isExitsProduct = cart.findIndex(({SLUG}) => {
                 return SLUG == item.dataset.slug;
             })
@@ -119,12 +164,10 @@ function updateQuantity() {
                 cart[isExitsProduct].TOTAL_PRICE = newTotalPrice;
 
                 // Save change quantity product cart to DB
-                $.post("http://localhost:3000/cart/update-cart-item", {
+                await instance.post('http://localhost:3000/cart/update-cart-item', {
                     product_id: cart[isExitsProduct].PRODUCT_ID,
                     quantity: cart[isExitsProduct].QUANTITY,
                     total_price: cart[isExitsProduct].TOTAL_PRICE,
-                }, function(data) {
-                        console.log(data);
                 });
             }
             // Save new cart to localstore and toast message for user
@@ -147,17 +190,15 @@ function deleteCart() {
     const deleteCartBtns = document.querySelectorAll('.delete-cart-btn');
 
     deleteCartBtns.forEach(item => {
-        item.addEventListener('click', (e) => {
+        item.addEventListener('click', async (e) => {
             const isExitsProduct = cart.findIndex(({SLUG}) => {
                 return SLUG == item.dataset.slug;
             })
 
             if(isExitsProduct != -1) {
                 // Delete product in cart list of DB
-                $.post("http://localhost:3000/cart/delete-cart-item", {
+                await instance.post('http://localhost:3000/cart/delete-cart-item', {
                     product_id: cart[isExitsProduct].PRODUCT_ID,
-                }, function(data) {
-                        console.log(data);
                 });
                 
                 var spliced = cart.splice(isExitsProduct, 1);
@@ -184,4 +225,20 @@ function handleOrder() {
     orderBtn.addEventListener('click', (e) => {
         window.location.replace("/payment");
     });
+}
+
+function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+        }
+    }
+    return "";
 }

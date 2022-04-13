@@ -1,3 +1,51 @@
+
+const instance = axios.create({
+    baseURL: '/',
+    timeout: 3*1000, 
+    headers: {
+        'Content-Type': 'application/json',
+    }
+});
+
+instance.interceptors.request.use( async (config) => {
+    if(config.url.indexOf('/user/login') >=0 || config.url.indexOf('/user/refresh') >=0) {
+        return config;
+    }
+
+    const accessToken = getCookie('accessToken');
+    let decodedToken;
+    if(accessToken){
+        decodedToken = jwt_decode(accessToken);
+
+        if(decodedToken.exp < Date.now()/1000) {
+            try {
+                console.log('AccessToken het han');
+                // const responseRefresh = (await instance.post('/user/refresh'));
+
+                // $.post("http://localhost:3000/user/refresh", function(data) {
+                //     location.reload();
+                // });
+
+                await instance.post('http://localhost:3000/user/refresh');
+                
+                return config;
+            }catch(err) {
+                return Promise.reject(err);
+            }
+        }
+    }
+    return config;
+}, err => {
+    return Promise.reject(err);
+});
+
+instance.interceptors.response.use( (response) => {
+    
+    return response;
+}, err => {
+    return Promise.reject(err);
+})
+
 // Load data for cart in header
 export function loadCartHeader() {
     var cart = JSON.parse(window.localStorage.getItem('cart')) || [];
@@ -58,20 +106,19 @@ export function loadCartListHeader() {
 export function deleteCarProHeader() {
     var cart = JSON.parse(window.localStorage.getItem('cart')) || [];
     const deleteCartBtns = document.querySelectorAll('.cart-popup__recent-item__closeBtn');
-
+    console.log(cart);
     deleteCartBtns.forEach(item => {
-        item.addEventListener('click', (e) => {
+        item.addEventListener('click', async (e) => {
             const isExitsProduct = cart.findIndex(({SLUG}) => {
                 return SLUG == item.dataset.slug;
             })
 
             if(isExitsProduct != -1) {
                 // Delete product in cart list of DB
-                $.post("http://localhost:3000/cart/delete-cart-item", {
+                await instance.post('http://localhost:3000/cart/delete-cart-item', {
                     product_id: cart[isExitsProduct].PRODUCT_ID,
-                }, function(data) {
-                        console.log(data);
                 });
+
                 // Delete product in cart list of LocalStorage
                 var spliced = cart.splice(isExitsProduct, 1);
             }
@@ -164,7 +211,7 @@ function updateQuantity(listProducts) {
     const plusQuantityBtns = document.querySelectorAll('.product_body-quantily-btnplus');
 
     minusQuantityBtns.forEach(item => {
-        item.addEventListener('click', (e) => {
+        item.addEventListener('click', async (e) => {
             const isExitsProduct = cart.findIndex(({SLUG}) => {
                 return SLUG == item.dataset.slug;
             })
@@ -175,20 +222,14 @@ function updateQuantity(listProducts) {
                 cart[isExitsProduct].QUANTITY = newQuantity>1?newQuantity:1;
                 cart[isExitsProduct].TOTAL_PRICE = newTotalPrice>parseInt(cart[isExitsProduct].PRICE_PER_UNIT)?newTotalPrice:parseInt(cart[isExitsProduct].PRICE_PER_UNIT);
 
-                console.log($);
-
-                
+                // Save change quantity product cart to DB
+                await instance.post('http://localhost:3000/cart/update-cart-item', {
+                    product_id: cart[isExitsProduct].PRODUCT_ID,
+                    quantity: cart[isExitsProduct].QUANTITY,
+                    total_price: cart[isExitsProduct].TOTAL_PRICE,
+                });
             }
             
-            // Save change quantity product cart to DB
-            $.post("http://localhost:3000/cart/update-cart-item", {
-                product_id: cart[isExitsProduct].PRODUCT_ID,
-                quantity: cart[isExitsProduct].QUANTITY,
-                total_price: cart[isExitsProduct].TOTAL_PRICE,
-            }, function(data) {
-                    console.log(data);
-            });
-
             // Save new cart to localstore and toast message for user
             window.localStorage.setItem('cart', JSON.stringify(cart));
 
@@ -204,7 +245,7 @@ function updateQuantity(listProducts) {
     });
 
     plusQuantityBtns.forEach(item => {
-        item.addEventListener('click', (e) => {
+        item.addEventListener('click', async (e) => {
             const isExitsProduct = cart.findIndex(({slug}) => {
                 return slug == item.dataset.slug;
             })
@@ -215,13 +256,11 @@ function updateQuantity(listProducts) {
                 cart[isExitsProduct].QUANTITY = newQuantity;
                 cart[isExitsProduct].TOTAL_PRICE = newTotalPrice;
 
-                // Save change quantity product cart to DB
-                $.post("http://localhost:3000/cart/update-cart-item", {
+                 // Save change quantity product cart to DB
+                 await instance.post('http://localhost:3000/cart/update-cart-item', {
                     product_id: cart[isExitsProduct].PRODUCT_ID,
                     quantity: cart[isExitsProduct].QUANTITY,
                     total_price: cart[isExitsProduct].TOTAL_PRICE,
-                }, function(data) {
-                        console.log(data);
                 });
             }
             // Save new cart to localstore and toast message for user
@@ -244,12 +283,17 @@ function deleteCart(listProducts) {
     const deleteCartBtns = document.querySelectorAll('.delete-cart-btn');
 
     deleteCartBtns.forEach(item => {
-        item.addEventListener('click', (e) => {
+        item.addEventListener('click', async (e) => {
             const isExitsProduct = cart.findIndex(({SLUG}) => {
                 return SLUG == item.dataset.slug;
             })
 
             if(isExitsProduct != -1) {
+                // Delete product in cart list of DB
+                await instance.post('http://localhost:3000/cart/delete-cart-item', {
+                    product_id: cart[isExitsProduct].PRODUCT_ID,
+                });
+                
                 var spliced = cart.splice(isExitsProduct, 1);
             }
 
@@ -300,4 +344,20 @@ function loadInforOrder(listProductEle) {
     listProductEle.innerHTML = htmls;
     totalPriceEle.innerHTML = totalPrice+'&nbsp;đ';
     finalTotalPriceEle.innerHTML = totalPrice+'&nbsp;đ';
+}
+
+function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+        }
+    }
+    return "";
 }
