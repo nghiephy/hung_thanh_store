@@ -49,12 +49,14 @@ instance.interceptors.response.use( (response) => {
 // Load data for cart in header
 export function loadCartHeader() {
     var cart = JSON.parse(window.localStorage.getItem('cart')) || [];
-    const totalProEle = document.querySelector('.header-user-control-cart__quantily span');
+    const totalProEles = document.querySelectorAll('.header-user-control-cart__quantily span');
     const totalProducts = cart.reduce((total, nextItem) => {
         return total + parseInt(nextItem.QUANTITY);
     }, 0);
 
-    totalProEle.innerHTML = totalProducts;
+    totalProEles.forEach(totalProEle => {
+        totalProEle.innerHTML = totalProducts;
+    })
 };
 
 export function loadCartListHeader() {

@@ -608,8 +608,9 @@ DELIMITER ;
 -- test
 call deleteCartList (2);
 
-delete 
-from carts_products
+update carts_products
+set quantity = 2
+	
 where carts_products.cart_id = 1 and carts_products.product_id = 4
 
 
