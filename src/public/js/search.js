@@ -14,23 +14,23 @@ document.addEventListener('DOMContentLoaded', function() {
             const image = forms[indexBtn].querySelector('#image').value;
             
             const product = {
-                name: name,
-                quantity: quantity,
-                price_per_unit: price_per_unit,
-                total_price: parseInt(price_per_unit)*quantity,
-                slug: slug,
-                image: image,
+                NAME: name,
+                QUANTITY: quantity,
+                PRICE_PER_UNIT: price_per_unit,
+                TOTAL_PRICE: parseInt(price_per_unit)*quantity,
+                SLUG: slug,
+                IMAGE: image,
             }
 
             var cart = JSON.parse(window.localStorage.getItem('cart')) || [];
             
-            const index = cart.findIndex(({slug}) => {
-                return slug == product.slug;
+            const index = cart.findIndex(({SLUG}) => {
+                return SLUG == product.SLUG;
             })
 
             if(index != -1) {
-                cart[index].quantity = parseInt(cart[index].quantity) + parseInt(product.quantity);
-                cart[index].total_price += product.total_price;
+                cart[index].QUANTITY = parseInt(cart[index].QUANTITY) + parseInt(product.QUANTITY);
+                cart[index].TOTAL_PRICE += product.TOTAL_PRICE;
             }else{
                 cart.push(product);
             }
@@ -58,23 +58,23 @@ document.addEventListener('DOMContentLoaded', function() {
             const image = forms[indexBtn].querySelector('#image').value;
             
             const product = {
-                name: name,
-                quantity: quantity,
-                price_per_unit: price_per_unit,
-                total_price: parseInt(price_per_unit)*quantity,
-                slug: slug,
-                image: image,
+                NAME: name,
+                QUANTITY: quantity,
+                PRICE_PER_UNIT: price_per_unit,
+                TOTAL_PRICE: parseInt(price_per_unit)*quantity,
+                SLUG: slug,
+                IMAGE: image,
             }
 
             var cart = JSON.parse(window.localStorage.getItem('cart')) || [];
             
-            const index = cart.findIndex(({slug}) => {
-                return slug == product.slug;
+            const index = cart.findIndex(({SLUG}) => {
+                return SLUG == product.SLUG;
             })
 
             if(index != -1) {
-                cart[index].quantity = parseInt(cart[index].quantity) + parseInt(product.quantity);
-                cart[index].total_price += product.total_price;
+                cart[index].QUANTITY = parseInt(cart[index].QUANTITY) + parseInt(product.QUANTITY);
+                cart[index].TOTAL_PRICE += product.TOTAL_PRICE;
             }else{
                 cart.push(product);
             }

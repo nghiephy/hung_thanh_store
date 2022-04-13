@@ -25,10 +25,10 @@
                         {{!-- <img src="{{#with user}}user.PHOTO{{else}}/img/avatar.jpg{{/with}}" alt="avata"> --}}
                         <img src="{{#if user.PHOTO includeZero=true}}{{user.PHOTO}}{{else}}/img/avatar.jpg{{/if}}" alt="avata">
                     </div>
-                    <span>{{user.NAME}}</span>
+                    <span class="username-user" >{{user.NAME}}</span>
                 </div>
-                <div class="modal-label header-top-config-item" id="header-top-config-item-logout">
-                    <form id="header-logout-form" class="d-none" action="/user/logout" method="post"></form>
+                <div class="header-top-config-item" id="header-top-config-item-logout">
+                    {{!-- <form id="header-logout-form" class="d-none" action="/user/logout" onsubmit="handleLogout()" method="post"></form> --}}
                     <span>Đăng xuất</span>
                 </div>
             </div>

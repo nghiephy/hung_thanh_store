@@ -67,19 +67,19 @@ class UsersController {
     }
 
     // Generate access token
-    generateAccessToken(userValid) {
+    generateAccessToken(dataUser) {
         return jwt.sign({
-            ...userValid.dataUser
+            ...dataUser
         },
         process.env.JWT_ACCESS_KEY,
-        {expiresIn: "30m"}
+        {expiresIn: "30s"}
         );
     } 
 
     // Generate refresh token
-    generateRefreshToken(userValid) {
+    generateRefreshToken(dataUser) {
         return jwt.sign({
-            ...userValid.dataUser
+            ...dataUser
         },
         process.env.JWT_REFRESH_KEY,
         {expiresIn: "365d"}
@@ -126,12 +126,12 @@ class UsersController {
 
         const userValid = await checkUserVliadPromise;
 
-        console.log(userValid);
+        // console.log(userValid);
 
         if(userValid.isUsernameValid && userValid.isPasswordValid) {
             const controllerObj = new UsersController();
-            const accessToken = controllerObj.generateAccessToken(userValid);
-            const refreshToken = controllerObj.generateRefreshToken(userValid);
+            const accessToken = controllerObj.generateAccessToken(userValid.dataUser);
+            const refreshToken = controllerObj.generateRefreshToken(userValid.dataUser);
 
             res.cookie("refreshToken", refreshToken, {
                 httpOnly: true,
@@ -141,7 +141,7 @@ class UsersController {
             });
 
             res.cookie("accessToken", accessToken, {
-                httpOnly: true,
+                httpOnly: false,
                 secure: false,
                 path: "/",
                 sameSite: "strict",
@@ -150,13 +150,13 @@ class UsersController {
             // res.render('user/welcome');
             res.status(200).json({
                 data: userValid.dataUser,
-                status: true,
+                status: 'success',
                 backURL,
             });
         }else {
             const isUsernameValid = userValid.isUsernameValid;
             const isPasswordValid = userValid.isPasswordValid;
-            res.status(401).json({data: {isUsernameValid, isPasswordValid}, status: false});
+            res.status(401).json({data: {isUsernameValid, isPasswordValid}, status: 'fail'});
         }
 
     }
@@ -223,6 +223,7 @@ class UsersController {
 
     //[GET] /user/welcome
     async welcomeUser(req, res, next) {
+        console.log(req.headers);
         res.render('user/welcome.hbs');
     }
 
@@ -230,6 +231,39 @@ class UsersController {
     async getInforUser(req, res, next) {
         res.status(200).json({
             data: req.user,
+        });
+    }
+
+    //[POST] /user/refresh
+    requestRefreshToken(req, res, next) {
+        //Take refresh token from user
+        const refreshToken = req.cookies.refreshToken;
+
+        if(!refreshToken) return res.status(401).json("You are not authenticated!");
+        jwt.verify(refreshToken, process.env.JWT_REFRESH_KEY, (err, user) => {
+            if(err) {
+                return console.log(err);
+            }
+            const {iat, exp, ...dataUser} = user;
+            // Create new accessToken and refreshToken
+            const controllerObj = new UsersController();
+            const newAccessToken = controllerObj.generateAccessToken(dataUser);
+            const newRefreshToken = controllerObj.generateRefreshToken(dataUser);
+
+            res.cookie("refreshToken", newRefreshToken, {
+                httpOnly: true,
+                secure: false,
+                path: "/",
+                sameSite: "strict",
+            });
+            res.cookie("accessToken", newAccessToken, {
+                httpOnly: false,
+                secure: false,
+                path: "/",
+                sameSite: "strict",
+            });
+
+            res.status(200).json({accessToken: newAccessToken});
         });
     }
 }

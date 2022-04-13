@@ -11,7 +11,7 @@ function loadDataToCart() {
     const priceBox = document.querySelector('#card-summary-old-price');
     const totalPriceBox = document.querySelector('#card-summary-total-price');
     var totalPrice = cart.reduce((total, nextItem) => {
-        return total + parseInt(nextItem.total_price);
+        return total + parseInt(nextItem.TOTAL_PRICE);
     }, 0);
 
     var htmls = cart.map(item => {
@@ -19,40 +19,40 @@ function loadDataToCart() {
             <tr class="cart-table__row">
                 <td class="cart-table__col cart-table__col--product">
                     <div class="cart-product">
-                        <a href="/products/${item.slug}" class="cart-product__image">
-                            <img src="${item.image}" alt="${item.slug}">
+                        <a href="/products/${item.SLUG}" class="cart-product__image">
+                            <img src="${item.IMAGE}" alt="${item.SLUG}">
                         </a>
-                        <a class="cart-product__title" href="/products/${item.slug}">
-                            <div >${item.name}</div>
+                        <a class="cart-product__title" href="/products/${item.SLUG}">
+                            <div >${item.NAME}</div>
                         </a>
                     </div>
                 </td>
                 <td class="cart-table__col cart-table__col--price">
                     <h3 class="label-mobile" >Giá: </h3>
                     <div>
-                        <span class="price">${item.price_per_unit} đ</span>
-                        <span class="old-price">${item.price_per_unit} đ</span>
+                        <span class="price">${item.PRICE_PER_UNIT} đ</span>
+                        <span class="old-price">${item.PRICE_PER_UNIT} đ</span>
                     </div>
                 </td>
                 <td class="cart-table__col cart-table__col--quantity">
                     <h3 class="label-mobile" >Số lượng: </h3>
                     <div class="product_body-quantily">
-                        <div class="product_body-quantily-btnminus quantity-btn" data-slug="${item.slug}">
+                        <div class="product_body-quantily-btnminus quantity-btn" data-slug="${item.SLUG}">
                             <ion-icon name="remove"></ion-icon>
                         </div>
-                        <input type="number" name="" id="" value="${item.quantity}">
-                        <div class="product_body-quantily-btnplus quantity-btn" data-slug="${item.slug}">
+                        <input type="number" name="" id="" value="${item.QUANTITY}">
+                        <div class="product_body-quantily-btnplus quantity-btn" data-slug="${item.SLUG}">
                             <ion-icon name="add"></ion-icon>
                         </div>
                     </div>
                 </td>
                 <td class="cart-table__col cart-table__col--total">
                     <h3 class="label-mobile" >Số tiền: </h3>
-                    <span class="price">${item.total_price} đ</span>
+                    <span class="price">${item.TOTAL_PRICE} đ</span>
                 </td>
                 <td class="cart-table__col cart-table__col--action">
                     <h3 class="label-mobile" >Hàng động: </h3>
-                    <a class="delete-cart-btn" data-slug="${item.slug}" href="#">Xoá</a>
+                    <a class="delete-cart-btn" data-slug="${item.SLUG}" href="#">Xoá</a>
                 </td>
             </tr>
         `;
@@ -73,15 +73,24 @@ function updateQuantity() {
 
     minusQuantityBtns.forEach(item => {
         item.addEventListener('click', (e) => {
-            const isExitsProduct = cart.findIndex(({slug}) => {
-                return slug == item.dataset.slug;
+            const isExitsProduct = cart.findIndex(({SLUG}) => {
+                return SLUG == item.dataset.slug;
             })
 
             if(isExitsProduct != -1) {
-                var newQuantity = parseInt(cart[isExitsProduct].quantity)-1;
-                var newTotalPrice = parseInt(cart[isExitsProduct].price_per_unit)*newQuantity;
-                cart[isExitsProduct].quantity = newQuantity>1?newQuantity:1;
-                cart[isExitsProduct].total_price = newTotalPrice>parseInt(cart[isExitsProduct].price_per_unit)?newTotalPrice:parseInt(cart[isExitsProduct].price_per_unit);
+                var newQuantity = parseInt(cart[isExitsProduct].QUANTITY)-1;
+                var newTotalPrice = parseInt(cart[isExitsProduct].PRICE_PER_UNIT)*newQuantity;
+                cart[isExitsProduct].QUANTITY = newQuantity>1?newQuantity:1;
+                cart[isExitsProduct].TOTAL_PRICE = newTotalPrice>parseInt(cart[isExitsProduct].PRICE_PER_UNIT)?newTotalPrice:parseInt(cart[isExitsProduct].PRICE_PER_UNIT);
+
+                // Save change quantity product cart to DB
+                $.post("http://localhost:3000/cart/update-cart-item", {
+                    product_id: cart[isExitsProduct].PRODUCT_ID,
+                    quantity: cart[isExitsProduct].QUANTITY,
+                    total_price: cart[isExitsProduct].TOTAL_PRICE,
+                }, function(data) {
+                        console.log(data);
+                });
             }
             // Save new cart to localstore and toast message for user
             window.localStorage.setItem('cart', JSON.stringify(cart));
@@ -99,15 +108,24 @@ function updateQuantity() {
 
     plusQuantityBtns.forEach(item => {
         item.addEventListener('click', (e) => {
-            const isExitsProduct = cart.findIndex(({slug}) => {
-                return slug == item.dataset.slug;
+            const isExitsProduct = cart.findIndex(({SLUG}) => {
+                return SLUG == item.dataset.slug;
             })
 
             if(isExitsProduct != -1) {
-                var newQuantity = parseInt(cart[isExitsProduct].quantity)+1;
-                var newTotalPrice = parseInt(cart[isExitsProduct].price_per_unit)*newQuantity;
-                cart[isExitsProduct].quantity = newQuantity;
-                cart[isExitsProduct].total_price = newTotalPrice;
+                var newQuantity = parseInt(cart[isExitsProduct].QUANTITY)+1;
+                var newTotalPrice = parseInt(cart[isExitsProduct].PRICE_PER_UNIT)*newQuantity;
+                cart[isExitsProduct].QUANTITY = newQuantity;
+                cart[isExitsProduct].TOTAL_PRICE = newTotalPrice;
+
+                // Save change quantity product cart to DB
+                $.post("http://localhost:3000/cart/update-cart-item", {
+                    product_id: cart[isExitsProduct].PRODUCT_ID,
+                    quantity: cart[isExitsProduct].QUANTITY,
+                    total_price: cart[isExitsProduct].TOTAL_PRICE,
+                }, function(data) {
+                        console.log(data);
+                });
             }
             // Save new cart to localstore and toast message for user
             window.localStorage.setItem('cart', JSON.stringify(cart));
@@ -130,11 +148,18 @@ function deleteCart() {
 
     deleteCartBtns.forEach(item => {
         item.addEventListener('click', (e) => {
-            const isExitsProduct = cart.findIndex(({slug}) => {
-                return slug == item.dataset.slug;
+            const isExitsProduct = cart.findIndex(({SLUG}) => {
+                return SLUG == item.dataset.slug;
             })
 
             if(isExitsProduct != -1) {
+                // Delete product in cart list of DB
+                $.post("http://localhost:3000/cart/delete-cart-item", {
+                    product_id: cart[isExitsProduct].PRODUCT_ID,
+                }, function(data) {
+                        console.log(data);
+                });
+                
                 var spliced = cart.splice(isExitsProduct, 1);
             }
 

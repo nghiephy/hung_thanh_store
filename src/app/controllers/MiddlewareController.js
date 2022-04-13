@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const Cart = require('../models/Cart');
 
 class MiddlewareController {
 
@@ -23,15 +24,22 @@ class MiddlewareController {
 
     // Verify user login or not 
     verifyUserLogin(req, res, next) {
-        const token = req.cookies.accessToken;
-
+        const token = req.headers.token || req.cookies.accessToken;
+        var productsCart=null;
+        console.log("Token" + token);
+      
+        console.log(token);
         if(token) {
             const accessToken = token.split(" ")[0];
             jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, (err, user) => {
+                // console.log(user);
                 if(err) {
                     req.user = null;
                     return next();
                 }
+                Cart.getCartList(user.USER_ID, (products) => {
+                    productsCart = JSON.parse(JSON.stringify(products[0]))
+                });
                 req.user = user;
                 next();
             });

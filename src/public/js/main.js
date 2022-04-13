@@ -1,22 +1,111 @@
 import { loadCartHeader,loadCartListHeader, deleteCarProHeader } from './modules/header-module.js';
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
+    const instance = axios.create({
+        baseURL: '/',
+        timeout: 3*1000, 
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+
     handleModal();
     loadDataHeader();
     deleteCarProHeader();
     formValidate();
 
+    const accessToken = getCookie('accessToken');
+    let decodedToken = null;
+    if(accessToken){
+        decodedToken = jwt_decode(accessToken);
+    }
+
+    const beforeLoginEle = document.querySelector('#header-top-config-before-login');
+    const afterLoginEle = document.querySelector('#header-top-config-after-login');
+    const imgEle = afterLoginEle.querySelector('.imgBox img');
+    const usernameEle = afterLoginEle.querySelector('.username-user');
+    if(decodedToken !== null && decodedToken.ACTIVE===1) {
+        beforeLoginEle.classList.add('d-none');
+        afterLoginEle.classList.remove('d-none');
+        imgEle.setAttribute("src", `${decodedToken.PHOTO!==null?decodedToken.PHOTO:'/img/avatar.jpg'}`);
+        usernameEle.innerHTML = decodedToken.NAME;
+    }
+
+    
+
+    instance.interceptors.request.use( async (config) => {
+        if(config.url.indexOf('/user/login') >=0 || config.url.indexOf('/user/refresh') >=0) {
+            return config;
+        }
+
+        const accessToken = getCookie('accessToken');
+        let decodedToken;
+        if(accessToken){
+            decodedToken = jwt_decode(accessToken);
+
+            if(decodedToken.exp < Date.now()/1000) {
+                try {
+                    console.log('AccessToken het han');
+                    // const responseRefresh = (await instance.post('/user/refresh'));
+
+                    // $.post("http://localhost:3000/user/refresh", function(data) {
+                    //     location.reload();
+                    // });
+
+                    const {accessToken} = (await instance.post('http://localhost:3000/user/refresh')).data;
+                    // window.localStorage.setItem('accessToken', accessToken);
+                    // config.headers = {
+                    //     'token': accessToken,
+                    // }
+                    // location.reload();
+
+                    return config;
+                }catch(err) {
+                    return Promise.reject(err);
+                }
+            }
+        }
+        return config;
+    }, err => {
+        return Promise.reject(err);
+    });
+
+    instance.interceptors.response.use( (response) => {
+        const listProduct = response.data.listProduct;
+        console.log(response);
+
+        if(listProduct){
+            window.localStorage.setItem('cart', JSON.stringify(listProduct));
+        }
+        else{
+            window.localStorage.setItem('cart', JSON.stringify([]));
+        }
+        
+
+        return response;
+    }, err => {
+        return Promise.reject(err);
+    })
+
+    await instance.get('/');
+    if(accessToken)
+        await instance.post('http://localhost:3000/cart/get-cart');
+
+
     //Handle submit form logout button
     const buttonLogout = document.querySelector('#header-top-config-item-logout');
-    buttonLogout.addEventListener('click', (e) => {
-        const formLogout = document.querySelector('#header-logout-form');
-        formLogout.submit();
+    buttonLogout.addEventListener('click', async (e) => {
+        window.localStorage.removeItem('cart');
+        window.localStorage.removeItem('accessToken');
+        await instance.post('http://localhost:3000/user/logout');
+        window.location.replace("/");
     })
 
     // Load data into header layout
     function loadDataHeader() {
         loadCartHeader();
         loadCartListHeader();
+        localStorage.clear();
     } 
 
     // Handle modal display
@@ -126,51 +215,89 @@ document.addEventListener('DOMContentLoaded', function() {
             form: '#modal-login-form',
             formGroupSelector: '.form-group',
             errorSelector: '.form-message',
-            onSubmit: function (dataForm) {
+            onSubmit: async function (dataForm) {
                 const username = dataForm.username;
                 const password = dataForm.password;
 
-                $.post("http://localhost:3000/user/login",{username, password}, function({data, status, backURL}) {
+                // $.post("http://localhost:3000/user/login",{username, password}, function({data, status, backURL}) {
                     
-                    // let form = document.createElement('form');
-                    // form.action = 'http://localhost:3000/user/login';
-                    // form.method = 'POST';
-                    // form.style.display = 'none';
+                //     window.location.replace(backURL);
 
-                    // form.innerHTML = `<input type="text" name="username" value="${username}">`;
-                    // form.innerHTML = `<input type="password" name="password" value="${password}">`;
-
-                    // document.body.append(form);
-                    // form.submit();
-                    window.location.replace(backURL);
-
-                    const topHeaderBeforeEle = document.querySelector('#header-top-config-before-login');
-                    const topHeaderAfterEle = document.querySelector('#header-top-config-after-login');
+                //     const topHeaderBeforeEle = document.querySelector('#header-top-config-before-login');
+                //     const topHeaderAfterEle = document.querySelector('#header-top-config-after-login');
                     
-                    topHeaderBeforeEle.classList.toggle('d-none');
-                    topHeaderAfterEle.classList.toggle('d-none');
-                    return true;
+                //     topHeaderBeforeEle.classList.toggle('d-none');
+                //     topHeaderAfterEle.classList.toggle('d-none');
+                //     return true;
                     
-                }).fail(function(jqxhr, settings, ex) {
-                    const {data, status} = jqxhr.responseJSON;
+                // }).fail(function(jqxhr, settings, ex) {
+                //     const {data, status} = jqxhr.responseJSON;
 
-                    if(data.isUsernameValid===false) {
-                        const usernameEle = document.querySelector('#username_login');              // it's mean username is not exits in DB
-                        const inputParent = getParent(usernameEle, '.form-group');
-                        const formMessageUsername = inputParent.querySelector('.form-message');
+                //     if(data.isUsernameValid===false) {
+                //         const usernameEle = document.querySelector('#username_login');              // it's mean username is not exits in DB
+                //         const inputParent = getParent(usernameEle, '.form-group');
+                //         const formMessageUsername = inputParent.querySelector('.form-message');
 
-                        inputParent.classList.add('invalid');
-                        formMessageUsername.innerHTML = "Tài khoản không tồn tại!";
-                    }
-                    if(data.isPasswordValid===false) {
-                        const passwordEle = document.querySelector('#password_login');              // it's mean password is not correct
-                        const inputParent = getParent(passwordEle, '.form-group');
-                        const formMessageUsername = inputParent.querySelector('.form-message');
+                //         inputParent.classList.add('invalid');
+                //         formMessageUsername.innerHTML = "Tài khoản không tồn tại!";
+                //     }
+                //     if(data.isPasswordValid===false) {
+                //         const passwordEle = document.querySelector('#password_login');              // it's mean password is not correct
+                //         const inputParent = getParent(passwordEle, '.form-group');
+                //         const formMessageUsername = inputParent.querySelector('.form-message');
 
-                        inputParent.classList.add('invalid');
-                        formMessageUsername.innerHTML = "Mật khẩu không đúng!";
-                    }
+                //         inputParent.classList.add('invalid');
+                //         formMessageUsername.innerHTML = "Mật khẩu không đúng!";
+                //     }
+                // });
+
+                $.ajax({
+                    url: 'http://localhost:3000/user/login',
+                    type: 'POST',
+                    beforeSend: function(xhr) {
+
+                    },
+                    data: {username, password},
+                    success: async function({data, status, backURL}) {
+                        // $.post("http://localhost:3000/cart/get-cart", {user_id: data.user_id} ,function(data) {
+                        //     window.localStorage.setItem('cart', data);
+                        // });
+                        instance.post('http://localhost:3000/cart/get-cart');
+
+                        window.location.replace(backURL);
+                        
+                    },
+                    error: function(jqxhr, settings, ex) {
+                        const {data, status} = jqxhr.responseJSON;
+
+                        if(data.isUsernameValid===false) {
+                            const usernameEle = document.querySelector('#username_login');              // it's mean username is not exits in DB
+                            const inputParent = getParent(usernameEle, '.form-group');
+                            const formMessageUsername = inputParent.querySelector('.form-message');
+
+                            inputParent.classList.add('invalid');
+                            formMessageUsername.innerHTML = "Tài khoản không tồn tại!";
+                        }
+                        if(data.isPasswordValid===false) {
+                            const passwordEle = document.querySelector('#password_login');              // it's mean password is not correct
+                            const inputParent = getParent(passwordEle, '.form-group');
+                            const formMessageUsername = inputParent.querySelector('.form-message');
+
+                            inputParent.classList.add('invalid');
+                            formMessageUsername.innerHTML = "Mật khẩu không đúng!";
+                        }
+                    },
                 });
+
+                
+                // const response = (await instance.post('/user/login', {
+                //     username,
+                //     password,
+                // })).data;
+
+                // console.log(response);
+
+                // await instance.setLocalAccessToken(response.accessToken);
             },
             rules: [
                 Validator.isRequired('#username_login', 'Vui lòng nhập tài khoản đăng nhập!'),
@@ -179,6 +306,19 @@ document.addEventListener('DOMContentLoaded', function() {
             ]
         }) 
     }
+
+    // instance.setLocalCart = async (cartData) => {
+    //    window.localStorage.setItem('cart', JSON.stringify(cartData));
+    // }
+
+    instance.getAccessToken = async () => {
+       window.localStorage.getItem('accessToken');
+    }
+
+    // instance.getLocalCart = async () => {
+    //     const cart = window.localStorage.getItem('cart');
+    //     return cart;
+    // }
 
 });
 
@@ -194,6 +334,35 @@ function getParent (element, selector) {
 function loadPageFirst() {
 
 }
+
+function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
+function setCookie(cname,cvalue,exdays) {
+    const d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    let expires = "expires=" + d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+
+
+
+
+
 
 
 

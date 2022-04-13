@@ -1,5 +1,6 @@
 var Categories = require('../models/Category');
 var Products = require('../models/Product');
+var Carts = require('../models/Cart');
 
 class SiteController {
     // [GET] /
@@ -49,10 +50,11 @@ class SiteController {
             products.push(casio);
 
             homeObjectData.products = products;
-            // console.log(products);
+            // console.log(req.user);
             res.render('home', {
                 ...homeObjectData,
-                user: req.user,
+                // user: req.user,
+                cart: req.cart,
             });
         }
         loadProductAsync();

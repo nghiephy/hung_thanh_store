@@ -264,6 +264,30 @@ create table USERS
    primary key (USER_ID)
 );
 
+/*==============================================================*/
+/* Table: CARTS                                                 */
+/*==============================================================*/
+create table CARTS
+(
+   CART_ID              int not null auto_increment,
+   USER_ID              int,
+   UPDATE_DATE         	timestamp,
+   primary key (CART_ID, USER_ID)
+);
+
+/*==============================================================*/
+/* Table: CARTS_PRODUCTS                                                 */
+/*==============================================================*/
+create table CARTS_PRODUCTS
+(
+   CART_ID              int,
+   PRODUCT_ID           int,
+   QUANTITY				int,
+   TOTAL_PRICE			float,
+   IMAGE				text,
+   primary key (CART_ID, PRODUCT_ID)
+);
+
 alter table ADDRESS add constraint FK_RELATIONSHIP_20 foreign key (USER_ID)
       references USERS (USER_ID) on delete restrict on update restrict;
 
@@ -317,12 +341,21 @@ alter table TAXES_PRODUCTS add constraint FK_TAXES_PRO_PRODUCTS foreign key (PRO
 
 alter table TAXES_PRODUCTS add constraint FK_TAXES_PRO_TAXES foreign key (TAX_ID)
       references TAXES (TAX_ID) on delete restrict on update restrict;
-
+      
+alter table CARTS add constraint FK_USERS_CARTS foreign key (USER_ID)
+      references USERS (USER_ID) on delete restrict on update restrict;
+      
 -- alter table USERS add constraint FK_EMPLOYEES_USERS2 foreign key (EMPLOYEE_ID)
 --       references EMPLOYEES (EMPLOYEE_ID) on delete restrict on update restrict;
 
 -- alter table USERS add constraint FK_RELATIONSHIP_19 foreign key (CUSTOMER_ID)
 --       references CUSTOMERS (CUSTOMER_ID) on delete restrict on update restrict;
+
+alter table CARTS_PRODUCTS add constraint FK_PRODUCTS_CARTS_PRODUCTS foreign key (PRODUCT_ID)
+      references PRODUCTS (PRODUCT_ID) on delete restrict on update restrict;
+
+alter table CARTS_PRODUCTS add constraint FK_PRODUCTS_CARTS_CARTS foreign key (CART_ID)
+      references CARTS (CART_ID) on delete restrict on update restrict;
 
 /*==============================================================*/
 /* Add values for table categories                                                */
@@ -449,7 +482,6 @@ join images on images.PRODUCT_ID = products.PRODUCT_ID
 where products.slug = 'bia-ke-tay---bia-lot-tap---quyen-vo';
 
 ## Query: search products via keyword
-
 select products.*, images.PATH as IMAGE_PATH
 from products
 join categories on products.category_id = categories.category_id
@@ -457,13 +489,12 @@ join images on products.product_id = images.product_id
 where products.name like '%tap%'
 group by product_id;
 
-select users.*, customers.name, customers.photo
-from users
-join customers on users.user_id = customers.user_id
+## Query: get list information of all user
+select users.*, customers.name, customers.photo from users join customers on users.user_id = customers.user_id
 union 
-select users.*, employees.name, employees.photo 
-from users
-join employees on users.user_id = employees.user_id
+select users.*, employees.name, employees.photo from users join employees on users.user_id = employees.user_id
+
+
 /*==============================================================*/
 /* DEFINE USEFUL FUNCTION                                               */
 /*==============================================================*/
@@ -520,12 +551,68 @@ DELIMITER ;
 -- test
 call getProductViaSlugCat ('do-dung-hoc-sinh');
 
+-- procedure get cart list via user_id
+DELIMITER //
+DROP PROCEDURE IF EXISTS getCartList //
+CREATE PROCEDURE 
+  getCartList( userId int)
+BEGIN  
+	select carts_products.*, products.NAME, products.PRICE_PER_UNIT, products.SLUG
+	from carts
+	join carts_products on carts.cart_id = carts_products.cart_id
+    join products on carts_products.product_id = products.product_id
+    where carts.user_id = userId;
+END//
+DELIMITER ;
+-- test
+call getCartList (14);
 
-select email 
-from customers
-union
-select email
-from employees;
+-- procedure delete cart list of user into db
+DELIMITER //
+DROP PROCEDURE IF EXISTS deleteCartList //
+CREATE PROCEDURE 
+  deleteCartList( cart_id int)
+BEGIN  
+	delete
+    from carts_products
+    where carts_products.cart_id = cart_id;
+END//
+DELIMITER ;
+-- test
+call deleteCartList (2);
+
+-- procedure save cart list of user into db
+DELIMITER //
+DROP PROCEDURE IF EXISTS saveCartList //
+CREATE PROCEDURE 
+  saveCartList( cart_id int, product_id int, quantity int, total_price float, image text)
+BEGIN  
+	insert into carts_products
+    values (cart_id, product_id, quantity, total_price, image);
+END//
+DELIMITER ;
+-- test
+call saveCartList (1, 3, 1, 7200, '/img/products/bia-ke-tay-bia-lot-tap-quyen-vo-1.jpg');
+
+-- procedure delete cart list of user into db
+DELIMITER //
+DROP PROCEDURE IF EXISTS deleteCartItem //
+CREATE PROCEDURE 
+  deleteCartItem( cart_id int, product_id int)
+BEGIN  
+	delete
+    from carts_products
+    where carts_products.cart_id = cart_id;
+END//
+DELIMITER ;
+-- test
+call deleteCartList (2);
+
+delete 
+from carts_products
+where carts_products.cart_id = 1 and carts_products.product_id = 4
+
+
 
 
 
