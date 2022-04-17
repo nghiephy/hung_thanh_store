@@ -1,0 +1,41 @@
+<header class="admin-header">
+    <div class="header-bottom">
+        <div class="header-user">
+            <div class="header-user-search col-lg-5 col-md-6 col-sm-7">
+                <form class="search-form" action="#">
+                    <input type="text" name="q" placeholder="Tìm kiếm...">
+                    <button class="button button--primary button-search" >
+                        <ion-icon name="search"></ion-icon>
+                    </button>
+                </form>
+            </div>
+            <div class="header-user-control col-lg-7 col-md-6 col-sm-5">
+                <div id="admin-header-after-login" class="header-top-config admin-header-after-login">
+                    <div class="modal-label header-top-config-item" data-modal-id="">
+                        <div class="imgBox">
+                            <img src="{{#if user.PHOTO includeZero=true}}{{user.PHOTO}}{{else}}/img/avatar.jpg{{/if}}" alt="avata">
+                        </div>
+                        <span class="username-user" >Nguyễn Lập Nghiệp</span>
+                    </div>
+                    <div class="header-top-config-item" id="header-top-config-item-logout">
+                        <span>Đăng xuất</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</header>
+
+<script>
+    const btnSearchEle = document.querySelector('.button-search');
+    const btnSearchNavEle = document.querySelector('.button-search-navigation');
+    const btnCloseSearchNavEle = document.querySelector('.button-close-search-navigation');
+
+    btnSearchEle.addEventListener('click', (e) => {
+        const groupSearchEle = document.querySelector('.header-user-control-search');
+        
+        groupSearchEle.classList.add('active');
+    })
+     
+</script>

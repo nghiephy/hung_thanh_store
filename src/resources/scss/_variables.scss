@@ -17,6 +17,14 @@ $border-color: #e1e1e1;
 $border-footer-color: #c2c2c2;
 $subtitle-color: #333;
 $black-background-color: #363636;
+$admin-nav-background: #e0dae2;
+$admin-nav-divide: #c4c2c7;
+// $nav-item-background: #f9f4fc;
+$nav-item-background: #efe4f3;
+$dashboard-review-1: #4e73df;
+$modify-button-color: #4e73df;
+
+$admin-nav-width: 240px;
 
 /* Mixin */
 /* Set các giá trị với màn hình tương ứng */
@@ -31,6 +39,11 @@ $desktop-lg-width: 1200px;
 }  
 
 @mixin mobile-sm { @media (max-width: #{$mobile-width - 1px}) {       
+  @content;   
+  } 
+}
+
+@mixin mobile-sm-580 { @media (max-width: 580px) {       
   @content;   
   } 
 }

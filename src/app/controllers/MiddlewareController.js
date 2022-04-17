@@ -26,9 +26,9 @@ class MiddlewareController {
     verifyUserLogin(req, res, next) {
         const token = req.headers.token || req.cookies.accessToken;
         var productsCart=null;
-        console.log("Token" + token);
+        // console.log("Token" + token);
       
-        console.log(token);
+        // console.log(token);
         if(token) {
             const accessToken = token.split(" ")[0];
             jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, (err, user) => {
@@ -44,6 +44,34 @@ class MiddlewareController {
                 next();
             });
         }else {
+            next();
+        }
+    }
+
+    // Verify admin login
+    verifyAdminLogin(req, res, next) {
+        const token = req.headers.token || req.cookies.accessToken;
+        var productsCart=null;
+      
+        if(token) {
+            const accessToken = token.split(" ")[0];
+            jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, (err, user) => {
+                console.log(user);
+                if(err || user.USER_TYPE !== 'admin') {
+                    res.status(401).json({
+                        message: "You're not authenticated!",
+                    });
+                }
+                Cart.getCartList(user.USER_ID, (products) => {
+                    productsCart = JSON.parse(JSON.stringify(products[0]))
+                });
+                req.user = user;
+                next();
+            });
+        }else {
+            // res.status(401).json({
+            //     message: "You're not authenticated!",
+            // });
             next();
         }
     }

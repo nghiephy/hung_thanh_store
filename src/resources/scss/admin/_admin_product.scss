@@ -1,0 +1,54 @@
+.admin-product {
+    position: absolute;
+    right: 0;
+    left: 0;
+    padding: 10px;
+    &-title {
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+    &-table {
+        width: 600px;
+        margin: 0 auto;
+        &_wraper {
+            font-size: 1.4rem !important;
+        }
+    }
+    &-item {
+        &--actions {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            .button {
+                padding: 5px 8px;
+                border-radius: 4px;
+                color: $white-color;
+                &-modify {
+                    background-color: $modify-button-color;
+                    margin-right: 10px;
+                }
+                &-delete {
+                    background-color: $warning-color;
+                }
+                &:hover {
+                    opacity: 0.8;
+                }
+            }
+        }
+    }
+}
+
+.dataTables_wrapper {
+    font-size: 1.4rem;
+}
+
+.dataTables_scroll {
+    display: block;
+    padding-top: 10px;
+}
+
+table.dataTable tbody td {
+    padding: 8px;
+    padding-left: 17px;
+}
+

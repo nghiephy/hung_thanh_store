@@ -21,6 +21,16 @@ Product.get_all = function (result) {
     });
 }
 
+Product.get_all_for_ad = function (result) {
+    db.query("SELECT PRODUCTS.*, CATEGORIES.NAME AS CAT_NAME FROM PRODUCTS JOIN CATEGORIES ON PRODUCTS.CATEGORY_ID = CATEGORIES.CATEGORY_ID;", function(err, products) {
+        if(err) {
+            result(err);
+        }else{
+            result(products);
+        }
+    });
+}
+
 Product.get_pro_via_category = function (categoryName, result) {
     db.query(`call getProductViaCategory ('${categoryName}');`, function(err, products) {
         if(err) {

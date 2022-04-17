@@ -1,0 +1,67 @@
+<section class="add-product">
+    <h1 class="add-product-title" >Thêm sản phẩm mới</h1>
+
+    <div class="add-product-body">
+        <form id="add-product-body-form" action="#">
+            <div class="form-group">
+                <label for="name_product">Tên sản phẩm</label>
+                <input class="form-control" type="text" name="name_product" id="name_product" placeholder="Nhập tên sản phẩm">
+                <span class="form-message"></span>
+            </div>
+            <div class="row image_category_form">
+                <div style="width: 315px;" class="form-group">
+                    <label for="images_product">Hình ảnh</label><br>
+                    <input type="file" accept="image/*" class="form-control-file" name="images_product" multiple id="images_product">
+                    <span class="form-message"></span>
+                </div>
+                <div class="form-group form-group--category_product">
+                    <label for="category_product mr-sm-2">Loại</label><br>
+                    <select id="category_product" class="custom-select mr-sm-2">
+                        <option value="Cái">Đồ dùng học tập</option>
+                        <option value="Bộ">Bộ</option>
+                        <option value="Quyển">Quyển</option>
+                        <option value="Hộp">Hộp</option>
+                        <option value="Miếng">Miếng</option>
+                    </select>
+                    <span class="form-message"></span>
+                    <div class="add-category-btn">
+                        <i class="fa-solid fa-plus"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div style="margin-right: 100px;" class="form-group">
+                    <label for="name_product">Đơn vị</label>
+                    <input class="form-control" type="text" name="basic_unit_product" id="basic_unit_product" placeholder="Nhập đơn vị">
+                    <span class="form-message"></span>
+                </div>
+                <div class="form-group">
+                    <label for="name_product">Giá</label>
+                    <input class="form-control" type="number" name="price_per_unit_product" id="price_per_unit_product" placeholder="Nhập giá">
+                    <span class="form-message"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div style="margin-right: 100px;" class="form-group">
+                    <label for="name_product">Nhãn hiệu</label>
+                    <input class="form-control" type="text" name="brand_product" id="brand_product" placeholder="Nhập tên nhãn hiệu">
+                    <span class="form-message"></span>
+                </div>
+                <div class="form-group">
+                    <label for="name_product">Xuất xứ</label>
+                    <input class="form-control" type="text" name="origin_product" id="origin_product" placeholder="Nhập nơi xuất xứ">
+                    <span class="form-message"></span>
+                </div>
+            </div>
+             <div class="form-group">
+                    <label for="description_product">Mô tả</label>
+                    <textarea id="description-ckeditor" ></textarea>
+                    <span class="form-message"></span>
+            </div>
+
+            <button id="add-product-button" class="add-product-body-button button button--type2">Thêm Mới</button>
+        </form>
+    </div>
+</section>
+ <script src="/js/validator.js"></script>
+<script type="module" src="/js/admin/add-product.js"></script>

@@ -10,6 +10,11 @@
 @import 'category_detail';
 @import 'welcome';
 @import '404_error';
+@import './admin/admin_header';
+@import './admin/admin_main';
+@import './admin/_admin_dashboard';
+@import './admin/_admin_product';
+@import './admin/_admin_add_product';
 @import 'main';
 
 .button {

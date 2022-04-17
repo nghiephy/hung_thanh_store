@@ -1,0 +1,81 @@
+<section class="admin-product">
+    <h1 class="admin-product-title" >Tất cả sản phẩm</h1>
+
+    <div class="block-section mt-4">
+        {{!-- <table id="admin-product-table" class="admin-product-table table table-bordered table-striped table-hover ">
+            <thead class="admin-product-table__head" >
+                <tr class="admin-product-table__row">
+                    <th class=" admin-product-table__col admin-product-table__col--head">ID</th>
+                    <th class=" admin-product-table__col admin-product-table__col--head" >Tên sản phẩm</th>
+                    <th class=" admin-product-table__col admin-product-table__col--head" >Thương hiệu</th>
+                    <th class=" admin-product-table__col admin-product-table__col--head" >Đơn vị</th>
+                    <th class=" admin-product-table__col admin-product-table__col--head" >Số tiền</th>
+                    <th class=" admin-product-table__col admin-product-table__col--head" >Loại</th>
+                    <th class=" admin-product-table__col admin-product-table__col--head" >Mô tả</th>
+                    <th class=" admin-product-table__col admin-product-table__col--head" >Hành động</th>
+                </tr>
+            </thead>
+
+            <tbody class="admin-product-table__body">
+                <tr class="admin-product-table__row">
+                    <td class="admin-product-table__col">
+                        <span>1</span>
+                    </td>
+                    <td class="admin-product-table__col">
+                        <span>Sách luyện chữ đẹp</span>
+                    </td>
+                    <td class="admin-product-table__col">
+                        <span>Việt Tiến</span>
+                    </td>
+                    <td class="admin-product-table__col">
+                        <span>Quyển</span>
+                    </td>
+                    <td class="admin-product-table__col">
+                        <span>100.000</span>
+                    </td>
+                    <td class="admin-product-table__col">
+                        <span>Sách</span>
+                    </td>
+                    <td class="admin-product-table__col">
+                        <span>Không có mô tả</span>
+                    </td>
+                    <td class="admin-product-table__col">
+                        <span>Thêm xoá</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table> --}}
+    </div>
+    <table id="admin-product-table" class="display nowrap" style="width:100%">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tên sản phẩm</th>
+                <th>Loại</th>
+                <th>Đơn vị</th>
+                <th>Giá</th>
+                <th>Nhãn hiệu</th>
+                <th>Xuất xứ</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each products}}
+                <tr class="admin-product-item">
+                    <td>{{this.PRODUCT_ID}}</td>
+                    <td>{{this.NAME}}</td>
+                    <td>{{this.CAT_NAME}}</td>
+                    <td>{{this.BASIC_UNIT}}</td>
+                    <td>{{this.PRICE_PER_UNIT}}</td>
+                    <td>{{this.BRAND}}</td>
+                    <td>{{this.ORIGIN}}</td>
+                    <td class="admin-product-item--actions" >
+                        <a class="button button-modify" href="#">Sửa</a>
+                        <a class="button button-delete" href="#">Xoá</a>
+                    </td>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</section>
+<script src="/js/admin/product.js"></script>

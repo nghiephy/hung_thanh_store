@@ -1,0 +1,19 @@
+/* Error: 0px and 1 are incompatible.
+ *    ,
+ * 57 |   $rfs-breakpoint: calc($rfs-breakpoint / calc($rfs-breakpoint * 0 + 1));
+ *    |                                                ^^^^^^^^^^^^^^^^^^^^^^^
+ *    '
+ *   src\resources\scss\scss\bootstrap\scss\vendor\_rfs.scss 57:48  @import
+ *   src\resources\scss\scss\bootstrap\scss\_mixins.scss 6:9        @import
+ *   src\resources\scss\scss\bootstrap\scss\bootstrap.scss 10:9     root stylesheet */
+
+body::before {
+  font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
+      "Droid Sans Mono", monospace, monospace;
+  white-space: pre;
+  display: block;
+  padding: 1em;
+  margin-bottom: 1em;
+  border-bottom: 2px solid black;
+  content: "Error: 0px and 1 are incompatible.\a    \2577 \a 57 \2502    $rfs-breakpoint: calc($rfs-breakpoint / calc($rfs-breakpoint * 0 + 1));\a    \2502                                                 ^^^^^^^^^^^^^^^^^^^^^^^\a    \2575 \a   src\\resources\\scss\\scss\\bootstrap\\scss\\vendor\\_rfs.scss 57:48  @import\a   src\\resources\\scss\\scss\\bootstrap\\scss\\_mixins.scss 6:9        @import\a   src\\resources\\scss\\scss\\bootstrap\\scss\\bootstrap.scss 10:9     root stylesheet";
+}
