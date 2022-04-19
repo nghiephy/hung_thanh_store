@@ -8,9 +8,6 @@ const dotenv = require('dotenv');
 var bodyParser = require('body-parser');
 const routes = require('./routes');
 const helper = require('./util/helpers');
-const multipart = require('connect-multiparty');
-const fs = require('fs');
-var multipartMiddleware = multipart();
 
 const port = 3000;
 const app = express();

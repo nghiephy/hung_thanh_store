@@ -89,4 +89,61 @@ Product.search_pro_by_name = function (productName, result) {
     });
 }
 
+Product.add_new = async function (data, result) {
+    const dataProduct = [
+        data.category_product,
+        data.name_product,
+        data.slug_product,
+        data.description_product,
+        data.basic_unit_product,
+        data.price_per_unit_product,
+        data.brand_product,
+        data.origin_product,
+    ];
+    const dataImage = data.image_list;
+    const dataStock = data.quantity_product;
+    const insertProductPromise = new Promise((resolve, reject) => {
+        db.query(`insert into products(CATEGORY_ID, NAME, SLUG, DESCRIPTION, BASIC_UNIT, PRICE_PER_UNIT, BRAND, ORIGIN) values (?,?,?,?,?,?,?,?);`, dataProduct, function(err, results, fields) {
+            if(err) {
+                reject(err);
+            }else{
+                resolve(results);
+            }
+        });
+    });
+    const addImage = (product_id) => {
+        return new Promise((resolve, reject) => {
+            dataImage.forEach(item => {
+                item.unshift(product_id);
+            });
+            db.query(`insert into images(PRODUCT_ID, PATH, DESCRIPTION) values ?`, [dataImage], function(err, results, fields) {
+                if(err) {
+                    reject(err);
+                }else{
+                    resolve(results);
+                }
+            });
+        });
+    };
+    const addStock = (product_id) => {
+        return new Promise((resolve, reject) => {
+            dataStock.unshift(product_id);
+            console.log(dataStock);
+            db.query(`insert into stock(PRODUCT_ID, QUANTITY, CREATED_AT) values (?,?,?)`, dataStock, function(err, results, fields) {
+                if(err) {
+                    reject(err);
+                }else{
+                    resolve(results);
+                }
+            });
+        });
+    };
+
+    const responseProduct = await insertProductPromise;
+    const responseImage = await addImage(responseProduct.insertId);
+    const responseStock = await addStock(responseProduct.insertId);
+    // const responseImage = insertImagesPromise;
+
+}
+
 module.exports = Product;
