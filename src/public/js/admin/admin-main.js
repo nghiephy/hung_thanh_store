@@ -12,6 +12,9 @@ navItemEles.forEach(navItemEle => {
     });
 });
 
+// Handle display modal
+handleModal();
+
 // Handle display small nav when screen.width < 1023px
 var onresize = function() {
     var width = document.body.clientWidth;
@@ -34,3 +37,22 @@ mbNavFulBtn.addEventListener('click', (e) => {
     mbNavFulBtn.querySelector('i').classList.toggle('fa-chevron-right');
     mbNavFulBtn.querySelector('i').classList.toggle('fa-chevron-left');
 })
+
+function handleModal() {
+    const modalExitBtns = document.querySelectorAll('.modal__theme-exit');
+    const closeSuccessModalBtn = document.querySelector('.successful-body__button button');
+    const modalItem = document.querySelector('#modal-successful');
+    const modalEle = document.querySelector('.modal');
+
+    modalExitBtns.forEach(modalExitBtn => {
+        modalExitBtn.addEventListener('click', () => {
+            modalItem.classList.remove('active');
+            modalEle.classList.remove('active');
+        }) 
+    })
+
+    closeSuccessModalBtn.addEventListener('click', (e) => {
+        modalItem.classList.remove('active');
+        modalEle.classList.remove('active');
+    })
+}

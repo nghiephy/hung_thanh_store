@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="/css/app.css">
     <title>Manage Hưng Thạnh Bookstore</title>
 </head>
-<body onload="">
+<body class="admin-page" onload="">
     <div class="wrapper">
 
         <div id="my-toast">
@@ -111,11 +111,10 @@
         </div>
 
         {{!-- {{> footer}} --}}
-
-        <div class="modal">
+        <div class="modal {{#if save_product_status includeZero=true}} active {{/if}}">
             <div class="modal__overlay"></div>
             <div class="modal__body">
-              <div id="modal-successful" class="modal__item"> 
+              <div id="modal-successful" class="modal__item {{#if save_product_status includeZero=true}} active {{/if}}"> 
                 <div class="modal__theme-exit">
                   <ion-icon name="close"></ion-icon>
                 </div>
@@ -124,10 +123,10 @@
                       <img src="/img/icon/success_icon.webp" alt="">
                     </div>
                     <div class="successful-body__title">
-                      <h2>Đặt hàng thành công!</h2>
+                      <h2>Thêm sản phẩm thành công!</h2>
                     </div>
                     <div class="successful-body__message">
-                      <p>Cám ơn bạn đã tin tưởng đặt hàng của chúng tôi!</p>
+                      <p>Bạn có thể chỉnh sửa lại thông tin sản phẩm trong phần tất cả sản phẩm!</p>
                     </div>
                     <div class="successful-body__button">
                       <button class="button button--type2" >Đóng</button>

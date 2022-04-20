@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     $('#add-product-body-form').submit(function() {
         var dataDescription = CKEDITOR.instances['description-ckeditor'].getData();
-        $('<input/>').attr({type:'text',name:'description_product',value: dataDescription}).appendTo('#add-product-body-form');
+        $('<input/>').attr({type:'text',name:'description_product',value: dataDescription,style:'display: none;'}).appendTo('#add-product-body-form');
 
         return true;
     });
@@ -110,6 +110,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 Validator.isRequired('#category_product'),
                 Validator.isRequired('#basic_unit_product'),
                 Validator.isRequired('#price_per_unit_product'),
+                Validator.isRequired('#quantity_product'),
             ]
         })
     }

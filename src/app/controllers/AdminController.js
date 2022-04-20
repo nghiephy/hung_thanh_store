@@ -98,10 +98,23 @@ class AdminController {
         data.image_list = image_list;
         console.log(data);
 
+        const getCategoryPromise = new Promise((resolve, reject) => {
+            Categories.get_all((categoryList) => {
+                resolve(categoryList);
+            });
+        });
+        var categoryList = await getCategoryPromise;
+        categoryList = Object.values(JSON.parse(JSON.stringify(categoryList)));
+
         Products.add_new(data, function(response) {
 
         });
-        res.redirect(backURL);
+        res.render('admin/add-product.hbs', {
+            layout: 'admin-main.hbs',
+            add_product: 'active',
+            categories: categoryList,
+            save_product_status: 'success',
+        });
     }
 
     // [POST] /admin/upload
