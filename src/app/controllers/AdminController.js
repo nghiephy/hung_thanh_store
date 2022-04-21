@@ -86,9 +86,10 @@ class AdminController {
                 message: 'fail',
             });
         }else {
-            res.status(200).json({
-                message: 'success',
-            });
+            // res.status(200).json({
+            //     message: 'success',
+            // });
+            res.redirect('back');
         }
     }
 

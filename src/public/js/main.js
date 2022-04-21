@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     // Handle modal display
     function handleModal() {
         const modalOverlayEle = document.querySelector('.modal__overlay');
-        const modalEle = document.querySelector('.modal');
+        const modalEle = document.querySelector('.my-modal');
         const modalExitBtns = document.querySelectorAll('.modal__theme-exit');
         const modalLabelList = document.querySelectorAll('.modal-label');
         const closeSuccessModalBtn = document.querySelector('.successful-body__button button');

@@ -2887,7 +2887,7 @@ select {
 }
 
 /* Modal css */
-.modal {
+.my-modal {
   position: fixed;
   top: 0;
   right: 0;
@@ -2897,7 +2897,7 @@ select {
   display: none;
 }
 
-.modal.active {
+.my-modal.active {
   display: flex;
 }
 
@@ -2922,6 +2922,18 @@ select {
 
 .modal__item.active {
   display: block;
+}
+
+/* Override css bootstrap modal */
+.modal-content {
+  font-size: 1.4rem;
+}
+.modal-content .modal-title {
+  font-size: 1.8rem;
+  font-weight: 500;
+}
+.modal-content .modal-footer button {
+  font-size: 1.4rem;
 }
 
 /* Toast custom css */

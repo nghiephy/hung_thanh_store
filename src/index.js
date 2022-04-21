@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const handlebars = require('express-handlebars');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
+const methodOverride = require('method-override');
 const dotenv = require('dotenv');
 var bodyParser = require('body-parser');
 const routes = require('./routes');
@@ -24,6 +25,9 @@ dotenv.config();
 
 app.use(cors());
 app.use(cookieParser());
+
+// method override
+app.use(methodOverride('_method'))
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));

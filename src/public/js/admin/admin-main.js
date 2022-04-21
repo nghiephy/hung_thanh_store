@@ -47,7 +47,7 @@ function handleModal() {
     const modalExitBtns = document.querySelectorAll('.modal__theme-exit');
     const closeSuccessModalBtn = document.querySelector('.successful-body__button button');
     const modalItem = document.querySelector('#modal-successful');
-    const modalEle = document.querySelector('.modal');
+    const modalEle = document.querySelector('.my-modal');
 
     modalExitBtns.forEach(modalExitBtn => {
         modalExitBtn.addEventListener('click', () => {

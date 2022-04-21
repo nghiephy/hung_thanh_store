@@ -77,11 +77,33 @@
                     <td>{{this.ORIGIN}}</td>
                     <td class="admin-product-item--actions" >
                         <a class="button button-modify" href="/admin/update-product/{{this.SLUG}}">Sửa</a>
-                        <a class="button button-delete" href="/admin/soft-delete/{{this.PRODUCT_ID}}">Xoá</a>
+                        <button class="button button-delete" data-bs-toggle="modal" data-bs-id="{{this.PRODUCT_ID}}" data-bs-target="#admin-product-item--delete">Xoá</button>
                     </td>
                 </tr>
             {{/each}}
         </tbody>
     </table>
+
+    {{!-- Form delete product hidden --}}
+    <form name="delete-product-form" action="" method="POST"></form>
+
+    {{!-- Bootstrap modal section --}}
+    <div class="modal" id="admin-product-item--delete" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Xoá sản phẩm?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn chắc chắn muốn xoá sản phẩm này?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Huỷ</button>
+                <button type="button" class="btn btn-danger" id="admin-product-delete-btn">Xoá bỏ</button>
+            </div>
+            </div>
+        </div>
+    </div>
 </section>
 <script src="/js/admin/product.js"></script>

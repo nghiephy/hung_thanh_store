@@ -45,7 +45,7 @@ router.get('/products', middlewareController.verifyAdminLogin, adminController.g
 router.get('/get-product', middlewareController.verifyAdminLogin, adminController.getProductDetail);
 router.get('/add-product', middlewareController.verifyAdminLogin, adminController.addProduct);
 router.get('/trash', middlewareController.verifyAdminLogin, adminController.getTrash);
-router.get('/soft-delete/:id', middlewareController.verifyAdminLogin, adminController.softDelete);
+router.delete('/soft-delete/:id', middlewareController.verifyAdminLogin, adminController.softDelete);
 router.get('/update-product/:slug', middlewareController.verifyAdminLogin, adminController.updateProduct);
 router.post('/add-product', middlewareController.verifyAdminLogin, uploadMultiple, adminController.saveProduct);
 router.post('/upload', multipartMiddleware, adminController.uploadImage);
