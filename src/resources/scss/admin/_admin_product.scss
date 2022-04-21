@@ -3,9 +3,22 @@
     right: 0;
     left: 0;
     padding: 10px;
+    .trash {
+        &-btn {
+            float: right;
+            margin-bottom: 20px;
+            padding: 8px 14px;
+            cursor: pointer;
+            i {
+                margin-right: 10px;
+            }
+            &:hover {
+                color: $white-color;
+            }
+        }
+    }
     &-title {
         font-weight: bold;
-        margin-bottom: 20px;
     }
     &-table {
         width: 600px;

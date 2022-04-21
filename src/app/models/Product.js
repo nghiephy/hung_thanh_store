@@ -12,7 +12,7 @@ const Product = function (product) {
 }
 
 Product.get_all = function (result) {
-    db.query("SELECT * FROM PRODUCTS", function(err, products) {
+    db.query("SELECT * FROM PRODUCTS WHERE PRODUCTS.DELETED = FALSE;", function(err, products) {
         if(err) {
             result(err);
         }else{
@@ -21,8 +21,28 @@ Product.get_all = function (result) {
     });
 }
 
+Product.get_trash = function (result) {
+    db.query("SELECT PRODUCTS.*, CATEGORIES.NAME AS CAT_NAME FROM PRODUCTS JOIN CATEGORIES ON PRODUCTS.CATEGORY_ID = CATEGORIES.CATEGORY_ID WHERE PRODUCTS.DELETED = TRUE;", function(err, products) {
+        if(err) {
+            result(err);
+        }else{
+            result(products);
+        }
+    });
+}
+
+Product.soft_delete = function (ipProduct, timestamp, result) {
+    db.query(`UPDATE PRODUCTS SET DELETED = TRUE, DELETED_AT = '${timestamp}' WHERE PRODUCT_ID = ${ipProduct};`, function(err, data) {
+        if(err) {
+            result(err);
+        }else{
+            result(data);
+        }
+    });
+}
+
 Product.get_all_for_ad = function (result) {
-    db.query("SELECT PRODUCTS.*, CATEGORIES.NAME AS CAT_NAME FROM PRODUCTS JOIN CATEGORIES ON PRODUCTS.CATEGORY_ID = CATEGORIES.CATEGORY_ID;", function(err, products) {
+    db.query("SELECT PRODUCTS.*, CATEGORIES.NAME AS CAT_NAME FROM PRODUCTS JOIN CATEGORIES ON PRODUCTS.CATEGORY_ID = CATEGORIES.CATEGORY_ID WHERE PRODUCTS.DELETED = FALSE;", function(err, products) {
         if(err) {
             result(err);
         }else{
@@ -80,7 +100,7 @@ Product.get_pro_via_slug = function (slug, result) {
 }
 
 Product.search_pro_by_name = function (productName, result) {
-    db.query(`select products.*, images.PATH as IMAGE_PATH from products join categories on products.category_id = categories.category_id join images on products.product_id = images.product_id where products.name like '%${productName}%' group by product_id;`, function(err, products) {
+    db.query(`select products.*, images.PATH as IMAGE_PATH from products join categories on products.category_id = categories.category_id join images on products.product_id = images.product_id where products.name like '%${productName}%' and products.deleted = false group by product_id;`, function(err, products) {
         if(err) {
             result(err);
         }else{

@@ -42,7 +42,11 @@ const imageFilter = function(req, file, cb) {
 let uploadMultiple = multer({ storage: storage, fileFilter: imageFilter }).array('images_product', 10);
 
 router.get('/products', middlewareController.verifyAdminLogin, adminController.getProducts);
+router.get('/get-product', middlewareController.verifyAdminLogin, adminController.getProductDetail);
 router.get('/add-product', middlewareController.verifyAdminLogin, adminController.addProduct);
+router.get('/trash', middlewareController.verifyAdminLogin, adminController.getTrash);
+router.get('/soft-delete/:id', middlewareController.verifyAdminLogin, adminController.softDelete);
+router.get('/update-product/:slug', middlewareController.verifyAdminLogin, adminController.updateProduct);
 router.post('/add-product', middlewareController.verifyAdminLogin, uploadMultiple, adminController.saveProduct);
 router.post('/upload', multipartMiddleware, adminController.uploadImage);
 router.get('/', middlewareController.verifyAdminLogin, adminController.index);

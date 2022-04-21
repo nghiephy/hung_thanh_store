@@ -46,6 +46,12 @@
             </tbody>
         </table> --}}
     </div>
+    <div class="trash-wrap" >
+        <a href="/admin/trash" class="button button--type2 trash-btn">
+            <i class="fa-solid fa-trash-can"></i>
+            <span>Thùng Rác</span>
+        </a>
+    </div>
     <table id="admin-product-table" class="display nowrap" style="width:100%">
         <thead>
             <tr>
@@ -70,8 +76,8 @@
                     <td>{{this.BRAND}}</td>
                     <td>{{this.ORIGIN}}</td>
                     <td class="admin-product-item--actions" >
-                        <a class="button button-modify" href="#">Sửa</a>
-                        <a class="button button-delete" href="#">Xoá</a>
+                        <a class="button button-modify" href="/admin/update-product/{{this.SLUG}}">Sửa</a>
+                        <a class="button button-delete" href="/admin/soft-delete/{{this.PRODUCT_ID}}">Xoá</a>
                     </td>
                 </tr>
             {{/each}}

@@ -2342,6 +2342,70 @@ img {
   overflow-y: scroll;
 }
 
+.modal #modal-update-product {
+  background-color: white;
+  border-radius: 5px;
+  padding: 20px;
+  width: 700px;
+  font-size: 1.4rem;
+}
+.modal #modal-update-product .row > * {
+  width: auto;
+  margin-bottom: 20px;
+}
+.modal .form-group {
+  margin-bottom: 10px;
+  position: relative;
+}
+.modal .form-group.no-width {
+  width: unset;
+}
+.modal .form-group:first-child, .modal .form-group:last-child {
+  width: unset;
+}
+.modal .form-group--category_product .add-category-btn {
+  position: absolute;
+  left: 60%;
+  top: 50%;
+  font-size: 2.2rem;
+  font-weight: bold;
+  color: green;
+  cursor: pointer;
+}
+.modal .form-group .form-message {
+  color: #f33a58;
+}
+.modal .form-group label {
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+.modal .form-group input {
+  padding: 6px 10px;
+  font-size: 1.4rem;
+  width: 100%;
+}
+.modal .form-group input[name=name_product] {
+  width: 100%;
+}
+@media (max-width: 767px) {
+  .modal .form-group input[name=name_product] {
+    width: 100%;
+  }
+}
+.modal .form-group input[name=images_product] {
+  width: 200px;
+  padding: 6px 0;
+}
+.modal .form-group select {
+  font-size: 1.4rem;
+  padding: 6px 10px;
+  border-radius: 4px;
+  border-color: #c2c2c2;
+}
+.modal .form-group #cke_1_contents {
+  height: 400px !important;
+}
+
 .dashboard {
   padding: 10px;
 }
@@ -2378,9 +2442,20 @@ img {
   left: 0;
   padding: 10px;
 }
+.admin-product .trash-btn {
+  float: right;
+  margin-bottom: 20px;
+  padding: 8px 14px;
+  cursor: pointer;
+}
+.admin-product .trash-btn i {
+  margin-right: 10px;
+}
+.admin-product .trash-btn:hover {
+  color: white;
+}
 .admin-product-title {
   font-weight: bold;
-  margin-bottom: 20px;
 }
 .admin-product-table {
   width: 600px;

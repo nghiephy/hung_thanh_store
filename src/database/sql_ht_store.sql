@@ -528,6 +528,7 @@ BEGIN
 	join categories on products.category_id = categories.category_id
     join images on products.product_id = images.product_id
 	where categories.name = categoryName
+    and products.deleted = false
     group by product_id;
 END//
 DELIMITER ;
@@ -545,6 +546,7 @@ BEGIN
 	join categories on products.category_id = categories.category_id
     join images on products.product_id = images.product_id
 	where categories.slug = slug
+    and products.deleted = false
     group by product_id;
 END//
 DELIMITER ;
@@ -561,7 +563,8 @@ BEGIN
 	from carts
 	join carts_products on carts.cart_id = carts_products.cart_id
     join products on carts_products.product_id = products.product_id
-    where carts.user_id = userId;
+    where carts.user_id = userId
+    and products.deleted = false;
 END//
 DELIMITER ;
 -- test

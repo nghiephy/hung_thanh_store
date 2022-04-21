@@ -16,6 +16,7 @@ const hbs = handlebars.create({
     helpers: {
         sum: (a, b) => a + b,
         eachCategories: helper.eachCategories,
+        ifEquals: helper.ifEquals,
     },
 });
 
