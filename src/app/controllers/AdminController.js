@@ -97,24 +97,47 @@ class AdminController {
     // [DELETE] /admin/destroy-product
     async destroyProduct(req, res, next) {
         const idProduct = req.params.id;
+        const slugProduct = req.params.slug;
 
+        const getProductPromise = new Promise((resolve, reject) => {
+            Products.get_pro_via_slug(slugProduct, (product) => {
+                resolve(product);
+            });
+        });
         const destroyPromise = new Promise((resolve, reject) => {
             Products.destroy_product(idProduct, (data) => {
                 resolve(data);
             });
         });
-        const data = await destroyPromise;
 
-        if(data.errno) {
-            res.status(500).json({
-                message: 'fail',
+        handleDestroy();
+
+        async function handleDestroy() {
+            var product = await getProductPromise;
+            product = Object.values(JSON.parse(JSON.stringify(product)));
+            const images = product[1];
+            console.log(images);
+            images.forEach(item => {
+                var pathImage = path.resolve(__dirname, '../../public') + item.IMG_PATH;
+                fs.unlink(pathImage, (err) => {
+                    if (err) {
+                    console.error(err);
+                    return;
+                    }
+                });
             });
-        }else {
-            res.status(200).json({
-                message: 'success',
-            });
-            // res.redirect('back');
-        }
+            const data = await destroyPromise;
+
+            if(data.errno) {
+                res.status(500).json({
+                    message: 'fail',
+                });
+            }else {
+                res.status(200).json({
+                    message: 'success',
+                });
+            }
+        };
     }
 
     // [PUT] /admin/restore-product/:id

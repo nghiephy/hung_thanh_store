@@ -32,7 +32,7 @@
                     <td>{{this.ORIGIN}}</td>
                     <td class="admin-product-item--actions" >
                         <a class="button button-modify trash-product-item-restore" onclick="return false" href="/admin/restore-product/{{this.PRODUCT_ID}}">Khôi phục</a>
-                        <a class="button button-delete trash-product-item-destroy" onclick="return false" href="/admin/destroy-product/{{this.PRODUCT_ID}}">Xoá</a>
+                        <a class="button button-delete trash-product-item-destroy" onclick="return false" href="/admin/destroy-product/{{this.PRODUCT_ID}}/{{this.SLUG}}">Xoá</a>
                     </td>
                 </tr>
             {{/each}}
