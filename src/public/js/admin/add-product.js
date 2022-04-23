@@ -1,6 +1,10 @@
 import { initAxiosInstance } from '../modules/axios-module.js';
 
 document.addEventListener('DOMContentLoaded', function() {
+    const afterLoginEle = document.querySelector('#admin-header-after-login');
+    const imgEle = afterLoginEle.querySelector('.imgBox img');
+    const usernameEle = afterLoginEle.querySelector('.username-user');
+
     CKEDITOR.replace('description-ckeditor', {
         extraPlugins: 'filebrowser',
         filebrowserBrowseUrl: '/list',
@@ -18,51 +22,62 @@ document.addEventListener('DOMContentLoaded', function() {
             'Content-Type': 'application/json',
         }
     });
+
+    const accessToken = getCookie('accessToken');
+    let decodedToken = null;
+    if(accessToken){
+        decodedToken = jwt_decode(accessToken);
+    }
+    if(decodedToken !== null && decodedToken.ACTIVE===1) {
+        imgEle.setAttribute("src", `${decodedToken.PHOTO!==null?decodedToken.PHOTO:'/img/avatar.jpg'}`);
+        usernameEle.innerHTML = decodedToken.NAME;
+    }
     
-    instance.interceptors.request.use( async (config) => {
-        if(config.url.indexOf('/user/login') >=0 || config.url.indexOf('/user/refresh') >=0) {
-            return config;
-        }
-    
-        const accessToken = getCookie('accessToken');
-        let decodedToken;
-        if(accessToken){
-            decodedToken = jwt_decode(accessToken);
-    
-            if(decodedToken.exp < Date.now()/1000) {
-                try {
-                    console.log('AccessToken het han');
-                    // const responseRefresh = (await instance.post('/user/refresh'));
-    
-                    // $.post("http://localhost:3000/user/refresh", function(data) {
-                    //     location.reload();
-                    // });
-    
-                    await instance.post('http://localhost:3000/user/refresh');
-                    
-                    return config;
-                }catch(err) {
-                    return Promise.reject(err);
-                }
+    instance.interceptors.request.use( 
+        async (config) => {
+            // if(config.url.indexOf('/user/login') >=0 || config.url.indexOf('/user/refresh') >=0) {
+            //     return config;
+            // }
+
+            const accessToken = getCookie('accessToken');
+            let decodedToken;
+            if(accessToken){
+                return config;
             }
-        }
-        return config;
-    }, err => {
-        return Promise.reject(err);
+
+            return config;
+        }, (err) => {
+            return Promise.reject(err);
     });
-    
-    instance.interceptors.response.use( (response) => {
-        console.log(response);
-        return response;
-    }, err => {
-        return Promise.reject(err);
-    })
 
-    $('#add-product-body-form').submit(function() {
-        var dataDescription = CKEDITOR.instances['description-ckeditor'].getData();
-        $('<input/>').attr({type:'text',name:'description_product',value: dataDescription,style:'display: none;'}).appendTo('#add-product-body-form');
+    instance.interceptors.response.use( 
+        async (response) => {
+            console.log(response);
 
-        return true;
+            return response;
+        }, async (err) => {
+            const originalConfig = err.config;
+            if (err.response) {
+                // Access Token was expired
+                if (err.response.status === 401 && !originalConfig._retry) {
+                    originalConfig._retry = true;
+                    try {
+                        const rs = await instance.post('http://localhost:3000/user/refresh');
+                        const { accessToken } = rs.data;
+
+                        return instance(originalConfig);
+                    } catch (_error) {
+                        if (_error.response && _error.response.data) {
+                            return Promise.reject(_error.response.data);
+                        }
+                        return Promise.reject(_error);
+                    }
+                }
+                if (err.response.status === 403 && err.response.data) {
+                    return Promise.reject(err.response.data);
+                  }
+            }
+            return Promise.reject(err);
     });
 
     // Validate form add new product
@@ -73,37 +88,27 @@ document.addEventListener('DOMContentLoaded', function() {
             form: '#add-product-body-form',
             formGroupSelector: '.form-group',
             errorSelector: '.form-message',
-            // onSubmit: async function (dataForm) {
-            //     var data = new FormData();
-            //     var fileListArray = Array.from(dataForm.images_product);
-            //     // fileListArray.forEach(item => {
-            //     //     data.append('images_product', item);
-            //     // });
-            //     // data.append("a", 1);
-            //     // console.log(data);
-            //     var dataDescription = CKEDITOR.instances['description-ckeditor'].getData();
-            //     dataForm.images_product = fileListArray;
-            //     // const {images_product, ...other} = dataForm;
-            //     data = {
-            //         ...dataForm,
-            //         description: dataDescription,
-            //     }
-            //     console.log(data);
-            //     // const response = await instance.post('http://localhost:3000/admin/add-product', data);
-            //     // console.log(response);
-                // $.ajax({
-                //     type: "POST",
-                //     beforeSend: function(request) {
-                //       request.setRequestHeader("Content-Type", "multipart/form-data");
-                //     },
-                //     url: "http://localhost:3000/admin/add-product",
-                //     data: data,
-                //     processData: false,
-                //     success: function(msg) {
-                //       alert("OK");
-                //     }
-                //   });
-            // },
+            onSubmit: async function (dataForm) {
+                var dataDescription = CKEDITOR.instances['description-ckeditor'].getData();
+                $('<input/>').attr({type:'text',name:'description_product',value: dataDescription,style:'display: none;'}).appendTo('#add-product-body-form');
+                const form = document.querySelector('#add-product-body-form');
+                const formData = new FormData(form);
+                const dataResponse = await instance.post("/admin/add-product", formData, {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                });
+                if(dataResponse.data.message === 'success') {
+                    const modal = document.querySelector('.my-modal');
+                    const modalItemSuccess = document.querySelector('#modal-successful');
+
+                    modal.classList.add('active');
+                    modalItemSuccess.classList.add('active');
+                    location.replace(dataResponse.request.responseURL);
+                }else {
+                    alert("Them san pham that bai!");
+                }
+            },
             rules: [
                 Validator.isRequired('#name_product', 'Vui lòng nhập tên sản phẩm'),
                 Validator.isRequired('#images_product'),

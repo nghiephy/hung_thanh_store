@@ -30,7 +30,7 @@
 
               <ul class="nav-list">
                 <li class="nav-item {{#if dashboard includeZero=true}} active {{/if}}">
-                    <a href="/admin" class="nav-item__btn fs-2-2">
+                    <a href="#"class="nav-item__btn fs-2-2" onclick="return false" id="nav-item-dashboard-btn">
                         <i class="fa-solid fa-gauge"></i>
                         <span>Trang Chính</span>
                     </a>
@@ -43,13 +43,13 @@
                   <span>Sản phẩm</span>
                 </div>
                 <li class="nav-item {{#if all_product includeZero=true}} active {{/if}}">
-                    <a href="/admin/products" class="nav-item__btn fs-2-2">
+                    <a href="#" onclick="return false" class="nav-item__btn fs-2-2" id="nav-item-all-product-btn">
                         <i class="fa-brands fa-product-hunt fa-1x"></i>
                         <span>Tất cả sản phẩm</span>
                     </a>
                 </li>
                 <li class="nav-item {{#if add_product includeZero=true}} active {{/if}}">
-                    <a href="/admin/add-product" class="nav-item__btn fs-2-2">
+                    <a href="#" onclick="return false" class="nav-item__btn fs-2-2" id="nav-item-add-product-btn">
                         <i class="fa-solid fa-circle-plus"></i>
                         <span>Thêm sản phẩm mới</span>
                     </a>

@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         let decodedToken;
         if(accessToken){
             decodedToken = jwt_decode(accessToken);
-
+           
             if(decodedToken.exp < Date.now()/1000) {
                 try {
                     console.log('AccessToken het han');

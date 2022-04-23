@@ -13,6 +13,7 @@ class AdminController {
         res.render('admin/index.hbs', {
             layout: 'admin-main.hbs',
             dashboard: 'active',
+            user: req.user,
         });
     }
 
@@ -129,19 +130,26 @@ class AdminController {
 
     // [GET] /admin/add-product
     async addProduct(req, res, next) {
-        const getCategoryPromise = new Promise((resolve, reject) => {
-            Categories.get_all((categoryList) => {
-                resolve(categoryList);
+        try {
+            const getCategoryPromise = new Promise((resolve, reject) => {
+                Categories.get_all((categoryList) => {
+                    resolve(categoryList);
+                });
             });
-        });
-        var categoryList = await getCategoryPromise;
-        categoryList = Object.values(JSON.parse(JSON.stringify(categoryList)));
-
-        res.render('admin/add-product.hbs', {
-            layout: 'admin-main.hbs',
-            add_product: 'active',
-            categories: categoryList,
-        });
+            var categoryList = await getCategoryPromise;
+            categoryList = Object.values(JSON.parse(JSON.stringify(categoryList)));
+    
+            res.render('admin/add-product.hbs', {
+                layout: 'admin-main.hbs',
+                add_product: 'active',
+                categories: categoryList,
+            });
+            
+        }catch(err) {
+            res.status(500).json({
+                message: 'fail',
+            });
+        }
     }
 
     // [GET] /admin/update-product/:slug
@@ -219,7 +227,7 @@ class AdminController {
         const image_list = [];
         let index, len;
 
-        // Loop through all the uploaded images and display them on frontend
+        // Loop through all the uploaded images and create images_list
         for (index = 0, len = files.length; index < len; ++index) {
             const item = [];
             item.push(`/img/products/${files[index].filename}`);
@@ -237,15 +245,23 @@ class AdminController {
         var categoryList = await getCategoryPromise;
         categoryList = Object.values(JSON.parse(JSON.stringify(categoryList)));
 
-        Products.add_new(data, function(response) {
-
-        });
-        res.render('admin/add-product.hbs', {
-            layout: 'admin-main.hbs',
-            add_product: 'active',
-            categories: categoryList,
-            save_product_status: 'success',
-        });
+        try {
+            Products.add_new(data, function(response) {
+            });
+            res.status(200).json({
+                message: 'success',
+            });
+        }catch(err) {
+            res.status(500).json({
+                message: 'fail',
+            });
+        }
+        // res.render('admin/add-product.hbs', {
+        //     layout: 'admin-main.hbs',
+        //     add_product: 'active',
+        //     categories: categoryList,
+        //     save_product_status: 'success',
+        // });
     }
 
     // [POST] /admin/upload

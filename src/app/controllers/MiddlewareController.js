@@ -37,10 +37,15 @@ class MiddlewareController {
                     req.user = null;
                     return next();
                 }
+                
                 Cart.getCartList(user.USER_ID, (products) => {
                     productsCart = JSON.parse(JSON.stringify(products[0]))
                 });
                 req.user = user;
+                if(user.USER_TYPE === 'admin') {
+                    res.redirect('/admin');
+                    return;
+                }
                 next();
             });
         }else {
