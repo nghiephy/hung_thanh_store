@@ -35,14 +35,36 @@ document.addEventListener('DOMContentLoaded', function() {
     
     instance.interceptors.request.use( 
         async (config) => {
-            // if(config.url.indexOf('/user/login') >=0 || config.url.indexOf('/user/refresh') >=0) {
-            //     return config;
-            // }
+            if(config.url.indexOf('/user/login') >=0 || config.url.indexOf('/user/refresh') >=0) {
+                return config;
+            }
 
             const accessToken = getCookie('accessToken');
             let decodedToken;
             if(accessToken){
-                return config;
+                decodedToken = jwt_decode(accessToken);
+           
+                if(decodedToken.exp < Date.now()/1000) {
+                    try {
+                        console.log('AccessToken het han');
+                        // const responseRefresh = (await instance.post('/user/refresh'));
+
+                        // $.post("http://localhost:3000/user/refresh", function(data) {
+                        //     location.reload();
+                        // });
+
+                        const {accessToken} = (await instance.post('http://localhost:3000/user/refresh')).data;
+                        // window.localStorage.setItem('accessToken', accessToken);
+                        config.headers = {
+                            'token': accessToken,
+                        }
+                        // location.reload();
+
+                        return config;
+                    }catch(err) {
+                        return Promise.reject(err);
+                    }
+                }
             }
 
             return config;
@@ -99,12 +121,16 @@ document.addEventListener('DOMContentLoaded', function() {
                     },
                 });
                 if(dataResponse.data.message === 'success') {
+                    // location.replace(dataResponse.request.responseURL);
                     const modal = document.querySelector('.my-modal');
                     const modalItemSuccess = document.querySelector('#modal-successful');
+                    const closeBtn = modalItemSuccess.querySelector('.successful-body__button');
 
                     modal.classList.add('active');
                     modalItemSuccess.classList.add('active');
-                    location.replace(dataResponse.request.responseURL);
+                    closeBtn.addEventListener('click', e => {
+                        window.location.reload();
+                    });
                 }else {
                     alert("Them san pham that bai!");
                 }

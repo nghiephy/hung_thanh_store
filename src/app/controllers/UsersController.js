@@ -72,7 +72,7 @@ class UsersController {
             ...dataUser
         },
         process.env.JWT_ACCESS_KEY,
-        {expiresIn: "90m"}
+        {expiresIn: "10s"}
         );
     } 
 
