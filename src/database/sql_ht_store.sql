@@ -611,10 +611,29 @@ DELIMITER ;
 -- test
 call deleteCartList (2);
 
-update carts_products
-set quantity = 2
-	
-where carts_products.cart_id = 1 and carts_products.product_id = 4
+-- procedure delete all information about product via product_id
+DELIMITER //
+DROP PROCEDURE IF EXISTS destroyProduct //
+CREATE PROCEDURE 
+  destroyProduct(product_id int)
+BEGIN  
+	delete
+    from stock
+    where stock.product_id = product_id;
+    
+    delete
+    from images
+    where images.product_id = product_id;
+    
+    delete
+    from products
+    where products.product_id = product_id;
+END//
+DELIMITER ;
+-- test
+call destroyProduct (30);
+
+
 
 
 

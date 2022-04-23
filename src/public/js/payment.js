@@ -99,7 +99,7 @@ function toggleLayout() {
 function loadInforOrder() {
     var cart = JSON.parse(window.localStorage.getItem('cart')) || [];
     var totalPrice = cart.reduce((total, nextItem) => {
-        return total + parseInt(nextItem.total_price);
+        return total + parseInt(nextItem.TOTAL_PRICE);
     }, 0);
     var htmls = cart.map(item => {
         return `
@@ -107,16 +107,16 @@ function loadInforOrder() {
                 <td class="cart-table__col cart-table__col--product">
                     <div class="cart-product">
                         <a href="#" class="cart-product__image">
-                            <img src="${item.image}" alt="${item.slug}">
+                            <img src="${item.IMAGE}" alt="${item.SLUG}">
                         </a>
-                        <div class="cart-product__title">${item.name}</div>
+                        <div class="cart-product__title">${item.NAME}</div>
                     </div>
                 </td>
                 <td class="cart-table__col cart-table__col--price">
                     <div class="payment-quantity">
-                        <span class="price">${item.price_per_unit} đ</span>
-                        <span class="old-price">${item.price_per_unit} đ</span>
-                        <span class="quantity">x${item.quantity}</span>
+                        <span class="price">${item.PRICE_PER_UNIT} đ</span>
+                        <span class="old-price">${item.PRICE_PER_UNIT} đ</span>
+                        <span class="quantity">x${item.QUANTITY}</span>
                     </div>
                 </td>
             </tr>

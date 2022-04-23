@@ -31,8 +31,28 @@ Product.get_trash = function (result) {
     });
 }
 
-Product.soft_delete = function (ipProduct, timestamp, result) {
-    db.query(`UPDATE PRODUCTS SET DELETED = TRUE, DELETED_AT = '${timestamp}' WHERE PRODUCT_ID = ${ipProduct};`, function(err, data) {
+Product.soft_delete = function (idProduct, timestamp, result) {
+    db.query(`UPDATE PRODUCTS SET DELETED = TRUE, DELETED_AT = '${timestamp}' WHERE PRODUCT_ID = ${idProduct};`, function(err, data) {
+        if(err) {
+            result(err);
+        }else{
+            result(data);
+        }
+    });
+}
+
+Product.destroy_product = function (idProduct, result) {
+    db.query(`call destroyProduct(${idProduct});`, function(err, data) {
+        if(err) {
+            result(err);
+        }else{
+            result(data);
+        }
+    });
+}
+
+Product.restore_product = function (idProduct, result) {
+    db.query(`UPDATE PRODUCTS SET DELETED = FALSE, DELETED_AT = null WHERE PRODUCT_ID = ${idProduct};`, function(err, data) {
         if(err) {
             result(err);
         }else{

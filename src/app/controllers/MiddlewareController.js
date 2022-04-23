@@ -28,7 +28,8 @@ class MiddlewareController {
         var productsCart=null;
         // console.log("Token" + token);
       
-        // console.log(token);
+        console.log("Middleware check >>>");
+        console.log(req.headers);
         if(token) {
             const accessToken = token.split(" ")[0];
             jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, (err, user) => {
@@ -36,6 +37,9 @@ class MiddlewareController {
                 if(err) {
                     req.user = null;
                     return next();
+                    // res.status(401).json({
+                    //     message: "You're not authenticated!",
+                    // });
                 }
                 
                 Cart.getCartList(user.USER_ID, (products) => {
@@ -74,10 +78,9 @@ class MiddlewareController {
                 next();
             });
         }else {
-            // res.status(401).json({
-            //     message: "You're not authenticated!",
-            // });
-            next();
+            res.status(401).json({
+                message: "You're not authenticated!",
+            });
         }
     }
 }

@@ -57,9 +57,9 @@ document.addEventListener('DOMContentLoaded', async function() {
 
                     const {accessToken} = (await instance.post('http://localhost:3000/user/refresh')).data;
                     // window.localStorage.setItem('accessToken', accessToken);
-                    // config.headers = {
-                    //     'token': accessToken,
-                    // }
+                    config.headers = {
+                        'token': accessToken,
+                    }
                     // location.reload();
 
                     return config;
@@ -92,8 +92,13 @@ document.addEventListener('DOMContentLoaded', async function() {
     })
 
     await instance.get('/');
-    if(accessToken)
+    if(accessToken) {
         await instance.post('http://localhost:3000/cart/get-cart');
+        // decodedToken = jwt_decode(accessToken);
+        // if(decodedToken.exp > Date.now()/1000) {
+        //     await instance.post('http://localhost:3000/cart/get-cart');
+        // }
+    }
 
     //Update header data when login successful
     loadDataHeader();

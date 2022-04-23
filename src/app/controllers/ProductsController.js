@@ -10,7 +10,6 @@ class ProductsController {
         });
         const loadProInforAsync = async () => {
             var inforProduct = await getProViaSlugPromise;
-            // inforProduct = Object.values(JSON.parse(JSON.stringify(inforProduct)));
             // console.log(inforProduct);
             res.render('products/show', {
                 ...inforProduct,

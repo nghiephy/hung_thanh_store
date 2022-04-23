@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const forms = document.querySelectorAll('.form-product-home');
     const addToCartHomeBtns = document.querySelectorAll('.home-add-cart-btn');
     const buyNowBtns = document.querySelectorAll('.buy-now');
+    const homeDirectImgBtns = document.querySelectorAll('.home-products-detail-img');
 
     const instance = axios.create({
         baseURL: '/',
@@ -32,7 +33,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     //     location.reload();
                     // });
 
-                    await instance.post('http://localhost:3000/user/refresh');
+                    const {accessToken} = (await instance.post('http://localhost:3000/user/refresh')).data;
+                    config.headers = {
+                        'token': accessToken,
+                    }
                     
                     return config;
                 }catch(err) {
@@ -46,6 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     instance.interceptors.response.use( (response) => {
+        console.log(response);
         
         return response;
     }, err => {
@@ -160,6 +165,18 @@ document.addEventListener('DOMContentLoaded', function() {
             deleteCarProHeader();
         });
     })
+
+    homeDirectImgBtns.forEach((homeDirectImgBtn, indexBtn) => {
+        homeDirectImgBtn.addEventListener('click', async (e) => {
+            const pathToProductDetail = homeDirectImgBtn.getAttribute('href');
+
+            const response = await instance.get(pathToProductDetail);
+            location.href = response.request.responseURL;
+            // if(response.data.message === 'success') {
+            //     window.location.replace(response.request.responseURL);
+            // }
+        });
+    });
 
     function getCookie(cname) {
         let name = cname + "=";

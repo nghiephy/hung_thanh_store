@@ -1,6 +1,5 @@
 
-document.addEventListener('DOMContentLoaded', async function() {
-    
+document.addEventListener('DOMContentLoaded', async function() {   
     const navItemEles = document.querySelectorAll('.nav-item');
     const navLayoutEle = document.querySelector('.navigation');
     const mbNavFulBtn = document.querySelector('.nav-full-btn');
@@ -28,14 +27,23 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     instance.interceptors.request.use( 
         async (config) => {
-            // if(config.url.indexOf('/user/login') >=0 || config.url.indexOf('/user/refresh') >=0) {
-            //     return config;
-            // }
+            if(config.url.indexOf('/user/login') >=0 || config.url.indexOf('/user/refresh') >=0) {
+                return config;
+            }
 
             const accessToken = getCookie('accessToken');
             let decodedToken;
             if(accessToken){
-                return config;
+                decodedToken = jwt_decode(accessToken);
+           
+                if(decodedToken.exp < Date.now()/1000) {
+                    try {
+                        const {accessToken} = (await instance.post('http://localhost:3000/user/refresh')).data;
+                        return config;
+                    }catch(err) {
+                        return Promise.reject(err);
+                    }
+                }
             }
 
             return config;
@@ -72,6 +80,14 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
             return Promise.reject(err);
     });
+
+    if (performance.navigation.type == performance.navigation.TYPE_RELOAD) {
+        const currentURL = window.location.href;
+        const response = await instance.get(currentURL);
+        // const {accessToken} = (await instance.post('http://localhost:3000/user/refresh')).data;
+    } else {
+    console.info( "This page is not reloaded");
+    }
 
     // await instance.get('/admin');
 
@@ -130,6 +146,9 @@ document.addEventListener('DOMContentLoaded', async function() {
         const getTrashBtn = document.getElementById('admin-trash-btn');
         const returnAllProBtn = document.getElementById('all-product-btn');
         const updateProductBtns = document.querySelectorAll('.admin-product-item--update');
+        const btnDeleteProduct = document.getElementById('admin-product-delete-btn');
+        const restoreProductBtns = document.querySelectorAll('.trash-product-item-restore');
+        const destroyProductBtns = document.querySelectorAll('.trash-product-item-destroy');
         
         dashboardBtn.addEventListener('click', e => {
             getDashboard();
@@ -161,6 +180,31 @@ document.addEventListener('DOMContentLoaded', async function() {
                 });
             })
         }
+        if(btnDeleteProduct) {
+            btnDeleteProduct.onclick = function () {
+                var deleteProductForm = document.forms['delete-product-form'];
+                const pathSoftDelete = deleteProductForm.getAttribute('action');
+                console.log(pathSoftDelete);
+                softDeleteProduct(pathSoftDelete);
+            };
+        }
+        if(restoreProductBtns) {
+            restoreProductBtns.forEach( (restoreProductBtn) => {
+                restoreProductBtn.addEventListener('click', e => {
+                    const pathRestore = restoreProductBtn.getAttribute('href');
+                    restoreProduct(pathRestore);
+                });
+            })
+        }
+        if(destroyProductBtns) {
+            destroyProductBtns.forEach( (destroyProductBtn) => {
+                destroyProductBtn.addEventListener('click', e => {
+                    const pathDestroy = destroyProductBtn.getAttribute('href');
+                    destroyProduct(pathDestroy);
+                });
+            })
+        }
+
     };
 
     async function getDashboard() {
@@ -188,6 +232,26 @@ document.addEventListener('DOMContentLoaded', async function() {
     async function updateProduct(pathUpdate) {
         const updateProduct = await instance.get(pathUpdate);
         location.replace(updateProduct.request.responseURL);
+    }
+
+    async function softDeleteProduct(pathSoftDelete) {
+        const softDeleteResponse = await instance.delete(pathSoftDelete);
+
+        if(softDeleteResponse.data.message === 'success') {
+            window.location.reload();
+        }
+    }
+    async function restoreProduct(pathRestore) {
+        const pathRestoreResponse = await instance.put(pathRestore);
+        if(pathRestoreResponse.data.message === 'success') {
+            window.location.reload();
+        }
+    }
+    async function destroyProduct(pathDestroy) {
+        const pathDestroyResponse = await instance.delete(pathDestroy);
+        if(pathDestroyResponse.data.message === 'success') {
+            window.location.reload();
+        }
     }
 });
 

@@ -14,12 +14,11 @@ document.addEventListener('DOMContentLoaded', function() {
     deleteModal.addEventListener('show.bs.modal', function (event) {
         var button = event.relatedTarget
         idProduct = button.getAttribute('data-bs-id')
-
-        
+        deleteProductForm.action = '/admin/soft-delete/' + idProduct;
     })
 
-    btnDeleteProduct.onclick = function () {
-        deleteProductForm.action = 'soft-delete/' + idProduct + '?_method=DELETE';
-        deleteProductForm.submit();
-    };
+    // btnDeleteProduct.onclick = function () {
+    //     deleteProductForm.action = 'soft-delete/' + idProduct + '?_method=DELETE';
+    //     deleteProductForm.submit();
+    // };
 });

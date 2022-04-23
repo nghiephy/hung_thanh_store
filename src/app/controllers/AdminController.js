@@ -62,7 +62,7 @@ class AdminController {
         });
     }
 
-    // [GET] /admin/soft-delete
+    // [DELETE] /admin/soft-delete
     async softDelete(req, res, next) {
         const idProduct = req.params.id;
         let date_ob = new Date();
@@ -87,10 +87,56 @@ class AdminController {
                 message: 'fail',
             });
         }else {
-            // res.status(200).json({
-            //     message: 'success',
-            // });
-            res.redirect('back');
+            res.status(200).json({
+                message: 'success',
+            });
+            // res.redirect('back');
+        }
+    }
+
+    // [DELETE] /admin/destroy-product
+    async destroyProduct(req, res, next) {
+        const idProduct = req.params.id;
+
+        const destroyPromise = new Promise((resolve, reject) => {
+            Products.destroy_product(idProduct, (data) => {
+                resolve(data);
+            });
+        });
+        const data = await destroyPromise;
+
+        if(data.errno) {
+            res.status(500).json({
+                message: 'fail',
+            });
+        }else {
+            res.status(200).json({
+                message: 'success',
+            });
+            // res.redirect('back');
+        }
+    }
+
+    // [PUT] /admin/restore-product/:id
+    async resotreProduct(req, res, next) {
+        const idProduct = req.params.id;
+
+        const restorePromise = new Promise((resolve, reject) => {
+            Products.restore_product(idProduct, (data) => {
+                resolve(data);
+            });
+        });
+        const data = await restorePromise;
+
+        if(data.errno) {
+            res.status(200).json({
+                message: 'fail',
+            });
+        }else {
+            res.status(200).json({
+                message: 'success',
+            });
+            // res.redirect('back');
         }
     }
 

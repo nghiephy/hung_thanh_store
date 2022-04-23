@@ -23,7 +23,7 @@
                                     <input  type="hidden" name="image" value="{{IMAGE_PATH}}">
                                     <input  type="hidden" name="product_id" value="{{PRODUCT_ID}}">
                                 </form>
-                                <a href="/products/{{SLUG}}" class="imgLink">
+                                <a href="/products/{{SLUG}}" onclick="return false" class="imgLink home-products-detail-img">
                                     <div class="imgBox">
                                         <img src="{{IMAGE_PATH}}" alt="{{NAME}}">
                                     </div>
@@ -50,12 +50,12 @@
                                     </div>
                                 </div>
                                 <div class="item-options">
-                                    <a href="/cart" class="buy-now" >Mua ngay</a>
+                                    <a href="/cart" onclick="return false" class="buy-now" >Mua ngay</a>
                                     <div class="option-right">
                                         <a href="/products/{{SLUG}}">
                                             <ion-icon name="eye"></ion-icon>
                                         </a>
-                                        <button class="home-add-cart-btn" id="home-add-cart-btn" >
+                                        <button class="home-add-cart-btn" onclick="return false" id="home-add-cart-btn" >
                                             <ion-icon name="cart"></ion-icon>
                                         </button>
                                     </div>
