@@ -3,9 +3,41 @@
     right: 0;
     left: 0;
     padding: 10px;
+    .all-product-wrap {
+        float: right;
+        margin-bottom: 20px;
+    }
+    &-actions {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        margin-bottom: 20px;
+        &-option {
+            display: inline-block;
+            &.delete-mul-wrap .trash-btn {
+                background-color: $warning-color;
+            }
+            &.admin-trash-wrap {
+                margin-left: auto;
+            }
+            .delete-mul-options-item {
+                color: $white-color;
+                i {
+                    margin-right: 10px;
+                }
+                &.cancel-btn {
+                    background-color: $modify-button-color;
+                    margin-right: 20px;
+                }
+                &.confirm-btn {
+                    background-color: $warning-color;
+                }
+            }
+        }
+    }
     .trash {
+        float: right;
         &-btn {
-            float: right;
             margin-bottom: 20px;
             padding: 8px 14px;
             cursor: pointer;
@@ -25,6 +57,17 @@
         margin: 0 auto;
         &_wraper {
             font-size: 1.4rem !important;
+        }
+    }
+    .admin-product-checkbox {
+        cursor: pointer;
+        width: 16px;
+        height: 16px;
+        accent-color: $hover-color;
+        &-wrap {
+            display: none;
+            padding: 13px ;
+            width: unset !important;
         }
     }
     &-item {

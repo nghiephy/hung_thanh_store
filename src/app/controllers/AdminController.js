@@ -62,9 +62,11 @@ class AdminController {
         });
     }
 
-    // [DELETE] /admin/soft-delete
+    // [POST] /admin/soft-delete/:id
     async softDelete(req, res, next) {
         const idProduct = req.params.id;
+        var idProductList = req.body.id_product_array;
+        var idProductArray = [];
         let date_ob = new Date();
         let date = ("0" + date_ob.getDate()).slice(-2);
         let month = ("0" + (date_ob.getMonth()+1)).slice(-2);
@@ -75,15 +77,21 @@ class AdminController {
 
         const timestamp = year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds;
 
+        if(idProduct!=='null')
+            idProductArray.push(idProduct);
+        if(idProductList) {
+            idProductList = JSON.parse(req.body.id_product_array);
+            idProductArray = idProductArray.concat(idProductList);
+        }
+        
         const softDeletePromise = new Promise((resolve, reject) => {
-            Products.soft_delete(idProduct, timestamp, (data) => {
+            Products.soft_delete(idProductArray, timestamp, (data) => {
                 resolve(data);
             });
         });
         const data = await softDeletePromise;
-
         if(data.errno) {
-            res.status(200).json({
+            res.status(500).json({
                 message: 'fail',
             });
         }else {

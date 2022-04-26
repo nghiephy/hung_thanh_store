@@ -46,15 +46,34 @@
             </tbody>
         </table> --}}
     </div>
-    <div class="trash-wrap" >
-        <a href="#" onclick="return false" class="button button--type2 trash-btn" id="admin-trash-btn">
-            <i class="fa-solid fa-trash-can"></i>
-            <span>Thùng Rác</span>
-        </a>
+    <div class="admin-product-actions">
+        <div class="admin-product-actions-option delete-mul-wrap" >
+            <a href="#" onclick="return false" class="button button--type2 trash-btn" id="admin-delete-mul-btn">
+                <i class="fa-solid fa-calendar-xmark"></i>
+                <span>Xoá nhiều</span>
+            </a>
+        </div>
+        <div class="admin-product-actions-option delete-mul-options-wrap d-none" >
+            <a href="#" onclick="return false" class="button button--type2 delete-mul-options-item cancel-btn" id="admin-delete-mul-cancel-btn">
+                <i class="fa-solid fa-calendar-xmark"></i>
+                <span>Huỷ</span>
+            </a>
+            <a href="#" onclick="return false" class="button button--type2 delete-mul-options-item confirm-btn" id="admin-delete-mul-confirm-btn"  data-bs-toggle="modal" data-bs-target="#admin-product-item--delete-mul">
+                <i class="fa-solid fa-calendar-xmark"></i>
+                <span>Xoá</span>
+            </a>
+        </div>
+        <div class="trash-wrap admin-product-actions-option admin-trash-wrap" >
+            <a href="#" onclick="return false" class="button button--type2 trash-btn" id="admin-trash-btn">
+                <i class="fa-solid fa-trash-can"></i>
+                <span>Thùng Rác</span>
+            </a>
+        </div>
     </div>
     <table id="admin-product-table" class="display nowrap" style="width:100%">
         <thead>
             <tr>
+                <th class="admin-product-checkbox-wrap" ><input type="checkbox" class="admin-product-checkbox check-all" id="delete-all-product-ck-all"></th>
                 <th>ID</th>
                 <th>Tên sản phẩm</th>
                 <th>Loại</th>
@@ -68,6 +87,7 @@
         <tbody>
             {{#each products}}
                 <tr class="admin-product-item">
+                    <td class="admin-product-checkbox-wrap" ><input type="checkbox" name="checkbox-delete" class="admin-product-checkbox check-item" value={{this.PRODUCT_ID}}></td>
                     <td>{{this.PRODUCT_ID}}</td>
                     <td>{{this.NAME}}</td>
                     <td>{{this.CAT_NAME}}</td>
@@ -101,6 +121,24 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Huỷ</button>
                 <button type="button" class="btn btn-danger" id="admin-product-delete-btn">Xoá bỏ</button>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="admin-product-item--delete-mul" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Xoá các sản phẩm này?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn chắc chắn muốn xoá các sản phẩm này?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Huỷ</button>
+                <button type="button" class="btn btn-danger" id="admin-product-delete-mul-btn">Xoá bỏ</button>
             </div>
             </div>
         </div>

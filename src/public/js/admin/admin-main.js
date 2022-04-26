@@ -149,6 +149,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         const btnDeleteProduct = document.getElementById('admin-product-delete-btn');
         const restoreProductBtns = document.querySelectorAll('.trash-product-item-restore');
         const destroyProductBtns = document.querySelectorAll('.trash-product-item-destroy');
+        var confirmDeleteMulBtn = document.querySelector('#admin-product-item--delete-mul');
+        var idProductArray = [];
         
         dashboardBtn.addEventListener('click', e => {
             getDashboard();
@@ -204,6 +206,17 @@ document.addEventListener('DOMContentLoaded', async function() {
                 });
             })
         }
+        if(confirmDeleteMulBtn) {
+            confirmDeleteMulBtn.onclick = function() {
+                const checkboxes = document.querySelectorAll('input[name="checkbox-delete"]');
+                checkboxes.forEach(item => {
+                    if(item.checked==true) {
+                        idProductArray.push(Number(item.value));
+                    }
+                })
+                softDeleteProduct('/admin/soft-delete/null', idProductArray);
+            }
+        }
 
     };
 
@@ -234,8 +247,12 @@ document.addEventListener('DOMContentLoaded', async function() {
         location.replace(updateProduct.request.responseURL);
     }
 
-    async function softDeleteProduct(pathSoftDelete) {
-        const softDeleteResponse = await instance.delete(pathSoftDelete);
+    async function softDeleteProduct(pathSoftDelete, idProductArray) {
+        const dataIdProduct = JSON.stringify(idProductArray);
+        console.log(dataIdProduct);
+        const softDeleteResponse = await instance.post(pathSoftDelete, {
+            id_product_array: dataIdProduct,
+        });
 
         if(softDeleteResponse.data.message === 'success') {
             window.location.reload();

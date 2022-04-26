@@ -32,7 +32,7 @@ Product.get_trash = function (result) {
 }
 
 Product.soft_delete = function (idProduct, timestamp, result) {
-    db.query(`UPDATE PRODUCTS SET DELETED = TRUE, DELETED_AT = '${timestamp}' WHERE PRODUCT_ID = ${idProduct};`, function(err, data) {
+    db.query(`UPDATE PRODUCTS SET DELETED = TRUE, DELETED_AT = '${timestamp}' WHERE PRODUCT_ID IN (?);`, [idProduct], function(err, data) {
         if(err) {
             result(err);
         }else{

@@ -2442,8 +2442,42 @@ img {
   left: 0;
   padding: 10px;
 }
-.admin-product .trash-btn {
+.admin-product .all-product-wrap {
   float: right;
+  margin-bottom: 20px;
+}
+.admin-product-actions {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.admin-product-actions-option {
+  display: inline-block;
+}
+.admin-product-actions-option.delete-mul-wrap .trash-btn {
+  background-color: #f33a58;
+}
+.admin-product-actions-option.admin-trash-wrap {
+  margin-left: auto;
+}
+.admin-product-actions-option .delete-mul-options-item {
+  color: white;
+}
+.admin-product-actions-option .delete-mul-options-item i {
+  margin-right: 10px;
+}
+.admin-product-actions-option .delete-mul-options-item.cancel-btn {
+  background-color: #4e73df;
+  margin-right: 20px;
+}
+.admin-product-actions-option .delete-mul-options-item.confirm-btn {
+  background-color: #f33a58;
+}
+.admin-product .trash {
+  float: right;
+}
+.admin-product .trash-btn {
   margin-bottom: 20px;
   padding: 8px 14px;
   cursor: pointer;
@@ -2463,6 +2497,17 @@ img {
 }
 .admin-product-table_wraper {
   font-size: 1.4rem !important;
+}
+.admin-product .admin-product-checkbox {
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+  accent-color: #f06292;
+}
+.admin-product .admin-product-checkbox-wrap {
+  display: none;
+  padding: 13px;
+  width: unset !important;
 }
 .admin-product-item--actions {
   display: flex;
