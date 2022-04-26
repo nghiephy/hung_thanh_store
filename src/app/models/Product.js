@@ -51,6 +51,16 @@ Product.destroy_product = function (idProduct, result) {
     });
 }
 
+Product.delete_images = function (idImage, result) {
+    db.query(`DELETE FROM IMAGES WHERE IMAGES.IMAGE_ID IN (?);`, [idImage], function(err, data) {
+        if(err) {
+            result(err);
+        }else{
+            result(data);
+        }
+    });
+}
+
 Product.restore_product = function (idProduct, result) {
     db.query(`UPDATE PRODUCTS SET DELETED = FALSE, DELETED_AT = null WHERE PRODUCT_ID = ${idProduct};`, function(err, data) {
         if(err) {
@@ -95,7 +105,7 @@ Product.get_pro_via_slug = function (slug, result) {
         });
     });
     const getImagesListPromise = new Promise((resolve, reject) => {
-        db.query(`select images.PATH as IMG_PATH, images.DESCRIPTION as IMG_DESCRIPTION from products join images on images.PRODUCT_ID = products.PRODUCT_ID where products.slug = '${slug}';`, function(err, images) {
+        db.query(`select images.IMAGE_ID AS IMAGE_ID, images.PATH as IMG_PATH, images.DESCRIPTION as IMG_DESCRIPTION from products join images on images.PRODUCT_ID = products.PRODUCT_ID where products.slug = '${slug}';`, function(err, images) {
             if(err) {
                 reject(err);
             }else{
@@ -153,29 +163,36 @@ Product.add_new = async function (data, result) {
     });
     const addImage = (product_id) => {
         return new Promise((resolve, reject) => {
-            dataImage.forEach(item => {
-                item.unshift(product_id);
-            });
-            db.query(`insert into images(PRODUCT_ID, PATH, DESCRIPTION) values ?`, [dataImage], function(err, results, fields) {
-                if(err) {
-                    reject(err);
-                }else{
-                    resolve(results);
-                }
-            });
+            if(dataImage.length>0) {
+                dataImage.forEach(item => {
+                    item.unshift(product_id);
+                });
+                db.query(`insert into images(PRODUCT_ID, PATH, DESCRIPTION) values ?`, [dataImage], function(err, results, fields) {
+                    if(err) {
+                        reject(err);
+                    }else{
+                        resolve(results);
+                    }
+                });
+            }else {
+                resolve("");
+            }
         });
     };
     const addStock = (product_id) => {
         return new Promise((resolve, reject) => {
-            dataStock.unshift(product_id);
-            console.log(dataStock);
-            db.query(`insert into stock(PRODUCT_ID, QUANTITY, CREATED_AT) values (?,?,?)`, dataStock, function(err, results, fields) {
-                if(err) {
-                    reject(err);
-                }else{
-                    resolve(results);
-                }
-            });
+            if(dataStock) {
+                dataStock.unshift(product_id);
+                db.query(`insert into stock(PRODUCT_ID, QUANTITY, CREATED_AT) values (?,?,?)`, dataStock, function(err, results, fields) {
+                    if(err) {
+                        reject(err);
+                    }else{
+                        resolve(results);
+                    }
+                });
+            }else {
+                resolve("");
+            }
         });
     };
 
@@ -183,6 +200,55 @@ Product.add_new = async function (data, result) {
     const responseImage = await addImage(responseProduct.insertId);
     const responseStock = await addStock(responseProduct.insertId);
     // const responseImage = insertImagesPromise;
+
+}
+
+Product.update = async function (data, result) {
+    const dataProduct = [
+        data.id_product,
+        data.category_product,
+        data.name_product,
+        data.slug_product,
+        data.description_product,
+        data.basic_unit_product,
+        data.price_per_unit_product,
+        data.brand_product,
+        data.origin_product,
+        data.updated_at,
+    ];
+    const dataImage = data.image_list;
+    const updateProductPromise = new Promise((resolve, reject) => {
+        db.query(`call updateProduct(?,?,?,?,?,?,?,?,?,?)`, dataProduct, function(err, results, fields) {
+            if(err) {
+                reject(err);
+            }else{
+                resolve(results);
+            }
+        });
+    });
+    const addImage = (product_id) => {
+        return new Promise((resolve, reject) => {
+            if(dataImage.length>0) {
+                dataImage.forEach(item => {
+                    item.unshift(product_id);
+                });
+                db.query(`insert into images(PRODUCT_ID, PATH, DESCRIPTION) values ?`, [dataImage], function(err, results, fields) {
+                    if(err) {
+                        reject(err);
+                    }else{
+                        resolve(results);
+                    }
+                });
+            }else {
+                resolve("");
+            }
+        });
+    };
+
+    const responseProduct = await updateProductPromise;
+    console.log("Checl response updated >>>>");
+    console.log(responseProduct);
+    const responseImage = await addImage(data.id_product);
 
 }
 

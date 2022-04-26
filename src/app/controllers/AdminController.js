@@ -116,7 +116,6 @@ class AdminController {
             var product = await getProductPromise;
             product = Object.values(JSON.parse(JSON.stringify(product)));
             const images = product[1];
-            console.log(images);
             images.forEach(item => {
                 var pathImage = path.resolve(__dirname, '../../public') + item.IMG_PATH;
                 fs.unlink(pathImage, (err) => {
@@ -138,6 +137,96 @@ class AdminController {
                 });
             }
         };
+    }
+
+    // [PUT] /admin/update-product/:id/:slug
+    async handleUpdateProduct(req, res, next) {
+        const idProduct = req.params.id;
+        const backURL=req.header('Referer') || '/';
+        const data = req.body;
+        var arrayImageDelete = JSON.parse(data.images_delete_list);
+        var idImageDelete = [];
+        var pathImageDelete = [];
+        var timestamp = '';
+        let date_ob = new Date();
+        let date = ("0" + date_ob.getDate()).slice(-2);
+        let month = ("0" + (date_ob.getMonth()+1)).slice(-2);
+        let year = date_ob.getFullYear();
+        let hours = date_ob.getHours();
+        let minutes = date_ob.getMinutes();
+        let seconds = date_ob.getSeconds();
+
+        timestamp = year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds;
+        data.updated_at = timestamp;
+        data.id_product = idProduct;
+        data.quantity_product = [data.quantity_product, timestamp];
+        if(Array.isArray(data.description_product)) {
+            data.description_product = data.description_product.join("");
+        }
+        // Config your options
+        const options = {
+            replacement: '-', // replace spaces with replacement character, defaults to `-`
+            remove: undefined, // remove characters that match regex, defaults to `undefined`
+            lower: true, // convert to lower case, defaults to `false`
+            strict: true, // strip special characters except replacement, defaults to `false`
+            locale: 'vi', // language code of the locale to use
+        };
+
+        const slug_product = slugify(req.body.name_product, options);
+        data.slug_product = slug_product;
+
+        if (req.fileValidationError) {
+            return res.send(req.fileValidationError);
+        }
+        if (req.files) {
+            const files = req.files;
+            const image_list = [];
+            let index, len;
+    
+            // Loop through all the uploaded images and create images_list
+            for (index = 0, len = files.length; index < len; ++index) {
+                const item = [];
+                item.push(`/img/products/${files[index].filename}`);
+                item.push(data.name_product);
+                image_list.push(item);
+            }
+            data.image_list = image_list;
+        }
+        // console.log(data);
+        if(arrayImageDelete.length > 0) {
+            arrayImageDelete.forEach(item => {
+                // var itemArray = [Number(item.idImage)];
+                idImageDelete.push(Number(item.idImage));
+                pathImageDelete.push(item.imgPath);
+            });
+
+            pathImageDelete.forEach(item => {
+                var pathImage = path.resolve(__dirname, '../../public') + item;
+                fs.unlink(pathImage, (err) => {
+                    if (err) {
+                    console.error(err);
+                    return;
+                    }
+                });
+            });
+            Products.delete_images(idImageDelete, function(response) {
+                console.log("Check delete image response >>>>");
+                console.log(response);
+            });
+        }
+
+        try {
+            Products.update(data, function(response) {
+            });
+            res.status(200).json({
+                message: 'success',
+            });
+        }catch(err) {
+            res.status(500).json({
+                message: 'fail',
+            });
+        }
+        
     }
 
     // [PUT] /admin/restore-product/:id

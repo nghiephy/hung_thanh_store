@@ -26,10 +26,9 @@ class MiddlewareController {
     verifyUserLogin(req, res, next) {
         const token = req.headers.token || req.cookies.accessToken;
         var productsCart=null;
-        // console.log("Token" + token);
       
-        console.log("Middleware check >>>");
-        console.log(req.headers);
+        // console.log("Middleware check >>>");
+        // console.log(req.headers);
         if(token) {
             const accessToken = token.split(" ")[0];
             jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, (err, user) => {
@@ -65,7 +64,7 @@ class MiddlewareController {
         if(token) {
             const accessToken = token.split(" ")[0];
             jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, (err, user) => {
-                console.log(user);
+                // console.log(user);
                 if(err || user.USER_TYPE !== 'admin') {
                     res.status(401).json({
                         message: "You're not authenticated!",

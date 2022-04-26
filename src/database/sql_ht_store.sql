@@ -400,7 +400,6 @@ values
     (8, 'Máy tính Casio MX 12B - Hồng', 'may-tinh-casio-mx-12b---hong', null, 'Cái', 207500, 'Casio', 'Việt Nam'),
     (2, 'Giấy A4 Excel 70 Gsm', 'giay-a4-excel-70-gsm', null, 'Raem', 77400, 'Excel', 'Việt Nam');
 
-
 /*==============================================================*/
 /* Add values for table stock                                                */
 /*==============================================================*/
@@ -632,6 +631,29 @@ END//
 DELIMITER ;
 -- test
 call destroyProduct (30);
+
+-- procedure delete all information about product via product_id
+DELIMITER //
+DROP PROCEDURE IF EXISTS updateProduct //
+CREATE PROCEDURE 
+  updateProduct(product_id int, category_id int, name text, slug text, description text, basic_unit text, price_per_unit float, brand text, origin text, updated_at timestamp)
+BEGIN  
+	update products
+    set products.CATEGORY_ID = category_id,
+		products.NAME = name,
+        products.SLUG = slug,
+        products.DESCRIPTION = description,
+        products.BASIC_UNIT = basic_unit,
+        products.PRICE_PER_UNIT = price_per_unit,
+        products.BRAND = brand,
+        products.ORIGIN = origin,
+        products.UPDATED_AT = updated_at
+	where products.PRODUCT_ID = product_id;
+END//
+DELIMITER ;
+-- test
+
+
 
 
 

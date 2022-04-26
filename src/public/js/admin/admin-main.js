@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     instance.interceptors.request.use( 
         async (config) => {
-            if(config.url.indexOf('/user/login') >=0 || config.url.indexOf('/user/refresh') >=0) {
+            if(config.url.indexOf('/user/login') >=0 || config.url.indexOf('/user/logout') >=0 || config.url.indexOf('/user/refresh') >=0) {
                 return config;
             }
 

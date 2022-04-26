@@ -2573,6 +2573,31 @@ table.dataTable tbody td {
   transform: translateX(-50%);
 }
 
+.update-product #update-product-body-form .images_product-slider {
+  margin-bottom: 10px;
+}
+.update-product #update-product-body-form .images_product-item {
+  position: relative;
+  transition: all 0.2s ease-in;
+}
+.update-product #update-product-body-form .images_product-item__delete {
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+  display: none;
+}
+.update-product #update-product-body-form .images_product-item__delete ion-icon {
+  width: 20px;
+  height: 20px;
+}
+.update-product #update-product-body-form .images_product-item:hover {
+  opacity: 0.8;
+}
+.update-product #update-product-body-form .images_product-item:hover .images_product-item__delete {
+  display: inline-block;
+}
+
 .modal-login {
   padding: 30px;
   background-color: white;

@@ -1,8 +1,8 @@
-<section class="add-product">
+<section class="add-product update-product">
     <h1 class="add-product-title" >Cập nhật thông tin sản phẩm</h1>
-
+    <input style="display: none;" type="text" name="" value="{{product.[0].PRODUCT_ID}}" id="update_product_id">
     <div class="add-product-body">
-        <form id="add-product-body-form" action="/admin/add-product" method="POST" enctype="multipart/form-data">
+        <form id="update-product-body-form" action="/admin/update-product" method="POST" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="name_product">Tên sản phẩm</label>
                 <input class="form-control" type="text" name="name_product" id="name_product" placeholder="Nhập tên sản phẩm" value="{{product.[0].NAME}}">
@@ -16,6 +16,9 @@
             <div class="owl-carousel images_product-slider">
                 {{#each product.[1]}}
                     <div class="images_product-item">
+                        <div data-id-image="{{this.IMAGE_ID}}" class="images_product-item__delete">
+                            <ion-icon class="button button--primary" title="Xoá ảnh" name="close"></ion-icon>
+                        </div>
                         <img src="{{this.IMG_PATH}}" alt="{{this.IMG_DESCRIPTION}}">
                     </div>
                 {{/each}}
@@ -58,7 +61,7 @@
             </div>
             <div class="form-group">
                 <label for="name_product">Số lượng</label>
-                <input class="form-control" type="number" name="quantity_product" id="quantity_product" placeholder="Nhập số lượng hàng" value="{{stock.QUANTITY}}">
+                <input disabled class="form-control" type="number" name="quantity_product" id="quantity_product" placeholder="Nhập số lượng hàng" value="{{stock.QUANTITY}}">
                 <span class="form-message"></span>
             </div>
              <div class="form-group">

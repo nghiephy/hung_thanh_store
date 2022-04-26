@@ -1,0 +1,28 @@
+.update-product {
+    #update-product-body-form {
+        .images_product-slider {
+            margin-bottom: 10px;
+        }
+        .images_product-item {
+            position: relative;
+            transition: all .2s ease-in;
+            &__delete {
+                position: absolute;
+                top: 0;
+                right: 0;
+                cursor: pointer;
+                display: none;
+                ion-icon {
+                    width: 20px;
+                    height: 20px;
+                }
+            }
+            &:hover {
+                opacity: 0.8;
+            }
+            &:hover .images_product-item__delete {
+                display: inline-block;
+            }
+        }
+    }
+}
