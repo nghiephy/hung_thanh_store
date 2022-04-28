@@ -79,10 +79,15 @@ create table CUSTOMERS
    CUSTOMER_ID          int not null auto_increment,
    USER_ID              int,
    NAME                 text,
-   BIRTHDAY             timestamp,
+   BIRTHDAY             date,
+   PHONE				varchar(15) unique,
    EMAIL                text,
    GENDER               bool,
    PHOTO                text,
+   COMPANY_NAME			text,
+   COM_TAX_NUMBER 		text,
+   COM_ADDRESS			text,
+   UPDATED_AT			timestamp,
    primary key (CUSTOMER_ID)
 );
 
@@ -119,13 +124,18 @@ create table EMPLOYEES
    EMPLOYEE_ID          int not null auto_increment,
    USER_ID              int,
    NAME                 text,
-   BIRTHDAY             timestamp,
+   BIRTHDAY             date,
+   PHONE				varchar(15) unique,
    EMAIL                text,
    GENDER               bool,
    PHOTO                text,
    SALARY               numeric(8,0),
    BONUS                float,
    POSITION             text,
+   COMPANY_NAME			text,
+   COM_TAX_NUMBER 		text,
+   COM_ADDRESS			text,
+   UPDATED_AT			timestamp,
    primary key (EMPLOYEE_ID)
 );
 
@@ -444,7 +454,6 @@ values
 	('nghiephy', '123456', 1, 'admin', '2022-04-4 00:00:01'),
     ('haiyenln', '123456', 1, 'customer', '2022-04-4 00:00:01');
 
-
 /*==============================================================*/
 /* Add values for table employees                                                */
 /*==============================================================*/
@@ -632,7 +641,7 @@ DELIMITER ;
 -- test
 call destroyProduct (30);
 
--- procedure delete all information about product via product_id
+-- procedure update information of product by admin
 DELIMITER //
 DROP PROCEDURE IF EXISTS updateProduct //
 CREATE PROCEDURE 
@@ -652,6 +661,70 @@ BEGIN
 END//
 DELIMITER ;
 -- test
+
+-- procedure update information of user via user_id
+DELIMITER //
+DROP PROCEDURE IF EXISTS updateAccountInfor //
+CREATE PROCEDURE 
+  updateAccountInfor(user_id int, table_name text, name text, birthday date, email text, gender boolean, photo text, phone text, company_name text, com_tax_number text, com_address text, updated_at timestamp)
+BEGIN
+	set @table = table_name;
+	if @table = 'customers' then
+		update customers
+ 		set customers.NAME = name,
+ 			customers.BIRTHDAY = birthday,
+ 			customers.EMAIL = email,
+ 			customers.GENDER = gender,
+ 			customers.PHOTO = photo,
+ 			customers.PHONE = phone,
+ 			customers.COMPANY_NAME = company_name,
+ 			customers.COM_TAX_NUMBER = com_tax_number,
+			customers.COM_ADDRESS = com_address,
+ 			customers.UPDATED_AT = updated_at
+		where customers.USER_ID = user_id;
+	elseif @table = 'employees' then
+		update employees
+ 		set employees.NAME = name,
+ 			employees.BIRTHDAY = birthday,
+ 			employees.EMAIL = email,
+ 			employees.GENDER = gender,
+ 			employees.PHOTO = photo,
+ 			employees.PHONE = phone,
+ 			employees.COMPANY_NAME = company_name,
+ 			employees.COM_TAX_NUMBER = com_tax_number,
+			employees.COM_ADDRESS = com_address,
+ 			employees.UPDATED_AT = updated_at
+		where employees.USER_ID = user_id;
+	end if;
+END//
+DELIMITER ;
+-- test
+
+-- procedure update information of user via user_id
+DELIMITER //
+DROP PROCEDURE IF EXISTS updateAccountInfor //
+CREATE PROCEDURE 
+  updateAccountInfor(user_id int, table_name text, name text, birthday date, email text, gender boolean, photo text, phone text, company_name text, com_tax_number text, com_address text, updated_at timestamp)
+BEGIN
+	SET @s = CONCAT('update ', table_name,
+					'set NAME = ', name,', ',
+						'BIRTHDAY = ', birthday,', ',
+                        'EMAIL = ', email,', ',
+                        'GENDER = ', gender,', ',
+                        'PHOTO = ', photo,', ',
+                        'PHONE = ', phone,', ',
+                        'COMPANY_NAME = ', company_name,', ',
+                        'COM_TAX_NUMBER = ', com_tax_number,', ',
+                        'COM_ADDRESS = ', com_address,', ',
+                        'UPDATED_AT = ', updated_at,', ',
+					'where USER_ID = ', user_id);
+	PREPARE stmt1 FROM @s; 
+	EXECUTE stmt1;
+    DEALLOCATE PREPARE stmt1; 
+END//
+DELIMITER ;
+-- test
+call updateAccountInfor(15,'customers','Customer Văn Toàn','2000-01-15','customervt@gmail.com',true,'/img/users/capturejpg-1651152279007.JPG','0901222333','Elephant Company','12000MST','Chau Thanh, Hau Giang','2022-04-28 21:36:15');
 
 
 

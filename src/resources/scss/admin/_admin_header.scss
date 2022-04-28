@@ -11,6 +11,60 @@
     }
     &-after-login {
         font-size: 1.4rem;
+        .header-top-config-item {
+            position: relative;
+            .user-options-popup {
+                position: absolute;
+                right: 0%;
+                top: 100%;
+                width: 200px;
+                border-radius: 5px;
+                z-index: 10;
+                background-color: $white-color;
+                box-shadow: 0 5px 10px rgba(0,0,0,0.7);
+                padding: 12px 0;
+                display: none;
+                &__list {
+                    list-style: none;
+                    width: 100%;
+                    padding-left: 0;
+                    margin-bottom: unset;
+                }
+                &__item {
+                    display: block;
+                    width: 100%;
+                    height: 36px;
+                    a {
+                        display: block;
+                        width: 100%;
+                        height: 100%;
+                        line-height: 36px;
+                        font-size: 1.4rem;
+                        padding: 0px 20px;
+                        color: $black-color;
+                        &:hover {
+                            background-color: rgba(0,0,0,0.1);
+                        }
+                    }
+                }
+                &::after {
+                    content: "";
+                    position: absolute;
+                    width: 14px;
+                    height: 14px;
+                    border-top: 1px solid;
+                    border-left: 1px solid;
+                    border-color: $border-color;
+                    top: -9px;
+                    left: 70%;
+                    background: $white-color;
+                    transform: rotate(45deg);
+                }
+                &.active {
+                    display: block;
+                }
+            }
+        }
     }
     .username-user {
         font-size: 1.4rem;

@@ -24,14 +24,14 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     const accessToken = getCookie('accessToken');
-    let decodedToken = null;
-    if(accessToken){
-        decodedToken = jwt_decode(accessToken);
-    }
-    if(decodedToken !== null && decodedToken.ACTIVE===1) {
-        imgEle.setAttribute("src", `${decodedToken.PHOTO!==null?decodedToken.PHOTO:'/img/avatar.jpg'}`);
-        usernameEle.innerHTML = decodedToken.NAME;
-    }
+    // let decodedToken = null;
+    // if(accessToken){
+    //     decodedToken = jwt_decode(accessToken);
+    // }
+    // if(decodedToken !== null && decodedToken.ACTIVE===1) {
+    //     imgEle.setAttribute("src", `${decodedToken.PHOTO!==null?decodedToken.PHOTO:'/img/avatar.jpg'}`);
+    //     usernameEle.innerHTML = decodedToken.NAME;
+    // }
     
     instance.interceptors.request.use( 
         async (config) => {

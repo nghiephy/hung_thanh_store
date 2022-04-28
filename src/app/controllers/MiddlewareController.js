@@ -32,7 +32,7 @@ class MiddlewareController {
         if(token) {
             const accessToken = token.split(" ")[0];
             jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, (err, user) => {
-                // console.log(user);
+                console.log(user);
                 if(err) {
                     req.user = null;
                     return next();
@@ -45,10 +45,11 @@ class MiddlewareController {
                     productsCart = JSON.parse(JSON.stringify(products[0]))
                 });
                 req.user = user;
-                if(user.USER_TYPE === 'admin') {
-                    res.redirect('/admin');
-                    return;
-                }
+                // if(user.USER_TYPE === 'admin' && req.originalUrl !== '/user/account') {
+                //     console.log('OK');
+                //     res.redirect('/admin');
+                //     return;
+                // }
                 next();
             });
         }else {

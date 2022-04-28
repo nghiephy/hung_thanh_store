@@ -2,7 +2,10 @@
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 const bcrypt = require('bcrypt');
+const moment = require('moment');
 const User = require('../models/User');
+const fs = require('fs');
+const path = require('path');
 
 dotenv.config();
 
@@ -72,7 +75,7 @@ class UsersController {
             ...dataUser
         },
         process.env.JWT_ACCESS_KEY,
-        {expiresIn: "90m"}
+        {expiresIn: "3d"}
         );
     } 
 
@@ -229,8 +232,56 @@ class UsersController {
 
     //[GET] /user/information
     async getInforUser(req, res, next) {
+        const userId = req.user.USER_ID;
+        var data = null;
+
+        const getInforPromise = new Promise((resolve, reject) => {
+            if(req.user.USER_TYPE == 'customer') {
+                User.getFullUserInfor(userId, 'customers', (userInfor) => {
+                    resolve(userInfor[0]);
+                })
+            }else {
+                User.getFullUserInfor(userId, 'employees', (userInfor) => {
+                    resolve(userInfor[0]);
+                })
+            }
+        });
+        
+        data = await getInforPromise;
+        const newBirthday = moment.utc(data.BIRTHDAY).format('YYYY-MM-DD')
+        data.BIRTHDAY = newBirthday;
+
         res.status(200).json({
-            data: req.user,
+            user: data,
+        });
+    }
+
+    //[GET] /user/account
+    async getAccountUser(req, res, next) {
+        const userId = req.user.USER_ID;
+        var data = null;
+        console.log("Controller");
+        console.log(req.user);
+        const getInforPromise = new Promise((resolve, reject) => {
+            if(req.user.USER_TYPE == 'customer') {
+                User.getFullUserInfor(userId, 'customers', (userInfor) => {
+                    resolve(userInfor[0]);
+                })
+            }else {
+                User.getFullUserInfor(userId, 'employees', (userInfor) => {
+                    resolve(userInfor[0]);
+                })
+            }
+        });
+
+        data = await getInforPromise;
+        const newBirthday = moment.utc(data.BIRTHDAY).format('YYYY-MM-DD')
+        data.BIRTHDAY = newBirthday;
+        
+        res.render('user/account.hbs', {
+            layout: 'account-main.hbs',
+            data_contact: data,
+            contact: 'active',
         });
     }
 
@@ -265,6 +316,81 @@ class UsersController {
 
             res.status(200).json({accessToken: newAccessToken});
         });
+    }
+
+    //[PUT] /user/update-account
+    async updateAccountUser(req, res, next) {
+        var avatarPath = '';
+        const dataPayload = req.body;
+        var dataUser = [];
+        var pathOldAvatar = path.resolve(__dirname, '../../public') + dataPayload.path_old_avatar;
+        dataUser.push(req.user.USER_ID);
+
+        var timestamp = '';
+        let date_ob = new Date();
+        let date = ("0" + date_ob.getDate()).slice(-2);
+        let month = ("0" + (date_ob.getMonth()+1)).slice(-2);
+        let year = date_ob.getFullYear();
+        let hours = date_ob.getHours();
+        let minutes = date_ob.getMinutes();
+        let seconds = date_ob.getSeconds();
+
+        timestamp = year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds;
+
+        if (req.fileValidationError) {
+            return res.send(req.fileValidationError);
+        }
+        else if (!req.file) {
+            avatarPath = dataPayload.path_old_avatar;
+        }else{
+            avatarPath = "/img/users/" + req.file.filename;
+
+            fs.unlink(pathOldAvatar, (err) => {
+                if (err) {
+                console.error(err);
+                return;
+                }
+            });
+        }
+
+        if(req.user.USER_TYPE === 'customer') {
+            dataUser.push('customers');
+        }else {
+            dataUser.push('employees');
+        }
+
+        const dataCustomer = [
+            dataPayload.name_account,
+            dataPayload.birthday_account,
+            dataPayload.email_account,
+            Boolean(dataPayload.gender_account),
+            avatarPath,
+            dataPayload.phone_account,
+            dataPayload.company_name_account,
+            dataPayload.tax_number_account,
+            dataPayload.address_invoice_account,
+            timestamp
+        ];
+        dataUser = dataUser.concat(dataCustomer);
+
+        console.log("Check data account >>>>");
+        console.log(req.body);
+        console.log("Check data user >>>>");
+        console.log(dataUser);
+        
+        try {
+            User.updateCustomerInfor(dataUser, (response) => {
+                console.log(response);
+            });
+
+            res.status(200).json({
+                message: 'success',
+            });
+        }catch(err) {
+            res.status(500).json({
+                message: 'fail',
+            });
+        }
     }
 }
 

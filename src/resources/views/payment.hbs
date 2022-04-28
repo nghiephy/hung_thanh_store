@@ -25,24 +25,28 @@
                             <span>Nếu bạn đã có tài khoản. Vui lòng <a href="#">Đăng nhập</a> / <a href="#">Đăng ký</a> để có thể nhận được các chương trình khuyến mãi hấp dẫn từ Hung-Thanh-Bookstore.</span>
                         </div>
                         <div class="form-wrap">
-                            <form id="form-infor-payment" action="" method="POST">
-                                <div class="col-auto mt-4">
+                            <form id="form-infor-payment" action="/payment" method="POST" enctype="multipart/form-data">
+                                <div class="col-auto mt-4 form-group">
                                     <label for="name-payment-form" class="visually-hidden">Họ và tên</label>
                                     <input type="text" class="form-control" id="name-payment-form" name="name" placeholder="Họ và tên">
+                                    <span class="form-message"></span>
                                 </div>
                                 <div class="row gx-5 mt-4">
-                                    <div class="col-auto col-lg-6 col-md-6 col-sm-12">
+                                    <div class="col-auto col-lg-6 col-md-6 col-sm-12 form-group">
                                         <label for="email-payment-form" class="visually-hidden">Email</label>
                                         <input type="email" class="form-control" id="email-payment-form" name="email" placeholder="Email">
+                                        <span class="form-message"></span>
                                     </div>
-                                    <div class="col-auto col-lg-6 col-md-6 col-sm-12">
+                                    <div class="col-auto col-lg-6 col-md-6 col-sm-12 form-group">
                                         <label for="phone-payment-form" class="visually-hidden">Số điện thoại</label>
                                         <input type="phone" class="form-control" id="phone-payment-form" name="phone" placeholder="Số điện thoại">
+                                        <span class="form-message"></span>
                                     </div>
                                 </div>
-                                <div class="col-auto mt-4">
-                                    <label for="address-payment-form" class="visually-hidden">Địa chỉ</label>
+                                <div class="col-auto mt-4 form-group">
+                                    <label for="address-payment-form " class="visually-hidden">Địa chỉ</label>
                                     <input type="text" class="form-control" id="address-payment-form" name="address" placeholder="Địa chỉ">
+                                    <span class="form-message"></span>
                                 </div>
                                 <div class="row gx-5 mt-4">
                                     <div class="col-lg-4 col-md-4 col-sm-12">
@@ -50,6 +54,7 @@
                                             <select name="city" class="form-control form-select" id="city" aria-label="Default select example">
                                                 <option value="" selected >Chọn Tỉnh/Thành phố</option>
                                             </select>
+                                            <span class="form-message"></span>
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-sm-12">
@@ -57,6 +62,7 @@
                                             <select name="district" class="form-control form-select" id="district" aria-label="Default select example">
                                                 <option value="" selected >Chọn Quận/Huyện</option>
                                             </select>
+                                            <span class="form-message"></span>
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-sm-12">
@@ -64,6 +70,7 @@
                                             <select name="ward" class="form-control form-select" id="ward" aria-label="Default select example">
                                                 <option value="" selected >Chọn Phường/Xã</option>
                                             </select>
+                                            <span class="form-message"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -77,24 +84,21 @@
                             <label for="invoice-ck">Thông tin xuất hoá đơn</label>
                         </div>
                         <div class="form-invoice mt-5">
-                            <form action="">
+                            <form id="form-infor-invoice" action="">
                                 <div class="form-group mb-4 row">
                                     <label for="invoice-name-company" class="col-sm-2 col-form-label">Tên công ty</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="invoice-name-company" placeholder="Ít nhất 2 ký tự">
-                                    </div>
+                                    <input type="text" class="form-control col-sm-10" name="invoice-name-company" id="invoice-name-company" placeholder="Ít nhất 2 ký tự">
+                                    <span class="form-message"></span>
                                 </div>
                                 <div class="form-group mb-4 row">
                                     <label for="invoice-tax-number" class="col-sm-2 col-form-label">Mã số thuế</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="invoice-tax-number" placeholder="Mã số thuế">
-                                    </div>
+                                    <input type="text" class="form-control col-sm-10" name="invoice-tax-number" id="invoice-tax-number" placeholder="Mã số thuế">
+                                    <span class="form-message"></span>
                                 </div>
                                 <div class="form-group mb-4 row">
                                     <label for="invoice-address" class="col-sm-2 col-form-label">Địa chỉ</label>
-                                    <div class="col-sm-10">
-                                        <textarea class="form-control" id="invoice-address" placeholder="Địa chỉ" rows="3"></textarea>
-                                    </div>
+                                    <textarea class="form-control col-sm-10" id="invoice-address" name="invoice-address" placeholder="Địa chỉ" rows="3"></textarea>
+                                    <span class="form-message"></span>
                                 </div>
                             </form>
                             <div class="notes-section">
@@ -123,7 +127,7 @@
                                     <input type="radio" class="radio-input" name="payment-cash" id="payment-atm">
                                     <label class="" for="payment-atm">
                                         <img src="/img/icon/atm-machine.png" alt="atm-icon">
-                                        Thanh toán tiền mặt khi nhận hàng
+                                        Chuyển khoản ngân hàng
                                     </label>
                                 </div>
                             </li>
@@ -185,13 +189,13 @@
                         <div class="card--note mt-3">
                             <div class="card-body">
                                 <div class="form-label">Ghi chú</div>
-                                <textarea rows="4" name="note" class="form-control"></textarea>
+                                <textarea rows="4" name="note" class="form-control" id="card-note-order"></textarea>
                             </div>
                         </div>
 
                         <div class="card--buy mt-4">
                             <div class="card-body">
-                                <button id="order-btn" class="button button--type2 modal-label" data-modal-id="modal-successful" >Đặt hàng</button>
+                                <button id="order-btn" class="button button--type2" type="submit" form="form-infor-payment" >Đặt hàng</button>
                             </div>
                         </div>
                     </div>
@@ -204,4 +208,4 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
-<script src="/js/payment.js"></script>
+<script type="module" src="/js/payment.js"></script>

@@ -16,14 +16,14 @@ document.addEventListener('DOMContentLoaded', async function() {
     });
 
     const accessToken = getCookie('accessToken');
-    let decodedToken = null;
-    if(accessToken){
-        decodedToken = jwt_decode(accessToken);
-    }
-    if(decodedToken !== null && decodedToken.ACTIVE===1) {
-        imgEle.setAttribute("src", `${decodedToken.PHOTO!==null?decodedToken.PHOTO:'/img/avatar.jpg'}`);
-        usernameEle.innerHTML = decodedToken.NAME;
-    }
+    // let decodedToken = null;
+    // if(accessToken){
+    //     decodedToken = jwt_decode(accessToken);
+    // }
+    // if(decodedToken !== null && decodedToken.ACTIVE===1) {
+    //     imgEle.setAttribute("src", `${decodedToken.PHOTO!==null?decodedToken.PHOTO:'/img/avatar.jpg'}`);
+    //     usernameEle.innerHTML = decodedToken.NAME;
+    // }
 
     instance.interceptors.request.use( 
         async (config) => {
@@ -91,6 +91,20 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     // await instance.get('/admin');
 
+    // request to load data cart & infor user if user authenticated
+    if(accessToken) {
+        // request to get information of user
+        // display it into views
+        const dataUser = await instance.get('/user/information');
+        console.log(dataUser.data);
+        if(dataUser.status === 200) {
+            // beforeLoginEle.classList.add('d-none');
+            // afterLoginEle.classList.remove('d-none');
+            imgEle.setAttribute("src", `${dataUser.data.user.PHOTO!==null?dataUser.data.user.PHOTO:'/img/avatar.jpg'}`);
+            usernameEle.innerHTML = dataUser.data.user.NAME;
+        }
+    }
+
     // Handle click button toggle navigation in the left
     navItemEles.forEach(navItemEle => {
         navItemEle.addEventListener('click', (e) => {
@@ -150,8 +164,24 @@ document.addEventListener('DOMContentLoaded', async function() {
         const restoreProductBtns = document.querySelectorAll('.trash-product-item-restore');
         const destroyProductBtns = document.querySelectorAll('.trash-product-item-destroy');
         var confirmDeleteMulBtn = document.querySelector('#admin-product-item--delete-mul');
+        var headerAdminOptionsBtn = document.querySelector('#header-top-config-options');
+        const optionsPopup = headerAdminOptionsBtn.querySelector('.user-options-popup');
         var idProductArray = [];
-        
+
+        document.addEventListener('click', (e) => {
+            let targetElement = e.target;
+
+            do {
+                if(targetElement == headerAdminOptionsBtn) {
+                    optionsPopup.classList.toggle('active');
+                    return;
+                }
+                targetElement = targetElement.parentNode;
+            }while(targetElement);
+            
+            optionsPopup.classList.remove('active');
+        });
+
         dashboardBtn.addEventListener('click', e => {
             getDashboard();
         });
@@ -272,9 +302,14 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
 });
 
-
-
-
+function getParent (element, selector) {
+    while (element.parentElement) {
+        if(element.parentElement.matches(selector)) {
+            return element.parentElement
+        }
+        element = element.parentElement
+    }
+}
 
 function handleModal() {
     const modalExitBtns = document.querySelectorAll('.modal__theme-exit');

@@ -1,0 +1,69 @@
+<section class="account" >
+    <form action="#" method="POST" id="account-detail-form" enctype="multipart/form-data">
+        <div class="form-group mb-5">
+            <div class="block-account">
+                <div class="block-account__imgBox">
+                    <img id="block-account__imgAvatar" src="{{#if data_contact.PHOTO includeZero=true}}{{data_contact.PHOTO}}{{else}}/img/icon/anonymous-avatar.svg{{/if}}" alt="avatar">
+                    <label for="avatar-upload">Chọn ảnh</label>
+                    <input type="file" accept="image/*" class="d-none" name="avatar_account" id="avatar-upload">
+                </div>
+                <div class="block-account__body">
+                    <h5 class="name">{{data_contact.NAME}}</h5>
+                    <p class="message">Dung lượng file tối đa 1MB.</p>
+                    <p class="message">Định dạng: .JPEG, .PNG.</p>
+                </div>
+            </div>
+        </div>
+        <h5 class="form-section-title" >Thông tin tài khoản</h5>
+        <div class="form-group mb-5">
+            <label for="name-account" class="col-form-label">Họ tên</label>
+            <input type="text" class="form-control" name="name_account" id="name-account" placeholder="Họ và tên" value="{{data_contact.NAME}}">
+            <span class="form-message"></span>
+        </div>
+        <div class="form-group mb-5">
+            <label for="email-account" class="col-form-label">Email</label>
+            <input type="text" class="form-control" name="email_account" id="email-account" placeholder="Email" value="{{data_contact.EMAIL}}">
+            <span class="form-message"></span>
+        </div>
+        <div class="form-group mb-5">
+            <label for="phone-account" class="col-form-label">Số điện thoại</label>
+            <input type="text" class="form-control" name="phone_account" id="phone-account" placeholder="Số điện thoại" value="{{data_contact.PHONE}}">
+            <span class="form-message"></span>
+        </div>
+        <div class="form-group mb-5 birthday">
+            <label for="birthday-account" class="col-form-label">Ngày sinh</label>
+            <input type="date" class="form-control" name="birthday_account" id="birthday-account" value="{{data_contact.BIRTHDAY}}">
+            <span class="form-message"></span>
+        </div>
+        <div class="form-group mb-5">
+            <label class="col-form-label">Giới tính</label>
+            <input type="radio" class="radio-input" name="gender_account" value="true" id="male" {{#if data_contact.GENDER }}checked{{/if}}>
+            <label class="radio-label" for="male">Nam</label>
+            <input type="radio" class="radio-input" name="gender_account" value="false" id="female" {{#unless data_contact.GENDER }}checked{{/unless}}>
+            <label class="radio-label" for="female">Nữ</label>
+            <span class="form-message"></span>
+        </div>
+
+        <h5 class="form-section-title" >Thông tin xuất hoá đơn</h5>
+        <div class="form-group mb-5">
+            <label for="company-name-account" class="col-form-label">Tên công ty</label>
+            <input type="text" class="form-control" name="company_name_account" id="company-name-account" placeholder="Tên công ty" value="{{data_contact.COMPANY_NAME}}">
+            <span class="form-message"></span>
+        </div>
+        <div class="form-group mb-5">
+            <label for="tax-number-account" class="col-form-label">Mã số thuế</label>
+            <input type="text" class="form-control" name="tax_number_account" id="tax-number-account" placeholder="Mã số thuế" value="{{data_contact.COM_TAX_NUMBER}}">
+            <span class="form-message"></span>
+        </div>
+        <div class="form-group mb-5">
+            <label for="address-invoice-account" class="col-form-label">Địa chỉ</label>
+            <input type="text" class="form-control" name="address_invoice_account" id="address-invoice-account" placeholder="Địa chỉ" value="{{data_contact.COM_ADDRESS}}">
+            <span class="form-message"></span>
+        </div>
+
+        <div class="form-group mb-5">
+            <button type="submit" class="button button--type2" id="account-submit-btn">Cập nhật</button>
+        </div>
+    </form>
+</section>
+<script type="module" src="/js/user/account.js"></script>

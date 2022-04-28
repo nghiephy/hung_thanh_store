@@ -147,7 +147,7 @@ class AdminController {
         };
     }
 
-    // [PUT] /admin/update-product/:id/:slug
+    // [PUT] /admin/update-product/:id
     async handleUpdateProduct(req, res, next) {
         const idProduct = req.params.id;
         const backURL=req.header('Referer') || '/';

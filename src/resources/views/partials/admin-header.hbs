@@ -11,15 +11,31 @@
             </div>
             <div class="header-user-control col-lg-7 col-md-6 col-sm-5">
                 <div id="admin-header-after-login" class="header-top-config admin-header-after-login">
-                    <div class="modal-label header-top-config-item" data-modal-id="">
+                    <div class="header-top-config-item" id="header-top-config-options">
                         <div class="imgBox">
                             <img src="{{#if user.PHOTO includeZero=true}}{{user.PHOTO}}{{else}}/img/avatar.jpg{{/if}}" alt="avata">
                         </div>
                         <span class="username-user" >{{user.NAME}}</span>
+                        <div class="user-options-popup">
+                        <ul class="user-options-popup__list" >
+                            <li class="user-options-popup__item">
+                                <a href="/user/account">Tài khoản của tôi</a>
+                            </li>
+                            <li class="user-options-popup__item">
+                                <a href="">Đơn hàng</a>
+                            </li>
+                            <li class="user-options-popup__item">
+                                <a href="">Sản phẩm yêu thích</a>
+                            </li>
+                            <li class="user-options-popup__item" id="admin-header-top-config-item-logout">
+                                <a href="/">Đăng xuất</a>
+                            </li>
+                        </ul>
                     </div>
-                    <div class="header-top-config-item" id="admin-header-top-config-item-logout">
+                    </div>
+                    {{!-- <div class="header-top-config-item" id="admin-header-top-config-item-logout">
                         <span>Đăng xuất</span>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>

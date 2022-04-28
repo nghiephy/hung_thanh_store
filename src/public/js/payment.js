@@ -1,7 +1,57 @@
 
+document.addEventListener('DOMContentLoaded', function() {
+    const instance = axios.create({
+        baseURL: '/',
+        timeout: 3*1000, 
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
 
-$(document).ready(function () {
+    instance.interceptors.request.use( async (config) => {
+        if(config.url.indexOf('/user/login') >=0 || config.url.indexOf('/user/refresh') >=0) {
+            return config;
+        }
 
+        const accessToken = getCookie('accessToken');
+        let decodedToken;
+        if(accessToken){
+            decodedToken = jwt_decode(accessToken);
+
+            if(decodedToken.exp < Date.now()/1000) {
+                try {
+                    console.log('AccessToken het han');
+                    // const responseRefresh = (await instance.post('/user/refresh'));
+
+                    // $.post("http://localhost:3000/user/refresh", function(data) {
+                    //     location.reload();
+                    // });
+
+                    const {accessToken} = (await instance.post('http://localhost:3000/user/refresh')).data;
+                    config.headers = {
+                        'token': accessToken,
+                    }
+                    
+                    return config;
+                }catch(err) {
+                    return Promise.reject(err);
+                }
+            }
+        }
+        return config;
+    }, err => {
+        return Promise.reject(err);
+    });
+
+    instance.interceptors.response.use( (response) => {
+        console.log(response);
+        
+        return response;
+    }, err => {
+        return Promise.reject(err);
+    })
+
+    formValidate();
     loadCitisDisWard();
     toggleLayout();
     loadInforOrder();
@@ -19,22 +69,62 @@ $(document).ready(function () {
 
         const address = addressValue +', ' + wardValue +', ' + districtValue +', ' + cityValue;
         
-        console.log(nameValue);
-        $.post("/payment",
-        {
-           cart: cart,
-           name: nameValue,
-           email: emailValue,
-           phone: phoneValue,
-           address: address,
-        },
-        function (data, status) {
-           console.log(data);
-        });
     });
- });
 
+    async function formValidate() {
 
+        Validator({
+            form: '#form-infor-payment',
+            formGroupSelector: '.form-group',
+            errorSelector: '.form-message',
+            onSubmit: async function (dataForm) {
+                console.log(dataForm);
+                const invoiceCkEle = document.querySelector('#invoice-ck');
+                const cardNoteOrderEle = document.querySelector('#card-note-order');
+
+                dataForm.note_card = cardNoteOrderEle.value;
+                const invoiceForm = document.querySelector('#form-infor-invoice');
+                const form = new FormData(invoiceForm);
+                var dataInvoice = {};
+                form.forEach(function(value, key){
+                    dataInvoice[key] = value;
+                });
+                var json = JSON.stringify(dataInvoice);
+                dataForm.infor_invoice = json;
+                const dataRespon = await instance.post('/payment', dataForm);
+            },
+            rules: [
+                Validator.isRequired('#name-payment-form', 'Vui lòng nhập tên đầy đủ của bạn'),
+                Validator.isRequired('#email-payment-form'),
+                Validator.isRequired('#phone-payment-form'),
+                Validator.isRequired('#address-payment-form'),
+                Validator.isRequired('#city'),
+                Validator.isRequired('#district'),
+                Validator.isRequired('#ward'),
+            ]
+        })
+        
+        function getParent (element, selector) {
+            while (element.parentElement) {
+                if(element.parentElement.matches(selector)) {
+                    return element.parentElement
+                }
+                element = element.parentElement
+            }
+        }
+
+        function isRequired (selector, message) {
+           const inputEle = document.querySelector(selector);
+           const value = inputEle.value;
+
+            if (value != String) {
+                return value ? undefined : message || "Vui lòng nhập trường này!"
+            } else {
+                return value.trim() ? undefined : message || "Vui lòng nhập trường này!"
+            }
+        }
+    }
+});
 
 
 function loadCitisDisWard() {
@@ -142,5 +232,21 @@ function handleSubmitOrder() {
         // formInforPayment.submit();
 
     });
+}
+
+function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+        }
+    }
+    return "";
 }
 

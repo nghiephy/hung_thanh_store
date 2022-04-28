@@ -13,28 +13,18 @@ document.addEventListener('DOMContentLoaded', async function() {
     // deleteCarProHeader();
     formValidate();
     // loadDataHeader();
+    handleClick();
 
     const accessToken = getCookie('accessToken');
     let decodedToken = null;
     if(accessToken){
         decodedToken = jwt_decode(accessToken);
     }
-
+    
     const beforeLoginEle = document.querySelector('#header-top-config-before-login');
     const afterLoginEle = document.querySelector('#header-top-config-after-login');
     const imgEle = afterLoginEle.querySelector('.imgBox img');
     const usernameEle = afterLoginEle.querySelector('.username-user');
-
-    const listProductOfAnonymous = window.localStorage.getItem('cart');
-
-    if(decodedToken !== null && decodedToken.ACTIVE===1) {
-        beforeLoginEle.classList.add('d-none');
-        afterLoginEle.classList.remove('d-none');
-        imgEle.setAttribute("src", `${decodedToken.PHOTO!==null?decodedToken.PHOTO:'/img/avatar.jpg'}`);
-        usernameEle.innerHTML = decodedToken.NAME;
-    }
-
-    
 
     instance.interceptors.request.use( async (config) => {
         if(config.url.indexOf('/user/login') >=0 || config.url.indexOf('/user/refresh') >=0) {
@@ -75,30 +65,46 @@ document.addEventListener('DOMContentLoaded', async function() {
     });
 
     instance.interceptors.response.use( (response) => {
-        const listProduct = response.data.listProduct;
-
-        if(accessToken) {
-            if(listProduct){
-                window.localStorage.setItem('cart', JSON.stringify(listProduct));
-            }
-            else{
-                window.localStorage.setItem('cart', JSON.stringify([]));
-            }
-        }
-
+      
         return response;
     }, err => {
         return Promise.reject(err);
     })
 
+    // request to load page "/" first
     await instance.get('/');
+
+    // request to load data cart & infor user if user authenticated
     if(accessToken) {
-        await instance.post('http://localhost:3000/cart/get-cart');
-        // decodedToken = jwt_decode(accessToken);
-        // if(decodedToken.exp > Date.now()/1000) {
-        //     await instance.post('http://localhost:3000/cart/get-cart');
-        // }
+        // request to get information of user
+        // display it into views
+        const dataUser = await instance.get('/user/information');
+        console.log(dataUser);
+        if(dataUser.status === 200) {
+            beforeLoginEle.classList.add('d-none');
+            afterLoginEle.classList.remove('d-none');
+            imgEle.setAttribute("src", `${dataUser.data.user.PHOTO!==null?dataUser.data.user.PHOTO:'/img/avatar.jpg'}`);
+            usernameEle.innerHTML = dataUser.data.user.NAME;
+            if(dataUser.data.user.POSITION === 'admin') {
+                const manageBtn = document.querySelector("#header-top-config-item-manage");
+                manageBtn.addEventListener('click', (e) => {
+                    window.location.replace("/admin");
+                });
+            }
+        }
+
+        // request to get cart's data of user
+        // store it into localStorage
+        const cartResponse = await instance.post('http://localhost:3000/cart/get-cart');
+        if(cartResponse.data.listProduct){
+            window.localStorage.setItem('cart', JSON.stringify(cartResponse.data.listProduct));
+        }
+        else{
+            window.localStorage.setItem('cart', JSON.stringify([]));
+        }
+        
     }
+
 
     //Update header data when login successful
     loadDataHeader();
@@ -119,7 +125,12 @@ document.addEventListener('DOMContentLoaded', async function() {
     function loadDataHeader() {
         loadCartHeader();
         loadCartListHeader();
-        // localStorage.clear();
+
+        //hidden admin mode button
+        if(decodedToken.USER_TYPE !== 'admin') {
+            const adminModeBtn = document.querySelector('#header-top-config-item-manage');
+            adminModeBtn.classList.add('d-none');
+        }
     } 
 
     // Handle modal display
@@ -164,6 +175,26 @@ document.addEventListener('DOMContentLoaded', async function() {
             window.location.replace("/");
         })
 
+    }
+
+    // Hanlde event click UI in main layout
+    function handleClick() {
+        const userButton = document.querySelector('#header-top-config-item-user');
+        const userOptionsPopup = userButton.querySelector('.user-options-popup');
+
+        document.addEventListener('click', (e) => {
+            let targetElement = e.target;
+
+            do {
+                if(targetElement == userButton) {
+                    userOptionsPopup.classList.toggle('active');
+                    return;
+                }
+                targetElement = targetElement.parentNode;
+            }while(targetElement);
+            
+            userOptionsPopup.classList.remove('active');
+        });
     }
 
     function formValidate() {

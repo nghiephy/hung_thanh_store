@@ -94,9 +94,10 @@ class SiteController {
 
     // [POST] /payment
     handlePayment(req, res, next) {
+        console.log("Check body =>>>>>");
         console.log(req.body);
         res.json([{
-            cart: req.body.cart,
+            cart: req.body,
         }]);
     }
 }

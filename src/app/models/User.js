@@ -104,4 +104,27 @@ User.getListUser = async function(result) {
     });
 }
 
+User.getFullUserInfor = async function(user_id, table, result) {
+
+    db.query(`select * from ${table} where USER_ID = ${user_id};`, function(err, userInfor) {
+        if(err) {
+            result(err);
+        }else {
+            userInfor = JSON.parse(JSON.stringify(userInfor));
+
+            result(userInfor);
+        }
+    });
+}
+
+User.updateCustomerInfor = async function(dataUser, result) {
+    db.query(`call updateAccountInfor(?,?,?,?,?,?,?,?,?,?,?,?);`, dataUser, function(err, results, fields) {
+        if(err) {
+            result(err);
+        }else{
+            result(results);
+        }
+    });
+}
+
 module.exports = User;
