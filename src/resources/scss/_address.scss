@@ -1,0 +1,48 @@
+.address {
+    .row>* {
+        width: auto;
+    }
+    &-title {
+        display: inline-block;
+        margin-right: auto;
+        color: $hover-dark-color;
+        font-size: 2.2rem;
+        font-weight: 500;
+    }
+    &-list {
+        list-style: none;
+        padding-left: 0;
+    }
+    &-item {
+        background-color: $nav-item-background;
+        padding: 20px;
+        border-radius: 5px;
+        margin-top: 20px;
+        font-size: 1.4rem;
+        border-bottom: 1px solid $border-color;
+        padding-bottom: 20px;
+        &__name {
+            .name {
+                margin-right: auto;
+                font-weight: bold;
+            }
+            .actions {
+                p {
+                    display: inline-block;
+                    margin-bottom: 0;
+                }
+                span {
+                    margin-left: 5px;
+                    cursor: pointer;
+                    &:hover {
+                        color: $hover-color;
+                    }
+                }
+            }
+            .default {
+                font-weight: bold;
+            }
+        }
+
+    }
+}

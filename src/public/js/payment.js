@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return response;
     }, err => {
         return Promise.reject(err);
-    })
+    });
 
     formValidate();
     loadCitisDisWard();

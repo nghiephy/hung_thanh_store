@@ -48,16 +48,16 @@
                                 </div>
                             </div>
                             <ul class="nav-list">
-                                <li class="nav-item {{#if contact includeZero=true}} active {{/if}}">
-                                    <a href="#"class="nav-item__btn fs-2-2" onclick="return false" id="nav-item-dashboard-btn">
+                                <li class="nav-item {{#if account includeZero=true}} active {{/if}}">
+                                    <a href="/user/account"class="nav-item__btn fs-2-2" id="nav-item-dashboard-btn">
                                         <div class="nav-item__btn-imgBox">
                                             <img src="/img/icon/account-icon.svg" alt="">
                                         </div>
                                         <span>Tài khoản của tôi</span>
                                     </a>
                                 </li>
-                                <li class="nav-item {{#if dashboard includeZero=true}} active {{/if}}">
-                                    <a href="#"class="nav-item__btn fs-2-2" onclick="return false" id="nav-item-dashboard-btn">
+                                <li class="nav-item {{#if address includeZero=true}} active {{/if}}">
+                                    <a href="/user/address"class="nav-item__btn fs-2-2" id="nav-item-dashboard-btn">
                                         <div class="nav-item__btn-imgBox">
                                             <img src="/img/icon/address-icon.svg" alt="">
                                         </div>
@@ -103,76 +103,96 @@
         <div class="my-modal">
             <div class="modal__overlay"></div>
             <div class="modal__body">
-              <div id="modal-login" class="modal-login modal__item">
+              <div id="modal-add-address" class="modal__item address-body-modal">
                 <div class="modal__theme-exit">
-                  <ion-icon name="close"></ion-icon>
+                    <ion-icon name="close"></ion-icon>
                 </div>
-                <form class="modal-login-form" id="modal-login-form" action="/user/login" method="POST">
-                  <h2 class="mb-5 title" >Đăng nhập</h2>
+                <h2 class="title" >Thêm địa chỉ mới</h2>
+                <form id="add-address-body-form" action="/user/add-address" method="POST">
                   <div class="form-group">
-                    <input type="text" name="username" id="username_login" placeholder="Tài khoản">
-                    <span class="form-message"></span>
+                      <input class="form-control" type="text" name="name" id="name_add_address" placeholder="Họ tên">
+                      <span class="form-message"></span>
                   </div>
                   <div class="form-group">
-                    <input type="password" name="password" id="password_login" placeholder="Mật khẩu">
-                    <span class="form-message"></span>
+                      <input class="form-control" type="text" name="phone" id="phone_add_address" placeholder="Số điện thoại">
+                      <span class="form-message"></span>
                   </div>
-                  <button class="btn-login button mb-4" type="submit">Đăng nhập</button>
-                  <a class="reset-password mb-4" href="#">Cài lại mật khẩu</a>
-                  <span class="register mb-4" >Bạn chưa có tài khoản? <a href="#" class="modal-label" data-modal-id="modal-register" >Đăng ký</a></span>
-                  <div class="divider">
-                    Hoặc 
+                  <div class="form-group">
+                      <input class="form-control" type="text" name="address" id="address_add_address" placeholder="Địa chỉ">
+                      <span class="form-message"></span>
                   </div>
-                  <div class="social-login">
-                    <button class="button" type="butotn" >
-                      <img src="/img/icon/facebook-icon.svg" alt="">
-                    </button>
-                    <button class="button" type="butotn" >
-                       <img src="/img/icon/google-icon.svg" alt="">
-                    </button>
+                  <div class="form-group">
+                      <select name="city" class="form-control form-select" id="city" aria-label="Default select example">
+                          <option value="" selected >Chọn Tỉnh/Thành phố</option>
+                      </select>
+                      <span class="form-message"></span>
+                  </div>
+                  <div class="form-group ">
+                      <select name="district" class="form-control form-select" id="district" aria-label="Default select example">
+                          <option value="" selected >Chọn Quận/Huyện</option>
+                      </select>
+                      <span class="form-message"></span>
+                  </div>
+                  <div class="form-group">
+                      <select name="ward" class="form-control form-select" id="ward" aria-label="Default select example">
+                          <option value="" selected >Chọn Phường/Xã</option>
+                      </select>
+                      <span class="form-message"></span>
+                  </div>
+                  <div class="form-group checkbox">
+                      <input type="checkbox" id="default_add_address" name="default" value="true">
+                      <label for="default_add_address">Đặt làm mặc định</label>
+                  </div>
+                  <div class="address-button-wrap">
+                    <button id="back-address-button" onclick="return false" class="modal__theme-exit-button back-address-body-button button button--type1">Quay lại</button>
+                    <button id="add-address-button" class="add-address-body-button button button--type2">Thêm</button>
                   </div>
                 </form>
               </div>
 
-              <div id="modal-register" class="modal-login modal__item">
+              <div id="modal-modify-address" class="modal__item address-body-modal">
                 <div class="modal__theme-exit">
-                  <ion-icon name="close"></ion-icon>
+                    <ion-icon name="close"></ion-icon>
                 </div>
-                <form id="modal-register-form" class="modal-login-form" method="POST" action="/user/register">
-                  <h2 class="mb-4 title" >Đăng ký</h2>
+                <h2 class="title" >Cập nhật địa chỉ</h2>
+                <form id="modify-address-body-form" action="/user/modify-address" method="POST">
                   <div class="form-group">
-                    <input type="text" name="name" id="name_register" placeholder="Họ tên">
-                    <span class="form-message"></span>
-                  </div>
-                  <div class="form-group">
-                    <input type="email" name="email" id="email_register" placeholder="Email">
-                    <span class="form-message"></span>
+                      <input class="form-control" type="text" name="name" id="name_modify_address" placeholder="Họ tên">
+                      <span class="form-message"></span>
                   </div>
                   <div class="form-group">
-                    <input type="text" name="username" id="username_register" placeholder="Tài khoản">
-                    <span class="form-message"></span>
+                      <input class="form-control" type="text" name="phone" id="phone_modify_address" placeholder="Số điện thoại">
+                      <span class="form-message"></span>
                   </div>
                   <div class="form-group">
-                    <input type="password" name="password" id="password_register" placeholder="Mật khẩu">
-                    <span class="form-message"></span>
+                      <input class="form-control" type="text" name="address" id="address_modify_address" placeholder="Địa chỉ">
+                      <span class="form-message"></span>
                   </div>
                   <div class="form-group">
-                    <input type="password" name="re_password" id="re_password_register" placeholder="Xác nhận mật khẩu">
-                    <span class="form-message"></span>
+                      <select name="city" class="form-control form-select" id="city_modify" aria-label="Default select example">
+                          <option value="" selected >Chọn Tỉnh/Thành phố</option>
+                      </select>
+                      <span class="form-message"></span>
                   </div>
-                  <button class="btn-login button mb-4" type="submit">Đăng ký</button>
-                  <a class="reset-password mb-4" href="#">Cài lại mật khẩu</a>
-                  <span class="register mb-4" >Bạn đã có tài khoản? <a href="#" class="modal-label" data-modal-id="modal-login" >Đăng nhập</a></span>
-                  <div class="divider">
-                    Hoặc 
+                  <div class="form-group ">
+                      <select name="district" class="form-control form-select" id="district_modify" aria-label="Default select example">
+                          <option value="" selected >Chọn Quận/Huyện</option>
+                      </select>
+                      <span class="form-message"></span>
                   </div>
-                  <div class="social-login">
-                    <button class="button" type="butotn" >
-                      <img src="/img/icon/facebook-icon.svg" alt="">
-                    </button>
-                    <button class="button" type="butotn" >
-                       <img src="/img/icon/google-icon.svg" alt="">
-                    </button>
+                  <div class="form-group">
+                      <select name="ward" class="form-control form-select" id="ward_modify" aria-label="Default select example">
+                          <option value="" selected >Chọn Phường/Xã</option>
+                      </select>
+                      <span class="form-message"></span>
+                  </div>
+                  <div class="form-group checkbox">
+                      <input type="checkbox" id="default_modify_address" name="default" value="true">
+                      <label for="default_modify_address">Đặt làm mặc định</label>
+                  </div>
+                  <div class="address-button-wrap">
+                    <button id="back-address-button" onclick="return false" class="modal__theme-exit-button back-address-body-button button button--type1">Quay lại</button>
+                    <button id="modify-address-button" type="submit" form="modify-address-body-form" class="modify-address-body-button button button--type2">Cập Nhật</button>
                   </div>
                 </form>
               </div>
@@ -196,6 +216,61 @@
                     </div>
                 </div>
               </div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal-account-layout">
+            <div class="modal" id="modal-update-success" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Thông báo</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Cập nhật địa chỉ thành công.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Đóng</button>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal" id="modal-add-success" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Thông báo</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Thêm địa chỉ mới thành công.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Đóng</button>
+                    </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal" id="modal-delete-confirm" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Xoá địa chỉ?</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Bạn có chắc xoá địa chỉ này không?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Huỷ</button>
+                        <button type="button" class="btn btn-danger" id="address-delete-btn">Xoá bỏ</button>
+                    </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -223,5 +298,6 @@
     <script src="/js/validator.js"></script>
     <script src="/js/toast.js"></script>
     <script type="module" src="/js/main.js"></script>
+    <script type="module" src="/js/account-main.js"></script>
 </body>
 </html>

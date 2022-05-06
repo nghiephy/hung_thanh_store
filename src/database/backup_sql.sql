@@ -53,11 +53,7 @@ create table ADDRESS
 (
    ADDRESS_ID           int not null auto_increment,
    USER_ID              int,
-   ADDRESS              text,
-   WARD                 text,
-   DISTRICT             text,
-   CITY                 text,
-   UPDATED_AT 			timestamp,
+   VALUE                text,
    primary key (ADDRESS_ID)
 );
 
@@ -705,25 +701,8 @@ DELIMITER ;
 -- test
 call updateAccountInfor(15,'customers','Customer Văn Toàn','2000-01-15','customervt@gmail.com',true,'/img/users/capturejpg-1651152279007.JPG','0901222333','Elephant Company','12000MST','Chau Thanh, Hau Giang','2022-04-28 21:36:15');
 
--- procedure save add address of user
-DELIMITER //
-DROP PROCEDURE IF EXISTS updateAddress //
-CREATE PROCEDURE 
-  updateAddress(address_id int, name text, phone varchar(15), address text, ward text, district text, city text, isdefault boolean, updated_at timestamp)
-BEGIN  
-	update address
-    set address.name = name, 
-		address.phone = phone, 
-		address.address = address, 
-		address.ward =  ward, 
-		address.district = district, 
-		address.city = city,
-		address.isdefault = isdefault,
-		address.updated_at = updated_at
-    where address.address_id = address_id;
-END//
-DELIMITER ;
--- test
+
+
 
 
 

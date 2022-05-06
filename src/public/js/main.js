@@ -127,9 +127,11 @@ document.addEventListener('DOMContentLoaded', async function() {
         loadCartListHeader();
 
         //hidden admin mode button
-        if(decodedToken.USER_TYPE !== 'admin') {
-            const adminModeBtn = document.querySelector('#header-top-config-item-manage');
-            adminModeBtn.classList.add('d-none');
+        if(accessToken) {
+            if(decodedToken.USER_TYPE !== 'admin') {
+                const adminModeBtn = document.querySelector('#header-top-config-item-manage');
+                adminModeBtn.classList.add('d-none');
+            }
         }
     } 
 
@@ -138,6 +140,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const modalOverlayEle = document.querySelector('.modal__overlay');
         const modalEle = document.querySelector('.my-modal');
         const modalExitBtns = document.querySelectorAll('.modal__theme-exit');
+        const modalExitBtnsBottom = document.querySelectorAll('.modal__theme-exit-button');
         const modalLabelList = document.querySelectorAll('.modal-label');
         const closeSuccessModalBtn = document.querySelector('.successful-body__button button');
         let modalItem;
@@ -164,6 +167,13 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         modalExitBtns.forEach(modalExitBtn => {
             modalExitBtn.addEventListener('click', () => {
+                modalItem.classList.remove('active');
+                modalEle.classList.remove('active');
+            }) 
+        })
+
+        modalExitBtnsBottom.forEach(item => {
+            item.addEventListener('click', () => {
                 modalItem.classList.remove('active');
                 modalEle.classList.remove('active');
             }) 

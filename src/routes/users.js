@@ -43,10 +43,15 @@ router.post('/register', usersController.registerUser);
 router.post('/login', usersController.loginUser);
 router.post('/logout', usersController.logoutUser);
 router.post('/refresh', usersController.requestRefreshToken);
+router.post('/add-address', middlewareController.verifyUserLogin, usersController.addAddressUser);
 router.get('/welcome', usersController.welcomeUser);
 router.get('/account', middlewareController.verifyUserLogin, usersController.getAccountUser);
+router.get('/address', middlewareController.verifyUserLogin, usersController.getAddressUser);
+router.get('/address/:id', middlewareController.verifyUserLogin, usersController.getAddressViaId);
 router.put('/update-account', middlewareController.verifyUserLogin, uploadSingle, usersController.updateAccountUser);
+router.put('/update-address/:id', middlewareController.verifyUserLogin, usersController.updateAddress);
 router.get('/information', middlewareController.verifyUserLogin, usersController.getInforUser);
 router.get('/check_exits_user', usersController.checkExitsUser);
+router.delete('/delete-address/:id', usersController.deleteAddress);
 
 module.exports = router;

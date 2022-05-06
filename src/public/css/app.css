@@ -2926,6 +2926,122 @@ table.dataTable tbody td {
   padding-left: 20px;
 }
 
+.address-body-modal {
+  max-width: 500px;
+  min-width: 400px;
+  height: auto;
+  padding: 20px 20px 50px 20px;
+  background-color: white;
+  border-radius: 5px;
+  position: relative;
+}
+.address-body-modal .title {
+  margin-bottom: 20px;
+}
+.address-body-modal .form-group {
+  font-size: 1.4rem;
+  margin-bottom: 14px;
+}
+.address-body-modal .form-group input, .address-body-modal .form-group select {
+  font-size: 1.4rem;
+  padding: 8px 10px;
+}
+.address-body-modal .form-group input[type=checkbox] {
+  width: 15px;
+  height: 15px;
+  margin-right: 5px;
+  accent-color: #f06292;
+  cursor: pointer;
+}
+.address-body-modal .form-group.checkbox {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.address-body-modal .form-group label {
+  user-select: none;
+}
+.address-body-modal .form-group .form-message {
+  font-size: 1.2rem;
+  color: #f33a58;
+}
+.address-body-modal .form-group.invalid input {
+  border: 1px solid #f33a58;
+}
+.address-body-modal .address-button-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: 50%;
+  transform: translateX(50%);
+  padding: 0 20px;
+}
+.address-body-modal .address-button-wrap #back-address-button {
+  width: 50%;
+  margin-right: 60px;
+  box-shadow: 0 2px 8px 10px rgba(0, 0, 0, 0.05);
+}
+.address-body-modal .address-button-wrap #add-address-button {
+  width: 50%;
+}
+.address-body-modal .address-button-wrap #modify-address-button {
+  width: 50%;
+}
+.address-body-modal .modal__theme-exit {
+  position: absolute;
+  right: 20px;
+  font-size: 2.4rem;
+  color: #555;
+  cursor: pointer;
+}
+.address-body-modal .modal__theme-exit:hover {
+  opacity: 0.8;
+}
+
+.address .row > * {
+  width: auto;
+}
+.address-title {
+  display: inline-block;
+  margin-right: auto;
+  color: #ce567e;
+  font-size: 2.2rem;
+  font-weight: 500;
+}
+.address-list {
+  list-style: none;
+  padding-left: 0;
+}
+.address-item {
+  background-color: #efe4f3;
+  padding: 20px;
+  border-radius: 5px;
+  margin-top: 20px;
+  font-size: 1.4rem;
+  border-bottom: 1px solid #e1e1e1;
+  padding-bottom: 20px;
+}
+.address-item__name .name {
+  margin-right: auto;
+  font-weight: bold;
+}
+.address-item__name .actions p {
+  display: inline-block;
+  margin-bottom: 0;
+}
+.address-item__name .actions span {
+  margin-left: 5px;
+  cursor: pointer;
+}
+.address-item__name .actions span:hover {
+  color: #f06292;
+}
+.address-item__name .default {
+  font-weight: bold;
+}
+
 .modal-login {
   padding: 30px;
   background-color: white;

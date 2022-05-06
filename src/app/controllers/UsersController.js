@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const bcrypt = require('bcrypt');
 const moment = require('moment');
 const User = require('../models/User');
+const Address = require('../models/Address');
 const fs = require('fs');
 const path = require('path');
 
@@ -256,12 +257,107 @@ class UsersController {
         });
     }
 
+    //[GET] /user/address/:id
+    async getAddressViaId(req, res, next) {
+        const userId = req.user.USER_ID;
+        const addressId = req.params.id;
+ 
+        const getAddressPromise = new Promise((resolve, reject) => {
+            Address.getAddressViaId(addressId, (addressInfor) => {
+                resolve(addressInfor);
+            });
+        });
+
+        try {
+            var addressInfor = await getAddressPromise;
+            addressInfor = Object.values(JSON.parse(JSON.stringify(addressInfor)));
+
+            res.status(200).json({
+                data: addressInfor[0],
+            });
+        }catch(err) {
+            res.status(500).json({
+                message: 'fail',
+            })
+        }
+    }
+
+    //[GET] /user/address
+    async getAddressUser(req, res, next) {
+        const userId = req.user.USER_ID;
+        var data = null;
+        const getInforPromise = new Promise((resolve, reject) => {
+            if(req.user.USER_TYPE == 'customer') {
+                User.getFullUserInfor(userId, 'customers', (userInfor) => {
+                    resolve(userInfor[0]);
+                })
+            }else {
+                User.getFullUserInfor(userId, 'employees', (userInfor) => {
+                    resolve(userInfor[0]);
+                })
+            }
+        });
+        const getAddressPromise = new Promise((resolve, reject) => {
+            Address.getAddress(userId, (addressList) => {
+                resolve(addressList);
+            });
+        });
+
+        data = await getInforPromise;
+        var addressList = await getAddressPromise;
+        addressList = Object.values(JSON.parse(JSON.stringify(addressList)));
+
+        console.log(addressList);
+        res.render('user/address.hbs', {
+            layout: 'account-main.hbs',
+            data_contact: data,
+            address: 'active',
+            addressList: addressList,
+        });
+    }
+
+    //[POST] /user/add-address
+    async addAddressUser(req, res, next) {
+        const userId = req.user.USER_ID;
+        var data = req.body;
+        console.log(req.body);
+        const isDefault = data.default!==''?true:false;
+        var dataAddress = [
+            userId,
+            data.name,
+            data.phone,
+            data.address,
+            data.ward,
+            data.district,
+            data.city,
+            Boolean(isDefault),
+        ];
+
+        const addAddressPromise = new Promise((resolve, reject) => {
+            Address.addAddress(dataAddress, (result) => {
+                resolve(result);
+            });
+        });
+
+        const dataResponse = await addAddressPromise;
+        console.log(dataResponse);
+
+        if(dataResponse.errno) {
+            res.status(500).json({
+                message: 'fail',
+            });
+        }else {
+            res.status(200).json({
+                message: 'success',
+            });
+        }
+    }
+
     //[GET] /user/account
     async getAccountUser(req, res, next) {
         const userId = req.user.USER_ID;
         var data = null;
-        console.log("Controller");
-        console.log(req.user);
+        
         const getInforPromise = new Promise((resolve, reject) => {
             if(req.user.USER_TYPE == 'customer') {
                 User.getFullUserInfor(userId, 'customers', (userInfor) => {
@@ -281,7 +377,7 @@ class UsersController {
         res.render('user/account.hbs', {
             layout: 'account-main.hbs',
             data_contact: data,
-            contact: 'active',
+            account: 'active',
         });
     }
 
@@ -389,6 +485,75 @@ class UsersController {
         }catch(err) {
             res.status(500).json({
                 message: 'fail',
+            });
+        }
+    }
+
+    //[PUT] /user/update-address/:id
+    async updateAddress(req, res, next) {
+        const addressId = req.params.id;
+        const data = req.body;
+        var timestamp = '';
+        let date_ob = new Date();
+        let date = ("0" + date_ob.getDate()).slice(-2);
+        let month = ("0" + (date_ob.getMonth()+1)).slice(-2);
+        let year = date_ob.getFullYear();
+        let hours = date_ob.getHours();
+        let minutes = date_ob.getMinutes();
+        let seconds = date_ob.getSeconds();
+
+        timestamp = year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds;
+
+        var dataAddress = [
+            addressId,
+            data.name,
+            data.phone,
+            data.address,
+            data.ward,
+            data.district,
+            data.city,
+            Boolean(data.default!==''?true:false),
+            timestamp,
+        ];
+
+        const updateAddressPromise = new Promise((resolve, reject) => {
+            Address.updateAddress(dataAddress, function(result) {
+                resolve(result);
+            })
+        });
+
+        const dataResponse = await updateAddressPromise;
+
+        if (dataResponse.errno) {
+            res.status(500).json({
+                message: 'fail',
+            });
+        }else {
+            res.status(200).json({
+                message: 'success',
+            });
+        }
+    }
+
+    //[DELETE] /user/delete-address/:id
+    async deleteAddress(req, res, next) {
+        const addressId = req.params.id;
+        
+        const deleteAddressPromise = new Promise((resolve, reject) => {
+            Address.deleteAddress(addressId, function(result) {
+                resolve(result);
+            })
+        });
+
+        const dataResponse = await deleteAddressPromise;
+
+        if (dataResponse.errno) {
+            res.status(500).json({
+                message: 'fail',
+            });
+        }else {
+            res.status(200).json({
+                message: 'success',
             });
         }
     }

@@ -1,0 +1,49 @@
+<section class="address">
+    <div class="row">
+        <h1 class="address-title" >Quản lí địa chỉ</h1>
+        <button data-modal-id="modal-add-address" class="modal-label button button--type2" >Thêm địa chỉ</button>
+    </div>
+    <div class="address-list-wrap">
+        <ul class="address-list" >
+            {{#each addressList}}
+                <li class="address-item" >
+                    <div class="row address-item__name">
+                        <h4 class="name" >{{this.NAME}}</h4>
+                        <div class="actions">
+                            <p class="default {{#if this.ISDEFAULT}} {{else}}d-none{{/if}}" >Mặc định</p>
+                            <span class="modal-label modify-address" data-modal-id="modal-modify-address" data-address-id="{{this.ADDRESS_ID}}">Sửa</span>
+                            <span class="{{#if this.ISDEFAULT}}d-none{{/if}}" data-bs-toggle="modal" data-bs-id="{{this.ADDRESS_ID}}" data-bs-target="#modal-delete-confirm">Xoá</span>
+                        </div>
+                    </div>
+                    <div class="address-item__phone">
+                        {{this.PHONE}}
+                    </div>
+                    <div class="address-item__address">
+                        {{this.ADDRESS}}, {{this.WARD}}, {{this.DISTRICT}}, {{this.CITY}}.
+                    </div>
+                </li>
+            {{/each}}
+            
+        </ul>
+    </div>
+
+    <div class="modal" id="modal-delete-success" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Thông báo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Xoá địa chỉ thành công.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Đóng</button>
+            </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<script src="/js/user/address.js"></script>

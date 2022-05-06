@@ -68,3 +68,77 @@
         padding-left: 20px;
     }
 }
+
+.address-body-modal {
+    max-width: 500px;
+    min-width: 400px;
+    height: auto;
+    padding: 20px 20px 50px 20px;
+    background-color: $white-color;
+    border-radius: 5px;
+    position: relative;
+    .title {
+        margin-bottom: 20px;
+    }
+    .form-group {
+        font-size: 1.4rem;
+        margin-bottom: 14px;
+        input, select {
+            font-size: 1.4rem;
+            padding: 8px 10px;
+        }
+        input[type='checkbox'] {
+            width: 15px;
+            height: 15px;
+            margin-right: 5px;
+            accent-color: $hover-color;
+            cursor: pointer;
+        }
+        &.checkbox {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
+        label {
+            user-select: none;
+        }
+        .form-message {
+            font-size: 1.2rem;
+            color: $warning-color;
+        }
+        &.invalid input{
+            border: 1px solid $warning-color;
+        }
+    }
+    .address-button-wrap {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        right: 50%;
+        transform: translateX(50%);
+        padding: 0 20px;
+        #back-address-button {
+            width: 50%;
+            margin-right: 60px;
+            box-shadow: 0 2px 8px 10px rgba(0, 0, 0, 0.05);
+        }
+        #add-address-button {
+            width: 50%;
+        }
+        #modify-address-button {
+            width: 50%;
+        }
+    }
+    .modal__theme-exit {
+        position: absolute;
+        right: 20px;
+        font-size: 2.4rem;
+        color: $text-color;
+        cursor: pointer;
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+}
