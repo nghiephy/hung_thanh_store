@@ -1,4 +1,7 @@
 .payment-body {
+    &-wrap {
+        background-color: $gray-light;
+    }
     .title {
         h2 {
             color: $hover-dark-color;
@@ -37,6 +40,39 @@
             color: $text-color;
         }
     }
+    .payment-info {
+        #form-infor-payment {
+            .form-group {
+                .form-message {
+                    font-size: 1.2rem;
+                    color: $warning-color;
+                }
+                &.invalid input {
+                    border: 1px solid $warning-color;
+                }
+            }
+        }
+    }
+    .address-info {
+        .address-item {
+            background-color: $white-color;
+            border-radius: 0;
+            position: relative;
+            padding-left: 30px;
+            .row>* {
+                width: auto;
+            }
+            &-radio {
+                position: absolute;
+                top: 50%;
+                left: 5px;
+                width: 18px;
+                height: 18px;
+                accent-color: $hover-dark-color;
+                cursor: pointer;
+            }
+        }
+    }
     .invoice-info {
         .title {
             display: flex;
@@ -68,6 +104,13 @@
                 input, textarea {
                     font-size: 1.4rem;
                     padding: 6px 12px;
+                }
+                .form-message {
+                    font-size: 1.2rem;
+                    color: $warning-color;
+                }
+                &.invalid input {
+                    border: 1px solid $warning-color;
                 }
             }
             .notes-section {

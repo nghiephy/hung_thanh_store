@@ -2060,6 +2060,9 @@ img {
   margin-left: 20px;
 }
 
+.payment-body-wrap {
+  background-color: #f4f4f4;
+}
 .payment-body .title h2 {
   color: #ce567e;
   font-weight: bold;
@@ -2092,6 +2095,31 @@ img {
   padding: 6px 12px;
   color: #555;
 }
+.payment-body .payment-info #form-infor-payment .form-group .form-message {
+  font-size: 1.2rem;
+  color: #f33a58;
+}
+.payment-body .payment-info #form-infor-payment .form-group.invalid input {
+  border: 1px solid #f33a58;
+}
+.payment-body .address-info .address-item {
+  background-color: white;
+  border-radius: 0;
+  position: relative;
+  padding-left: 30px;
+}
+.payment-body .address-info .address-item .row > * {
+  width: auto;
+}
+.payment-body .address-info .address-item-radio {
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  width: 18px;
+  height: 18px;
+  accent-color: #ce567e;
+  cursor: pointer;
+}
 .payment-body .invoice-info .title {
   display: flex;
   justify-content: flex-start;
@@ -2122,6 +2150,13 @@ img {
 .payment-body .invoice-info .form-invoice .form-group input, .payment-body .invoice-info .form-invoice .form-group textarea {
   font-size: 1.4rem;
   padding: 6px 12px;
+}
+.payment-body .invoice-info .form-invoice .form-group .form-message {
+  font-size: 1.2rem;
+  color: #f33a58;
+}
+.payment-body .invoice-info .form-invoice .form-group.invalid input {
+  border: 1px solid #f33a58;
 }
 .payment-body .invoice-info .form-invoice .notes-section__title {
   font-weight: bold;

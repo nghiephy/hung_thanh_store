@@ -1,6 +1,8 @@
 var Categories = require('../models/Category');
 var Products = require('../models/Product');
-var Carts = require('../models/Cart');
+var Cart = require('../models/Cart');
+var Address = require('../models/Address');
+var Order = require('../models/Order');
 
 class SiteController {
     // [GET] /
@@ -84,21 +86,104 @@ class SiteController {
     }
 
     // [GET] /payment
-    payment(req, res, next) {
+    async payment(req, res, next) {
         const user = req.user;
+        var addressList = '';
+        
+        if(user) {
+            const userId = user.USER_ID||null;
+            const getAddressPromise = new Promise((resolve, reject) => {
+                Address.getAddress(userId, (addressList) => {
+                    resolve(addressList);
+                });
+            });
+    
+            addressList = await getAddressPromise;
+            addressList = Object.values(JSON.parse(JSON.stringify(addressList)));
+        }
 
         res.render('payment', {
             user,
+            addressList,
         });
     }
 
     // [POST] /payment
-    handlePayment(req, res, next) {
+    async handlePayment(req, res, next) {
+        const user = req.user;
         console.log("Check body =>>>>>");
         console.log(req.body);
-        res.json([{
-            cart: req.body,
-        }]);
+        var dataOrder = [
+            Number(req.body.address_id),
+        ];
+        var cartOb = JSON.parse(req.body.cart);
+        var dataCart = [];
+        var invoiceOb = req.body.infor_invoice;
+        var timestamp = '';
+        let date_ob = new Date();
+        let date = ("0" + date_ob.getDate()).slice(-2);
+        let month = ("0" + (date_ob.getMonth()+1)).slice(-2);
+        let year = date_ob.getFullYear();
+        let hours = date_ob.getHours();
+        let minutes = date_ob.getMinutes();
+        let seconds = date_ob.getSeconds();
+
+        timestamp = year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds;
+
+        if(user) {
+            dataOrder.push(user.USER_ID);
+        }else {
+            dataOrder.push(null);
+        }
+        dataOrder.push(req.body.note_card);
+        dataOrder.push(timestamp);
+        dataOrder.push(Number(req.body.total_price));
+
+        if(invoiceOb) {
+            invoiceOb = JSON.parse(invoiceOb);
+            dataOrder.push(invoiceOb['invoice-name-company']);
+            dataOrder.push(invoiceOb['invoice-tax-number']);
+            dataOrder.push(invoiceOb['invoice-address']);
+        }
+
+        for(const obj of cartOb) {
+            const {
+                PRODUCT_ID,
+                QUANTITY,
+                TOTAL_PRICE,
+            } = obj;
+            const objSort = [
+                PRODUCT_ID,
+                QUANTITY,
+                TOTAL_PRICE,
+            ];
+            const value = Object.values(objSort);
+            dataCart.push(value);
+        }
+
+        // console.log(dataCart);
+        const addOrderPromise = new Promise((resolve, reject) => {
+            Order.addOrder(dataOrder, dataCart, (result) => {
+                resolve(result);
+            });
+        });
+
+        const dataResponse = await addOrderPromise;
+        console.log(dataResponse);
+       
+        if(dataResponse.errno) {
+            res.status(500).json({
+                message: 'fail',
+            });
+        }else {
+            if(user) {
+                Cart.deleteCartList(user.USER_ID, (result) => {});
+            }
+            res.status(200).json({
+                message: 'success',
+            });
+        };
+
     }
 }
 

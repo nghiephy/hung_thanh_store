@@ -71,7 +71,7 @@ Cart.saveCartList = function(userId, dataCart, result) {
     Cart.findCartId(userId, (cartId) => {
         const stmt = `insert into carts_products(cart_id, product_id, quantity, total_price, image) values ? `;
         cartId = Object.values(JSON.parse(JSON.stringify(cartId[0])));
-        console.log(cartId);
+        // console.log(cartId);
         dataCart.forEach(item => {
             item.unshift(cartId);
         });

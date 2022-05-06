@@ -19,7 +19,7 @@
             </div>
             <div class="row gx-5">
                 <div class="col-lg-7 col-md-7 col-sm-12">
-                    <div class="section-info payment-info">
+                    <div class="section-info payment-info {{#if user.USER_ID includeZero=true}}d-none{{/if}}">
                         <h3 class="title" >Thông tin thanh toán</h3>
                         <div class="anouncement">
                             <span>Nếu bạn đã có tài khoản. Vui lòng <a href="#">Đăng nhập</a> / <a href="#">Đăng ký</a> để có thể nhận được các chương trình khuyến mãi hấp dẫn từ Hung-Thanh-Bookstore.</span>
@@ -75,6 +75,32 @@
                                     </div>
                                 </div>
                             </form>
+                        </div>
+                    </div>
+
+                    <div class="section-info address-info {{#if user.USER_ID includeZero=true}}{{else}}d-none{{/if}}">
+                        <h3 class="title" >Địa chỉ nhận hàng</h3>
+                        <div class="address-list-wrap">
+                            <ul class="address-list" >
+                                {{#each addressList}}
+                                    <li class="address-item" >
+                                        <input type="radio" name="address" class="address-item-radio" value="{{this.ADDRESS_ID}}" {{#if this.ISDEFAULT}}checked{{/if}}>
+                                        <div class="row address-item__name">
+                                            <h4 class="name" >{{this.NAME}}</h4>
+                                            <div class="actions">
+                                                <p class="default {{#if this.ISDEFAULT}} {{else}}d-none{{/if}}" >Mặc định</p>
+                                                <span class="modal-label modify-address" data-modal-id="modal-modify-address" data-address-id="{{this.ADDRESS_ID}}">Sửa</span>
+                                            </div>
+                                        </div>
+                                        <div class="address-item__phone">
+                                            {{this.PHONE}}
+                                        </div>
+                                        <div class="address-item__address">
+                                            {{this.ADDRESS}}, {{this.WARD}}, {{this.DISTRICT}}, {{this.CITY}}.
+                                        </div>
+                                    </li>
+                                {{/each}}
+                            </ul>
                         </div>
                     </div>
 
@@ -167,7 +193,7 @@
                             <div class="card-body">
                                 <div class="list-checkout">
                                     <div class="list-checkout__item">
-                                        <span>Tổng tiền (2 sản phẩm)</span>
+                                        <span id="checkout-total-item" >Tổng tiền (2 sản phẩm)</span>
                                         <span id="checkout-total-price" style="font-weight: bold; color: black;" >12.400 đ</span>
                                     </div>
                                     <div class="list-checkout__item">

@@ -307,7 +307,6 @@ class UsersController {
         var addressList = await getAddressPromise;
         addressList = Object.values(JSON.parse(JSON.stringify(addressList)));
 
-        console.log(addressList);
         res.render('user/address.hbs', {
             layout: 'account-main.hbs',
             data_contact: data,

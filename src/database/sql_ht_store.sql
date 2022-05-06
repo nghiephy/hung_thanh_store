@@ -163,13 +163,16 @@ create table ORDERS
    ORDER_ID             int not null auto_increment,
    EMPLOYEE_ID          int,
    ADDRESS_ID           int,
-   CUSTOMER_ID          int,
-   COMMENT              text,
+   BUYER_ID             int,
+   NOTE                 text,
    INVOICE_DATE         timestamp,
    DELIVERY_DATE        timestamp,
    TOTAL_DISCOUNT       float,
    TOTAL_TAX            float,
    TOTAL_PRICE          float,
+   COMPANY_NAME			text,
+   COM_TAX_NUMBER 		text,
+   COM_ADDRESS			text,
    primary key (ORDER_ID)
 );
 
@@ -326,8 +329,8 @@ alter table IMAGES add constraint FK_HAVE_IMAGES foreign key (PRODUCT_ID)
 alter table ORDERS add constraint FK_ORDERS_ADDRESS foreign key (ADDRESS_ID)
       references ADDRESS (ADDRESS_ID) on delete restrict on update restrict;
 
-alter table ORDERS add constraint FK_ORDERS_CUSTOMERS foreign key (CUSTOMER_ID)
-      references CUSTOMERS (CUSTOMER_ID) on delete restrict on update restrict;
+alter table ORDERS add constraint FK_ORDERS_USERS foreign key (BUYER_ID)
+      references USERS (USER_ID) on delete restrict on update restrict;
 
 alter table ORDERS add constraint FK_ORDERS_EMPLOYEES foreign key (EMPLOYEE_ID)
       references EMPLOYEES (EMPLOYEE_ID) on delete restrict on update restrict;
@@ -394,8 +397,8 @@ SET SQL_SAFE_UPDATES = 0;
 
 -- Reset auto_increment = 1 --
 set @autoid :=0; 
-update users set user_id = @autoid := (@autoid+1);
-alter table users Auto_Increment = 1;
+update order_statuses set order_status_id = @autoid := (@autoid+1);
+alter table order_statuses Auto_Increment = 1;
 
 -- Turn on sale mode after run above stament --
 SET SQL_SAFE_UPDATES = 1;

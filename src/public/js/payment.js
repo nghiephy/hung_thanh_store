@@ -51,25 +51,60 @@ document.addEventListener('DOMContentLoaded', function() {
         return Promise.reject(err);
     });
 
+    const accessToken = getCookie('accessToken');
+    let decodedToken = null;
+    if(accessToken){
+        decodedToken = jwt_decode(accessToken);
+    }
+
     formValidate();
     loadCitisDisWard();
     toggleLayout();
     loadInforOrder();
+    loadDataUser();
     handleSubmitOrder();
 
-    $("#order-btn").click(function () {
-        var cart = window.localStorage.getItem('cart') || [];
-        const nameValue = $('#name-payment-form').val();
-        const emailValue = $('#email-payment-form').val();
-        const phoneValue = $('#phone-payment-form').val();
-        const addressValue = $('#address-payment-form').val();
-        const cityValue = $('.form-group #city :selected').text();
-        const districtValue = $('.form-group #district :selected').text();
-        const wardValue = $('.form-group #ward :selected').text();
+    if(accessToken) {
+        $("#order-btn").click( async function () {
+            var cart = window.localStorage.getItem('cart') || [];
+            const addressId = document.querySelector('input[name="address"]:checked').value;
+            const invoiceCkEle = document.querySelector('#invoice-ck');
+            const invoiceForm = document.querySelector('#form-infor-invoice');
+            const cardNoteOrderEle = document.querySelector('#card-note-order');
+            const totalPriceInput = document.querySelector('#checkout-final-total-price');
+            var formData = {};
+    
+            formData.cart = cart;
+            formData.address_id = addressId;
+            formData.note_card = cardNoteOrderEle.value;
+            formData.total_price = (totalPriceInput.innerText).slice(0, -2);
+    
+            if(invoiceCkEle.checked) {
+                const form = new FormData(invoiceForm);
+                var dataInvoice = {};
+                form.forEach(function(value, key){
+                    dataInvoice[key] = value;
+                });
+                var json = JSON.stringify(dataInvoice);
+                formData.infor_invoice = json;
+            }
+    
+            const dataRespon = await instance.post('/payment', formData);
+            if(dataRespon.data.message === 'success') {
+                const myModalEle = document.querySelector('.my-modal');
+                const modalSuccess = myModalEle.querySelector('#modal-successful');
+                const btnCloseModal = myModalEle.querySelector('.successful-body__button');
 
-        const address = addressValue +', ' + wardValue +', ' + districtValue +', ' + cityValue;
-        
-    });
+                myModalEle.classList.add('active');
+                modalSuccess.classList.add('active');
+                btnCloseModal.addEventListener('click', (e) => {
+                    window.location.replace('/');
+                })
+            }else {
+                alert('Dat hang that bai!');
+            }
+        });
+    }
 
     async function formValidate() {
 
@@ -121,6 +156,24 @@ document.addEventListener('DOMContentLoaded', function() {
                 return value ? undefined : message || "Vui lòng nhập trường này!"
             } else {
                 return value.trim() ? undefined : message || "Vui lòng nhập trường này!"
+            }
+        }
+    }
+
+    async function loadDataUser() {
+        if(accessToken) {
+            // request to get information of user
+            // display it into views
+            const dataUser = await instance.get('/user/information');
+            console.log(dataUser);
+            if(dataUser.status === 200) {
+                const invoiceNameInput = document.querySelector('#invoice-name-company');
+                const invoiceTaxInput = document.querySelector('#invoice-tax-number');
+                const invoiceAddressInput = document.querySelector('#invoice-address');
+    
+                invoiceNameInput.value = dataUser.data.user.COMPANY_NAME;
+                invoiceTaxInput.value = dataUser.data.user.COM_TAX_NUMBER;
+                invoiceAddressInput.value = dataUser.data.user.COM_ADDRESS;
             }
         }
     }
@@ -191,6 +244,9 @@ function loadInforOrder() {
     var totalPrice = cart.reduce((total, nextItem) => {
         return total + parseInt(nextItem.TOTAL_PRICE);
     }, 0);
+    var totalItem = cart.reduce((total, nextItem) => {
+        return total + parseInt(nextItem.QUANTITY);
+    }, 0);
     var htmls = cart.map(item => {
         return `
             <tr class="cart-table__row">
@@ -215,10 +271,12 @@ function loadInforOrder() {
     const listProductEle = document.querySelector('.cart-table__body');
     const totalPriceEle = document.querySelector('#checkout-total-price');
     const finalTotalPriceEle = document.querySelector('#checkout-final-total-price');
+    const totalItemEle = document.querySelector('#checkout-total-item');
 
     listProductEle.innerHTML = htmls;
     totalPriceEle.innerHTML = totalPrice+'&nbsp;đ';
     finalTotalPriceEle.innerHTML = totalPrice+'&nbsp;đ';
+    totalItemEle.innerHTML = `Tổng tiền (${totalItem} sản phẩm)`;
 }
 
 function handleSubmitOrder() {

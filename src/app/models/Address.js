@@ -1,6 +1,7 @@
 const db = require('../../config/db');
 
 const Address = function(Address) {
+    this.address_id = Address.address_id;
     this.user_id = Address.user_id;
     this.name = Address.name;
     this.phone = Address.phone;
