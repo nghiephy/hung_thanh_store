@@ -48,6 +48,9 @@ document.addEventListener('DOMContentLoaded', function() {
         
         return response;
     }, err => {
+        if(err) {
+            alert("Có lỗi xảy ra!" + err_message);
+        }
         return Promise.reject(err);
     });
 
@@ -116,17 +119,38 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log(dataForm);
                 const invoiceCkEle = document.querySelector('#invoice-ck');
                 const cardNoteOrderEle = document.querySelector('#card-note-order');
+                const totalPriceInput = document.querySelector('#checkout-final-total-price');
+                var cart = window.localStorage.getItem('cart') || [];
 
                 dataForm.note_card = cardNoteOrderEle.value;
-                const invoiceForm = document.querySelector('#form-infor-invoice');
-                const form = new FormData(invoiceForm);
-                var dataInvoice = {};
-                form.forEach(function(value, key){
-                    dataInvoice[key] = value;
-                });
-                var json = JSON.stringify(dataInvoice);
-                dataForm.infor_invoice = json;
+                if(invoiceCkEle.checked) {
+                    const invoiceForm = document.querySelector('#form-infor-invoice');
+                    const form = new FormData(invoiceForm);
+                    var dataInvoice = {};
+                    form.forEach(function(value, key){
+                        dataInvoice[key] = value;
+                    });
+                    var json = JSON.stringify(dataInvoice);
+                    dataForm.infor_invoice = json;
+                }
+                dataForm.cart = cart;
+                dataForm.total_price = (totalPriceInput.innerText).slice(0, -2);
                 const dataRespon = await instance.post('/payment', dataForm);
+                console.log(dataRespon);
+                if(dataRespon.data.message === 'success') {
+                    const myModalEle = document.querySelector('.my-modal');
+                    const modalSuccess = myModalEle.querySelector('#modal-successful');
+                    const btnCloseModal = myModalEle.querySelector('.successful-body__button button');
+    
+                    myModalEle.classList.add('active');
+                    modalSuccess.classList.add('active');
+                    btnCloseModal.addEventListener('click', (e) => {
+                        window.localStorage.setItem('cart', JSON.stringify([]));
+                        window.location.replace('/');
+                    })
+                }else {
+                    alert('Dat hang that bai!');
+                }
             },
             rules: [
                 Validator.isRequired('#name-payment-form', 'Vui lòng nhập tên đầy đủ của bạn'),

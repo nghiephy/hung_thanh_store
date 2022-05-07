@@ -58,6 +58,9 @@ create table ADDRESS
    DISTRICT             text,
    CITY                 text,
    UPDATED_AT 			timestamp,
+   PHONE				varchar(15),
+   NAME 				text,
+   ISDEFAULT 			boolean,
    primary key (ADDRESS_ID)
 );
 

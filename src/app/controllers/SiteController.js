@@ -116,6 +116,7 @@ class SiteController {
         var dataOrder = [
             Number(req.body.address_id),
         ];
+        var dataAddress = [];
         var cartOb = JSON.parse(req.body.cart);
         var dataCart = [];
         var invoiceOb = req.body.infor_invoice;
@@ -134,6 +135,17 @@ class SiteController {
             dataOrder.push(user.USER_ID);
         }else {
             dataOrder.push(null);
+            // Add address for anonymous user
+            dataAddress = [
+                null,
+                req.body.name,
+                req.body.phone,
+                req.body.address,
+                req.body.ward,
+                req.body.district,
+                req.body.city,
+                false,
+            ];
         }
         dataOrder.push(req.body.note_card);
         dataOrder.push(timestamp);
@@ -161,7 +173,26 @@ class SiteController {
             dataCart.push(value);
         }
 
-        // console.log(dataCart);
+        if(!user) {
+            const addAddressPromise = new Promise((resolve, reject) => {
+                Address.addAddress(dataAddress, (result) => {
+                    resolve(result);
+                });
+            });
+            const addAddressResponse = await addAddressPromise;
+
+            if(addAddressResponse.errno) {
+                res.status(500).json({
+                    message: 'fail',
+                    err_message: addAddressResponse,
+                });
+            }else {
+                dataOrder[0] = addAddressResponse.insertId;
+            }
+        }
+
+        console.log(dataOrder);
+        console.log(dataCart);
         const addOrderPromise = new Promise((resolve, reject) => {
             Order.addOrder(dataOrder, dataCart, (result) => {
                 resolve(result);
