@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return response;
     }, err => {
         if(err) {
-            alert("Có lỗi xảy ra!" + err_message);
+            alert("Có lỗi xảy ra!" + (err_message)?err_message:err);
         }
         return Promise.reject(err);
     });
@@ -140,8 +140,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 dataForm.cart = cart;
                 dataForm.total_price = (totalPriceInput.innerText).slice(0, -2);
-
-                if(cart!=='[]') {
+                if(JSON.stringify(cart)!=='[]') {
                     const dataRespon = await instance.post('/payment', dataForm);
                     if(dataRespon.data.message === 'success') {
                         const myModalEle = document.querySelector('.my-modal');
