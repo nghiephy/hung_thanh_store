@@ -731,6 +731,51 @@ END//
 DELIMITER ;
 -- test
 
+-- procedure get order list of user
+DELIMITER //
+DROP PROCEDURE IF EXISTS getOrderList //
+CREATE PROCEDURE 
+  getOrderList(user_id int)
+BEGIN  
+	SELECT o.*
+FROM (
+	select orders.ORDER_ID, orders.INVOICE_DATE, orders.TOTAL_PRICE, order_status_history.UPDATED_DATE, order_statuses.*
+	from orders
+	join order_status_history on orders.ORDER_ID = order_status_history.ORDER_ID
+	join order_statuses on order_statuses.ORDER_STATUS_ID = order_status_history.ORDER_STATUS_ID
+	where orders.BUYER_ID = user_id) AS o
+	left join (
+		select orders.ORDER_ID, orders.INVOICE_DATE, orders.TOTAL_PRICE, order_status_history.UPDATED_DATE, order_statuses.*
+		from orders
+		join order_status_history on orders.ORDER_ID = order_status_history.ORDER_ID
+		join order_statuses on order_statuses.ORDER_STATUS_ID = order_status_history.ORDER_STATUS_ID
+		where orders.BUYER_ID = user_id) as b
+	on o.ORDER_ID = b.ORDER_ID and o.ORDER_STATUS_ID < b.ORDER_STATUS_ID
+	where b.ORDER_STATUS_ID is NULL;
+END//
+DELIMITER ;
+-- test
+call getOrderList(15);
+
+-- procedure get list name product in specific orderId
+DELIMITER //
+DROP PROCEDURE IF EXISTS getNameProductsOrder //
+CREATE PROCEDURE 
+  getNameProductsOrder(user_id int, order_id int)
+BEGIN  
+	select products.NAME
+	from orders
+	join orders_products on orders.ORDER_ID = orders_products.ORDER_ID
+	join products on products.PRODUCT_ID = orders_products.PRODUCT_ID
+	where orders.BUYER_ID = user_id and orders.ORDER_ID = order_id;
+END//
+DELIMITER ;
+-- test
+call getNameProductsOrder(15, 13);
+
+
+
+
 
 
 

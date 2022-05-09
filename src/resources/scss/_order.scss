@@ -1,0 +1,49 @@
+.order {
+    &-table {
+        width: 100%;
+        border: 1px solid $border-color;
+        &__head {
+            font-weight: 600;
+        }
+        .order-col-product-name {
+            width: 35%;
+            &-data {
+                width: 35%;
+                ul {
+                    height: 100%;
+                    margin-bottom: 0px;
+                    padding: 0;
+                    height: 60px;
+                    overflow-y: auto;
+                }
+            }
+        }
+        &__col {
+            font-size: 1.4rem;
+            padding: 14px;
+            &--head {
+                font-weight: 600;
+                user-select: none;
+            }
+        }
+        &__row {
+            border-bottom: 1px solid $border-color;
+        }
+        .status-type {
+            color: $white-color;
+            border-radius: 4px;
+            display: inline-block;
+            width: 70px;
+            text-align: center;
+            user-select: none;
+            padding: 4px;
+            font-size: 1.2rem;
+            &-2 {
+                background-color: $wait-confirm-color;
+            }
+            &-3 {
+                background-color: $confirm-color;
+            }
+        }
+    }
+}

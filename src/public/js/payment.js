@@ -91,21 +91,26 @@ document.addEventListener('DOMContentLoaded', function() {
                 var json = JSON.stringify(dataInvoice);
                 formData.infor_invoice = json;
             }
-    
-            const dataRespon = await instance.post('/payment', formData);
-            if(dataRespon.data.message === 'success') {
-                const myModalEle = document.querySelector('.my-modal');
-                const modalSuccess = myModalEle.querySelector('#modal-successful');
-                const btnCloseModal = myModalEle.querySelector('.successful-body__button');
 
-                myModalEle.classList.add('active');
-                modalSuccess.classList.add('active');
-                btnCloseModal.addEventListener('click', (e) => {
-                    window.location.replace('/');
-                })
+            if(cart!=='[]') {
+                const dataRespon = await instance.post('/payment', formData);
+                if(dataRespon.data.message === 'success') {
+                    const myModalEle = document.querySelector('.my-modal');
+                    const modalSuccess = myModalEle.querySelector('#modal-successful');
+                    const btnCloseModal = myModalEle.querySelector('.successful-body__button');
+    
+                    myModalEle.classList.add('active');
+                    modalSuccess.classList.add('active');
+                    btnCloseModal.addEventListener('click', (e) => {
+                        window.location.replace('/');
+                    })
+                }else {
+                    alert('Dat hang that bai!');
+                }
             }else {
-                alert('Dat hang that bai!');
+                alert('Không có sản phẩm trong giỏ!');
             }
+    
         });
     }
 
@@ -135,21 +140,25 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 dataForm.cart = cart;
                 dataForm.total_price = (totalPriceInput.innerText).slice(0, -2);
-                const dataRespon = await instance.post('/payment', dataForm);
-                console.log(dataRespon);
-                if(dataRespon.data.message === 'success') {
-                    const myModalEle = document.querySelector('.my-modal');
-                    const modalSuccess = myModalEle.querySelector('#modal-successful');
-                    const btnCloseModal = myModalEle.querySelector('.successful-body__button button');
-    
-                    myModalEle.classList.add('active');
-                    modalSuccess.classList.add('active');
-                    btnCloseModal.addEventListener('click', (e) => {
-                        window.localStorage.setItem('cart', JSON.stringify([]));
-                        window.location.replace('/');
-                    })
+
+                if(cart!=='[]') {
+                    const dataRespon = await instance.post('/payment', dataForm);
+                    if(dataRespon.data.message === 'success') {
+                        const myModalEle = document.querySelector('.my-modal');
+                        const modalSuccess = myModalEle.querySelector('#modal-successful');
+                        const btnCloseModal = myModalEle.querySelector('.successful-body__button button');
+        
+                        myModalEle.classList.add('active');
+                        modalSuccess.classList.add('active');
+                        btnCloseModal.addEventListener('click', (e) => {
+                            window.localStorage.setItem('cart', JSON.stringify([]));
+                            window.location.replace('/');
+                        })
+                    }else {
+                        alert('Dat hang that bai!');
+                    }
                 }else {
-                    alert('Dat hang that bai!');
+                    alert('Không có sản phẩm trong giỏ!');
                 }
             },
             rules: [

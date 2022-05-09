@@ -4,11 +4,13 @@ const categoriesRouter = require('./categories');
 const usersRouter = require('./users');
 const adminRouter = require('./admin');
 const cartsRouter = require('./carts');
+const ordersRouter = require('./orders');
 
 function routes(app) {
     app.use('/products', productsRouter);
     app.use('/categories', categoriesRouter);
     app.use('/user', usersRouter);
+    app.use('/manage-order', ordersRouter);
     app.use('/cart', cartsRouter);
     app.use('/admin', adminRouter);
     app.use('/', siteRouter);

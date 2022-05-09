@@ -3077,6 +3077,54 @@ table.dataTable tbody td {
   font-weight: bold;
 }
 
+.order-table {
+  width: 100%;
+  border: 1px solid #e1e1e1;
+}
+.order-table__head {
+  font-weight: 600;
+}
+.order-table .order-col-product-name {
+  width: 35%;
+}
+.order-table .order-col-product-name-data {
+  width: 35%;
+}
+.order-table .order-col-product-name-data ul {
+  height: 100%;
+  margin-bottom: 0px;
+  padding: 0;
+  height: 60px;
+  overflow-y: auto;
+}
+.order-table__col {
+  font-size: 1.4rem;
+  padding: 14px;
+}
+.order-table__col--head {
+  font-weight: 600;
+  user-select: none;
+}
+.order-table__row {
+  border-bottom: 1px solid #e1e1e1;
+}
+.order-table .status-type {
+  color: white;
+  border-radius: 4px;
+  display: inline-block;
+  width: 70px;
+  text-align: center;
+  user-select: none;
+  padding: 4px;
+  font-size: 1.2rem;
+}
+.order-table .status-type-2 {
+  background-color: #ff9932;
+}
+.order-table .status-type-3 {
+  background-color: #0571f0;
+}
+
 .modal-login {
   padding: 30px;
   background-color: white;

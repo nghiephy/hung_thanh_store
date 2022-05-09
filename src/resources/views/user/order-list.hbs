@@ -1,0 +1,39 @@
+<section class="order" >
+    <div class="row mb-4">
+        <h1 class="address-title" >Quản lí đơn hàng</h1>
+    </div>
+    <div class="order-body">
+        <table class="order-table">
+            <thead class="order-table__head" >
+                <tr class="order-table__row">
+                    <th class=" order-table__col order-table__col--head">Mã đơn hàng</th>
+                    <th class=" order-table__col order-table__col--head order-col-product-name" >Sản phẩm</th>
+                    <th class=" order-table__col order-table__col--head" >Ngày mua</th>
+                    <th class=" order-table__col order-table__col--head" >Tổng tiền</th>
+                    <th class=" order-table__col order-table__col--head" >Trạng thái</th>
+                </tr>
+            </thead>
+
+            <tbody class="order-table__body">
+                {{#each orderList}}
+                    <tr class="order-table__row">
+                        <td class=" order-table__col "><a href="">{{this.ORDER_ID}}</a></td>
+                        <td class=" order-table__col  order-col-product-name-data" >
+                            <ul>
+                                {{#each this.NAME_PRODUCTS}}
+                                    <li>{{this}}</li>
+                                {{/each}}
+                            </ul>
+                        </td>
+                        <td class=" order-table__col " >{{this.INVOICE_DATE}}</td>
+                        <td class=" order-table__col " >{{this.TOTAL_PRICE}}</td>
+                        <td class=" order-table__col " >
+                            <span class="status-type status-type-{{this.ORDER_STATUS_ID}}" >{{this.NAME}}</span>
+                        </td>
+                    </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</section>
+<script type="module" src="/js/user/order.js"></script>

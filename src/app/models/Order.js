@@ -76,4 +76,26 @@ Order.addOrder = async function(dataOrder, dataProducts, result) {
 
 }
 
+Order.getListOrder = async function(userId, result) {
+    db.query(`call getOrderList(${userId});`, function(err, orderList) {
+        if(err) {
+            result(err);
+            return;
+        }else{
+            result(orderList);
+        }
+    });
+}
+
+Order.getNameProductsOrder = async function(userId, orderId, result) {
+    db.query(`call getNameProductsOrder(${userId}, ${orderId});`, function(err, nameProducts) {
+        if(err) {
+            result(err);
+            return;
+        }else{
+            result(nameProducts);
+        }
+    });
+}
+
 module.exports = Order;

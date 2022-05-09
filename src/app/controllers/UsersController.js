@@ -249,7 +249,7 @@ class UsersController {
         });
         
         data = await getInforPromise;
-        const newBirthday = moment.utc(data.BIRTHDAY).format('YYYY-MM-DD')
+        const newBirthday = moment.utc(data.BIRTHDAY).format('YYYY-MM-DD');
         data.BIRTHDAY = newBirthday;
 
         res.status(200).json({
