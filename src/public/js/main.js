@@ -336,9 +336,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                         // $.post("http://localhost:3000/cart/get-cart", {user_id: data.user_id} ,function(data) {
                         //     window.localStorage.setItem('cart', data);
                         // });
-                        await instance.post('http://localhost:3000/cart/get-cart');
-
-                        window.localStorage.removeItem('cart');
+                        const cartList = (await instance.post('http://localhost:3000/cart/get-cart')).data.listProduct;
+                        window.localStorage.setItem('cart', JSON.stringify(cartList));
                         if(backURL === 'http://localhost:3000/user/welcome') {
                             window.location.replace("/");
                         }else {
