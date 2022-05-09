@@ -112,6 +112,9 @@ document.addEventListener('DOMContentLoaded', async function() {
     // Listen event click delete product in header cart after get-cart-list stored in localStorage
     deleteCarProHeader();
 
+    // Handle add product to wishlist
+    handleAddWishlist();
+
     //Handle submit form logout button
     const buttonLogout = document.querySelector('#header-top-config-item-logout');
     buttonLogout.addEventListener('click', async (e) => {
@@ -134,6 +137,22 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
         }
     } 
+
+    // Function handleAddWishlist
+    function handleAddWishlist() {
+        const heartBtns = document.querySelectorAll(".item-info__price-origin .like");
+
+        heartBtns.forEach((heartBtn) => {
+            heartBtn.addEventListener('click', () => {
+                if(accessToken) {
+                    heartBtn.classList.toggle('active');
+                    console.log(heartBtn.dataset.idProduct);
+                }else {
+                    alert('Đăng nhập để thực hiện chức năng này!');
+                }
+            })
+        })
+    }
 
     // Handle modal display
     function handleModal() {
@@ -320,8 +339,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                         await instance.post('http://localhost:3000/cart/get-cart');
 
                         window.localStorage.removeItem('cart');
-
-                        window.location.replace(backURL);
+                        if(backURL === 'http://localhost:3000/user/welcome') {
+                            window.location.replace("/");
+                        }else {
+                            window.location.replace(backURL);
+                        }
                         
                     },
                     error: function(jqxhr, settings, ex) {

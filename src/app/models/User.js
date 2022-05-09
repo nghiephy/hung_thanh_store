@@ -34,6 +34,16 @@ User.createUser = async function(username, password, timestamp, name, email, act
             });
         });
     }
+    const insertCartPlacePromise = (userId) => {
+        return new Promise((resolve, reject) => {
+            db.query(`INSERT INTO CARTS(USER_ID, UPDATE_DATE) VALUES(?,?)`, [userId, timestamp], (err, results, fields) => {
+                if(err) {
+                    reject(err);
+                }
+                resolve(results);
+            });
+        });
+    }
 
     try {
         const response = await insertUserPromise;
@@ -45,6 +55,7 @@ User.createUser = async function(username, password, timestamp, name, email, act
         //     }
         // });
         const responseCustomer = await insertCustomerPromise(dataUserCustomer);
+        const responseCartPlace = await insertCartPlacePromise(response.insertId);
 
         return {
             status: "success",
@@ -52,6 +63,7 @@ User.createUser = async function(username, password, timestamp, name, email, act
     }catch(err) {
         return {
             status: "error",
+            error: err,
         };
     }
 }

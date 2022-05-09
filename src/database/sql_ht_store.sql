@@ -773,6 +773,12 @@ DELIMITER ;
 -- test
 call getNameProductsOrder(15, 13);
 
+select products.NAME
+	from orders
+	join orders_products on orders.ORDER_ID = orders_products.ORDER_ID
+	join products on products.PRODUCT_ID = orders_products.PRODUCT_ID
+	where orders.BUYER_ID = 15;
+
 
 
 
