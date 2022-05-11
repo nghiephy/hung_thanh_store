@@ -308,6 +308,27 @@ create table CARTS_PRODUCTS
    primary key (CART_ID, PRODUCT_ID)
 );
 
+/*==============================================================*/
+/* Table: WISHLIST                                                 */
+/*==============================================================*/
+create table WISHLIST
+(
+   WISHLIST_ID          int not null auto_increment,
+   USER_ID              int,
+   UPDATE_DATE         	timestamp,
+   primary key (WISHLIST_ID, USER_ID)
+);
+
+/*==============================================================*/
+/* Table: WISHLIST_PRODUCTS                                                 */
+/*==============================================================*/
+create table WISHLIST_PRODUCTS
+(
+   WISHLIST_ID          int,
+   PRODUCT_ID           int,
+   primary key (WISHLIST_ID, PRODUCT_ID)
+);
+
 alter table ADDRESS add constraint FK_RELATIONSHIP_20 foreign key (USER_ID)
       references USERS (USER_ID) on delete restrict on update restrict;
 
@@ -377,6 +398,14 @@ alter table CARTS_PRODUCTS add constraint FK_PRODUCTS_CARTS_PRODUCTS foreign key
 alter table CARTS_PRODUCTS add constraint FK_PRODUCTS_CARTS_CARTS foreign key (CART_ID)
       references CARTS (CART_ID) on delete restrict on update restrict;
 
+alter table WISHLIST add constraint FK_USERS_WISHLIST foreign key (USER_ID)
+      references USERS (USER_ID) on delete restrict on update restrict;
+
+alter table WISHLIST_PRODUCTS add constraint FK_PRODUCTS_WISHLIST_PRODUCTS foreign key (PRODUCT_ID)
+      references PRODUCTS (PRODUCT_ID) on delete restrict on update restrict;
+
+alter table WISHLIST_PRODUCTS add constraint FK_WISHLIST_WISHLIST_PRODUCTS foreign key (WISHLIST_ID)
+      references WISHLIST (WISHLIST_ID) on delete restrict on update restrict;
 /*==============================================================*/
 /* Add values for table categories                                                */
 /*==============================================================*/
@@ -778,6 +807,42 @@ select products.NAME
 	join orders_products on orders.ORDER_ID = orders_products.ORDER_ID
 	join products on products.PRODUCT_ID = orders_products.PRODUCT_ID
 	where orders.BUYER_ID = 15;
+
+
+-- procedure get wish list via user_id
+DELIMITER //
+DROP PROCEDURE IF EXISTS getWishList //
+CREATE PROCEDURE 
+  getWishList( userId int)
+BEGIN  
+	select wishlist_products.PRODUCT_ID
+	from wishlist
+	join wishlist_products on wishlist.WISHLIST_ID = wishlist_products.WISHLIST_ID
+    where wishlist.USER_ID = userId;
+END//
+DELIMITER ;
+-- test
+call getWishList (14);
+
+-- procedure get products of wish list via user_id
+DELIMITER //
+DROP PROCEDURE IF EXISTS getProductsWishList //
+CREATE PROCEDURE 
+  getProductsWishList( userId int)
+BEGIN  
+	select products.*, images.PATH as IMAGE_PATH, images.DESCRIPTION as IMG_DESCRIPTION
+	from wishlist
+	join wishlist_products on wishlist.WISHLIST_ID = wishlist_products.WISHLIST_ID
+	join products on products.PRODUCT_ID = wishlist_products.PRODUCT_ID
+	join images on images.PRODUCT_ID = products.PRODUCT_ID
+	where wishlist.USER_ID = userId and products.DELETED != 1
+	group by wishlist_products.PRODUCT_ID;
+END//
+DELIMITER ;
+-- test
+call getProductsWishList (15);
+
+
 
 
 

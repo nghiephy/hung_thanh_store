@@ -213,6 +213,18 @@
                 &:hover {
                     color: $hover-color;
                 }
+                .heart {
+                    display: none;
+                }
+                &.active {
+                    color: $hover-dark-color;
+                    .heart {
+                        display: inline-block;
+                    }
+                    .heart-outline {
+                        display: none;
+                    }
+                }
             }
         }
     }

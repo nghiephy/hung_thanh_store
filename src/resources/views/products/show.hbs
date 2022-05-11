@@ -87,8 +87,9 @@
                             <div class="product_body-action">
                                 <button class="button--type1 product_body-action-buy" >Mua ngay</button>
                                 <button id="add-whistlist-btn" class="button--type2 product_body-action-whistlist" >Thêm vào giỏ hàng</button>
-                                <div class="like-btn">
-                                    <ion-icon name="heart-outline"></ion-icon>
+                                <div class="like-btn" data-id-product="{{this.product.PRODUCT_ID}}">
+                                    <ion-icon class="heart-outline" name="heart-outline"></ion-icon>
+                                    <ion-icon class="heart" name="heart"></ion-icon>
                                     <span>Yêu thích</span>
                                 </div>
                             </div>

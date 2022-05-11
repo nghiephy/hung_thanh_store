@@ -130,7 +130,7 @@ class UsersController {
 
         const userValid = await checkUserVliadPromise;
 
-        console.log(userValid);
+        // console.log(userValid);
 
         if(userValid.isUsernameValid && userValid.isPasswordValid) {
             const controllerObj = new UsersController();

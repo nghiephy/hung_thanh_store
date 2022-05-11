@@ -102,12 +102,25 @@ document.addEventListener('DOMContentLoaded', async function() {
         else{
             window.localStorage.setItem('cart', JSON.stringify([]));
         }
+
+        // request to get wishlist's data of user
+        // store it into localStorage
+        const wishlistResponse = await instance.post('http://localhost:3000/wishlist/get-wishlist');
+        console.log(wishlistResponse);
+        if(wishlistResponse.data.dataWishlist){
+            window.localStorage.setItem('wishlist', JSON.stringify(wishlistResponse.data.dataWishlist));
+        }
+        else{
+            window.localStorage.setItem('wishlist', JSON.stringify([]));
+        }
         
     }
 
-
     //Update header data when login successful
     loadDataHeader();
+
+    //Load data wishlist for user
+    loadDataWishlist();
 
     // Listen event click delete product in header cart after get-cart-list stored in localStorage
     deleteCarProHeader();
@@ -119,6 +132,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     const buttonLogout = document.querySelector('#header-top-config-item-logout');
     buttonLogout.addEventListener('click', async (e) => {
         window.localStorage.removeItem('cart');
+        window.localStorage.removeItem('wishlist');
         window.localStorage.removeItem('accessToken');
         await instance.post('http://localhost:3000/user/logout');
         window.location.replace("/");
@@ -136,22 +150,109 @@ document.addEventListener('DOMContentLoaded', async function() {
                 adminModeBtn.classList.add('d-none');
             }
         }
-    } 
+    }
+
+    function loadDataWishlist() {
+        const homeLikeBtns = document.querySelectorAll('.item-info__price-origin .like');
+        const productLikeBtns = document.querySelectorAll('.like-btn');
+        var wishlist = localStorage.getItem('wishlist');
+        
+        wishlist = JSON.parse(wishlist);
+        homeLikeBtns.forEach(item => {
+            const currentId = item.dataset.idProduct;
+            if(wishlist.includes(Number(currentId))) {
+                item.classList.add('active');
+            }
+        });
+        if(productLikeBtns) {
+            productLikeBtns.forEach(item => {
+                const currentId = item.dataset.idProduct;
+                if(wishlist.includes(Number(currentId))) {
+                    item.classList.add('active');
+                }
+            });
+        }
+    }
 
     // Function handleAddWishlist
     function handleAddWishlist() {
         const heartBtns = document.querySelectorAll(".item-info__price-origin .like");
+        const productLikeBtns = document.querySelectorAll('.like-btn');
+        const deleteWishlistBtns = document.querySelectorAll('.wishlist-item-exit');
 
-        heartBtns.forEach((heartBtn) => {
-            heartBtn.addEventListener('click', () => {
+        heartBtns.forEach((item) => {
+            item.addEventListener('click', async () => {
                 if(accessToken) {
-                    heartBtn.classList.toggle('active');
-                    console.log(heartBtn.dataset.idProduct);
+                    item.classList.toggle('active');
+
+                    if(item.classList.contains('active')) {
+                        const productId = item.dataset.idProduct;
+                        const addResponse = await instance.post(`/wishlist/add/${productId}`);
+
+                        if(addResponse.data.message === 'success') {
+                            // alert("Thanh cong!");
+                        }else {
+                            alert("Them that bai!");
+                        }
+                    }else {
+                        const productId = item.dataset.idProduct;
+                        const deleteResponse = await instance.delete(`/wishlist/delete/${productId}`);
+
+                        if(deleteResponse.data.message === 'success') {
+                            // alert("Xoa thanh cong!");
+                        }else {
+                            alert("Them that bai!");
+                        }
+                    }
                 }else {
                     alert('Đăng nhập để thực hiện chức năng này!');
                 }
             })
-        })
+        });
+
+        productLikeBtns.forEach((item) => {
+            item.addEventListener('click', async () => {
+                if(accessToken) {
+                    item.classList.toggle('active');
+
+                    if(item.classList.contains('active')) {
+                        const productId = item.dataset.idProduct;
+                        const addResponse = await instance.post(`/wishlist/add/${productId}`);
+
+                        if(addResponse.data.message === 'success') {
+                            // alert("Thanh cong!");
+                        }else {
+                            alert("Them that bai!");
+                        }
+                    }else {
+                        const productId = item.dataset.idProduct;
+                        const deleteResponse = await instance.delete(`/wishlist/delete/${productId}`);
+
+                        if(deleteResponse.data.message === 'success') {
+                            // alert("Xoa thanh cong!");
+                        }else {
+                            alert("Them that bai!");
+                        }
+                    }
+                }else {
+                    alert('Đăng nhập để thực hiện chức năng này!');
+                }
+            })
+        });
+
+        deleteWishlistBtns.forEach(item => {
+            item.addEventListener('click', async (e) => {
+                const productId = item.dataset.idProduct;
+                const deleteResponse = await instance.delete(`/wishlist/delete/${productId}`);
+
+                if(deleteResponse.data.message === 'success') {
+                    window.location.reload();
+                }else {
+                    alert("Them that bai!");
+                }
+            });
+        });
+
     }
 
     // Handle modal display
@@ -333,11 +434,12 @@ document.addEventListener('DOMContentLoaded', async function() {
                     },
                     data: {username, password},
                     success: async function({data, status, backURL}) {
-                        // $.post("http://localhost:3000/cart/get-cart", {user_id: data.user_id} ,function(data) {
-                        //     window.localStorage.setItem('cart', data);
-                        // });
                         const cartList = (await instance.post('http://localhost:3000/cart/get-cart')).data.listProduct;
+                        const wishlist = (await instance.post('http://localhost:3000/wishlist/get-wishlist')).data.dataWishlist;
+
                         window.localStorage.setItem('cart', JSON.stringify(cartList));
+                        window.localStorage.setItem('wishlist', JSON.stringify(wishlist));
+                       
                         if(backURL === 'http://localhost:3000/user/welcome') {
                             window.location.replace("/");
                         }else {
