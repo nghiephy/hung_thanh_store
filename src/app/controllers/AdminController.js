@@ -1,6 +1,6 @@
 var Categories = require('../models/Category');
 var Products = require('../models/Product');
-var Carts = require('../models/Cart');
+var Order = require('../models/Order');
 var Stock = require('../models/Stock');
 const multipart = require('connect-multiparty');
 const fs = require('fs');
@@ -64,18 +64,20 @@ class AdminController {
 
     // [GET] /admin/orders
     async getManageOrders(req, res, next) {
-        const trashListPromise = new Promise((resolve, reject) => {
-            Products.get_trash((trashList) => {
-                resolve(trashList);
+        const orderListPromise = new Promise((resolve, reject) => {
+            Order.getAllListOrder((orderList) => {
+                resolve(orderList);
             });
         });
 
-        var trashList = await trashListPromise;
-        trashList = Object.values(JSON.parse(JSON.stringify(trashList)));
+        var orderList = await orderListPromise;
+        orderList = Object.values(JSON.parse(JSON.stringify(orderList[0])));
 
+        console.log(orderList);
         res.render('admin/orders.hbs', {
             layout: 'admin-main.hbs',
             manage_orders: 'active',
+            orderList,
         });
     }
 
@@ -274,6 +276,173 @@ class AdminController {
                 message: 'success',
             });
             // res.redirect('back');
+        }
+    }
+
+    // [PUT] /admin/confirm-order/:id/:user
+    async confirmOrder(req, res, next) {
+        const orderId = req.params.id;
+        const userId = req.params.user;
+        var timestamp = '';
+        let date_ob = new Date();
+        let date = ("0" + date_ob.getDate()).slice(-2);
+        let month = ("0" + (date_ob.getMonth()+1)).slice(-2);
+        let year = date_ob.getFullYear();
+        let hours = date_ob.getHours();
+        let minutes = date_ob.getMinutes();
+        let seconds = date_ob.getSeconds();
+
+        timestamp = year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds;
+
+        var dataConfirm = [
+            userId,
+            orderId,
+            3,
+            timestamp
+        ]
+
+        const confirmPromise = new Promise((resolve, reject) => {
+            Order.updateStatusOrder(dataConfirm, (data) => {
+                resolve(data);
+            });
+        });
+        const data = await confirmPromise;
+
+        if(data.errno) {
+            res.status(500).json({
+                message: 'fail',
+                err: data,
+            });
+        }else {
+            res.status(200).json({
+                message: 'success',
+            });
+        }
+    }
+
+    // [PUT] /admin/cancel-order/:id/:user
+    async cancelOrder(req, res, next) {
+        const orderId = req.params.id;
+        const userId = req.params.user;
+        var timestamp = '';
+        let date_ob = new Date();
+        let date = ("0" + date_ob.getDate()).slice(-2);
+        let month = ("0" + (date_ob.getMonth()+1)).slice(-2);
+        let year = date_ob.getFullYear();
+        let hours = date_ob.getHours();
+        let minutes = date_ob.getMinutes();
+        let seconds = date_ob.getSeconds();
+
+        timestamp = year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds;
+
+        var dataConfirm = [
+            userId,
+            orderId,
+            1,
+            timestamp
+        ]
+
+        const confirmPromise = new Promise((resolve, reject) => {
+            Order.updateStatusOrder(dataConfirm, (data) => {
+                resolve(data);
+            });
+        });
+        const data = await confirmPromise;
+
+        if(data.errno) {
+            res.status(500).json({
+                message: 'fail',
+                err: data,
+            });
+        }else {
+            res.status(200).json({
+                message: 'success',
+                err: data,
+            });
+        }
+    }
+
+    // [PUT] /admin/delivery-order/:id/:user
+    async deliveryOrder(req, res, next) {
+        const orderId = req.params.id;
+        const userId = req.params.user;
+        var timestamp = '';
+        let date_ob = new Date();
+        let date = ("0" + date_ob.getDate()).slice(-2);
+        let month = ("0" + (date_ob.getMonth()+1)).slice(-2);
+        let year = date_ob.getFullYear();
+        let hours = date_ob.getHours();
+        let minutes = date_ob.getMinutes();
+        let seconds = date_ob.getSeconds();
+
+        timestamp = year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds;
+
+        var dataConfirm = [
+            userId,
+            orderId,
+            4,
+            timestamp
+        ]
+
+        const confirmPromise = new Promise((resolve, reject) => {
+            Order.updateStatusOrder(dataConfirm, (data) => {
+                resolve(data);
+            });
+        });
+        const data = await confirmPromise;
+
+        if(data.errno) {
+            res.status(500).json({
+                message: 'fail',
+                err: data,
+            });
+        }else {
+            res.status(200).json({
+                message: 'success',
+                err: data,
+            });
+        }
+    }
+
+    // [PUT] /admin/delivered-order/:id/:user
+    async deliveredOrder(req, res, next) {
+        const orderId = req.params.id;
+        const userId = req.params.user;
+        var timestamp = '';
+        let date_ob = new Date();
+        let date = ("0" + date_ob.getDate()).slice(-2);
+        let month = ("0" + (date_ob.getMonth()+1)).slice(-2);
+        let year = date_ob.getFullYear();
+        let hours = date_ob.getHours();
+        let minutes = date_ob.getMinutes();
+        let seconds = date_ob.getSeconds();
+
+        timestamp = year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds;
+
+        var dataConfirm = [
+            userId,
+            orderId,
+            5,
+            timestamp
+        ]
+
+        const confirmPromise = new Promise((resolve, reject) => {
+            Order.updateStatusOrder(dataConfirm, (data) => {
+                resolve(data);
+            });
+        });
+        const data = await confirmPromise;
+
+        if(data.errno) {
+            res.status(500).json({
+                message: 'fail',
+                err: data,
+            });
+        }else {
+            res.status(200).json({
+                message: 'success',
+                err: data,
+            });
         }
     }
 

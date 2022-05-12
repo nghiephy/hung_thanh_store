@@ -38,11 +38,20 @@
             user-select: none;
             padding: 4px;
             font-size: 1.2rem;
+            &-1 {
+                background-color: $warning-color;
+            }
             &-2 {
                 background-color: $wait-confirm-color;
             }
             &-3 {
                 background-color: $confirm-color;
+            }
+            &-4 {
+                background-color: $delivering-color;
+            }
+            &-5 {
+                background-color: $delivered-color;
             }
         }
     }

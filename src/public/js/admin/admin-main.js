@@ -166,6 +166,10 @@ document.addEventListener('DOMContentLoaded', async function() {
         const allProductBtn = document.getElementById('nav-item-all-product-btn');
         const addProductBtn = document.getElementById('nav-item-add-product-btn');
         const manageOrdersBtn = document.getElementById('nav-item-manage-order-btn');
+        const confirmOrdersBtns = document.querySelectorAll('.admin-orders-actions-confirm');
+        const cancelOrdersBtns = document.querySelectorAll('.admin-orders-actions-cancel');
+        const deliveryOrdersBtns = document.querySelectorAll('.admin-orders-actions-delivery');
+        const deliveredOrdersBtns = document.querySelectorAll('.admin-orders-actions-delivered');
         const getTrashBtn = document.getElementById('admin-trash-btn');
         const returnAllProBtn = document.getElementById('all-product-btn');
         const updateProductBtns = document.querySelectorAll('.admin-product-item--update');
@@ -249,6 +253,46 @@ document.addEventListener('DOMContentLoaded', async function() {
                 });
             })
         }
+        if(confirmOrdersBtns) {
+            confirmOrdersBtns.forEach( (confirmOrdersBtn) => {
+                confirmOrdersBtn.addEventListener('click', e => {
+                    const orderId = confirmOrdersBtn.dataset.idOrder;
+                    const userId = confirmOrdersBtn.dataset.idUser;
+                    
+                    updateStatusOrder('/admin/confirm-order/' + orderId + "/" + userId);
+                });
+            })
+        }
+        if(cancelOrdersBtns) {
+            cancelOrdersBtns.forEach( (cancelOrdersBtn) => {
+                cancelOrdersBtn.addEventListener('click', e => {
+                    const orderId = cancelOrdersBtn.dataset.idOrder;
+                    const userId = cancelOrdersBtn.dataset.idUser;
+                    
+                    updateStatusOrder('/admin/cancel-order/' + orderId + "/" + userId);
+                });
+            })
+        }
+        if(deliveryOrdersBtns) {
+            deliveryOrdersBtns.forEach( (deliveryOrdersBtn) => {
+                deliveryOrdersBtn.addEventListener('click', e => {
+                    const orderId = deliveryOrdersBtn.dataset.idOrder;
+                    const userId = deliveryOrdersBtn.dataset.idUser;
+                    
+                    updateStatusOrder('/admin/delivery-order/' + orderId + "/" + userId);
+                });
+            })
+        }
+        if(deliveredOrdersBtns) {
+            deliveredOrdersBtns.forEach( (deliveredOrdersBtn) => {
+                deliveredOrdersBtn.addEventListener('click', e => {
+                    const orderId = deliveredOrdersBtn.dataset.idOrder;
+                    const userId = deliveredOrdersBtn.dataset.idUser;
+                    
+                    updateStatusOrder('/admin/delivered-order/' + orderId + "/" + userId);
+                });
+            })
+        }
         if(confirmDeleteMulBtn) {
             confirmDeleteMulBtn.onclick = function() {
                 const checkboxes = document.querySelectorAll('input[name="checkbox-delete"]');
@@ -316,6 +360,13 @@ document.addEventListener('DOMContentLoaded', async function() {
     async function destroyProduct(pathDestroy) {
         const pathDestroyResponse = await instance.delete(pathDestroy);
         if(pathDestroyResponse.data.message === 'success') {
+            window.location.reload();
+        }
+    }
+    async function updateStatusOrder(pathUpdate) {
+        const dataResponse = await instance.put(pathUpdate);
+        if(dataResponse.data.message === 'success') {
+            // alert("Thao tác thành công!");
             window.location.reload();
         }
     }

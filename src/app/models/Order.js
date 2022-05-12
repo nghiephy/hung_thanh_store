@@ -19,8 +19,8 @@ const Order = function (Order) {
 Order.addOrder = async function(dataOrder, dataProducts, result) {
     const time_update = dataOrder[3];
     const addOrderPromise = new Promise((resolve, reject) => {
-        if(dataOrder.length === 5) {
-            db.query(`INSERT INTO ORDERS(ADDRESS_ID, BUYER_ID, NOTE, INVOICE_DATE, TOTAL_PRICE) VALUES(?)`,[dataOrder], function(err, results, fields) {
+        if(dataOrder.length === 6) {
+            db.query(`INSERT INTO ORDERS(ADDRESS_ID, BUYER_ID, NOTE, INVOICE_DATE, TOTAL_PRICE, CUR_STATUS) VALUES(?)`,[dataOrder], function(err, results, fields) {
                 if(err) {
                     result(err);
                     return;
@@ -29,7 +29,7 @@ Order.addOrder = async function(dataOrder, dataProducts, result) {
                 }
             });
         }else {
-            db.query(`INSERT INTO ORDERS(ADDRESS_ID, BUYER_ID, NOTE, INVOICE_DATE, TOTAL_PRICE, COMPANY_NAME, COM_TAX_NUMBER, COM_ADDRESS) VALUES(?)`,[dataOrder], function(err, results, fields) {
+            db.query(`INSERT INTO ORDERS(ADDRESS_ID, BUYER_ID, NOTE, INVOICE_DATE, TOTAL_PRICE, CUR_STATUS, COMPANY_NAME, COM_TAX_NUMBER, COM_ADDRESS) VALUES(?)`,[dataOrder], function(err, results, fields) {
                 if(err) {
                     result(err);
                     return;
@@ -83,6 +83,28 @@ Order.getListOrder = async function(userId, result) {
             return;
         }else{
             result(orderList);
+        }
+    });
+}
+
+Order.getAllListOrder = async function(result) {
+    db.query(`call getAllOrderList();`, function(err, orderList) {
+        if(err) {
+            result(err);
+            return;
+        }else{
+            result(orderList);
+        }
+    });
+}
+
+Order.updateStatusOrder = async function(dataUpdate, result) {
+    db.query(`call updateStatusOrder(?);`,[dataUpdate], function(err, results, fields) {
+        if(err) {
+            result(err);
+            return;
+        }else{
+            result(results);
         }
     });
 }

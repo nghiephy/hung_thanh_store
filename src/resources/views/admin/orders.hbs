@@ -14,18 +14,21 @@
             </tr>
         </thead>
         <tbody>
-            {{#each trash_list}}
-                <tr class="admin-product-item">
-                    <td>{{this.PRODUCT_ID}}</td>
+            {{#each orderList}}
+                <tr class="admin-orders-item">
+                    <td>{{this.ORDER_ID}}</td>
                     <td>{{this.NAME}}</td>
-                    <td>{{this.CAT_NAME}}</td>
-                    <td>{{this.BASIC_UNIT}}</td>
-                    <td>{{this.PRICE_PER_UNIT}}</td>
-                    <td>{{this.BRAND}}</td>
-                    <td>{{this.ORIGIN}}</td>
-                    <td class="admin-product-item--actions" >
-                        <a class="button button-modify trash-product-item-restore" onclick="return false" href="/admin/restore-product/{{this.PRODUCT_ID}}">Khôi phục</a>
-                        <a class="button button-delete trash-product-item-destroy" onclick="return false" href="/admin/destroy-product/{{this.PRODUCT_ID}}/{{this.SLUG}}">Xoá</a>
+                    <td>{{this.NOTE}}</td>
+                    <td>{{this.ADDRESS}}, {{this.WARD}}, {{this.DISTRICT}}, {{this.CITY}}.</td>
+                    <td>{{this.TOTAL_PRICE}}</td>
+                    <td>
+                        <span class="status-type status-type-{{this.CUR_STATUS}}" >{{this.CUR_STATUS_NAME}}</span>
+                    </td>
+                    <td class="admin-orders-item--actions" >
+                        <a class="button button--confirm admin-orders-actions-confirm {{#ifEquals this.CUR_STATUS 2}}{{else}}d-none{{/ifEquals}}" onclick="return false" href="#" data-id-order="{{this.ORDER_ID}}" data-id-user="{{this.USER_ID}}">Duyệt</a>
+                        <a class="button button--warning admin-orders-actions-cancel {{#ifEquals this.CUR_STATUS 2}}{{else}}d-none{{/ifEquals}}" onclick="return false" href="#" data-id-order="{{this.ORDER_ID}}" data-id-user="{{this.USER_ID}}">Huỷ</a>
+                        <a class="button button--delivery admin-orders-actions-delivery {{#ifEquals this.CUR_STATUS 3}}{{else}}d-none{{/ifEquals}}" onclick="return false" href="#" data-id-order="{{this.ORDER_ID}}" data-id-user="{{this.USER_ID}}">Giao hàng</a>
+                        <a class="button button--delivered admin-orders-actions-delivered {{#ifEquals this.CUR_STATUS 4}}{{else}}d-none{{/ifEquals}}" onclick="return false" href="#" data-id-order="{{this.ORDER_ID}}" data-id-user="{{this.USER_ID}}">Đã nhận</a>
                     </td>
                 </tr>
             {{/each}}

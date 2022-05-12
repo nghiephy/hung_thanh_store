@@ -111,6 +111,7 @@ class SiteController {
     // [POST] /payment
     async handlePayment(req, res, next) {
         const user = req.user;
+        const cur_status = 2;
         console.log("Check body =>>>>>");
         console.log(req.body);
         var dataOrder = [
@@ -150,7 +151,7 @@ class SiteController {
         dataOrder.push(req.body.note_card);
         dataOrder.push(timestamp);
         dataOrder.push(Number(req.body.total_price));
-
+        dataOrder.push(cur_status);
         if(invoiceOb) {
             invoiceOb = JSON.parse(invoiceOb);
             dataOrder.push(invoiceOb['invoice-name-company']);

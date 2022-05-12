@@ -9,6 +9,41 @@
             font-size: 1.4rem !important;
         }
     }
+    &-item {
+        .status-type {
+            color: $white-color;
+            border-radius: 4px;
+            display: inline-block;
+            width: 70px;
+            text-align: center;
+            user-select: none;
+            padding: 4px;
+            font-size: 1.2rem;
+            &-1 {
+                background-color: $warning-color;
+            }
+            &-2 {
+                background-color: $wait-confirm-color;
+            }
+            &-3 {
+                background-color: $confirm-color;
+            }
+            &-4 {
+                background-color: $delivering-color;
+            }
+            &-5 {
+                background-color: $delivered-color;
+            }
+        }
+        &--actions {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            .admin-orders-actions-confirm {
+                margin-right: 5px;
+            }
+        }
+    }
 }
 
 .dataTables_wrapper {

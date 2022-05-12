@@ -50,6 +50,10 @@ router.delete('/soft-delete/:id', middlewareController.verifyAdminLogin, adminCo
 router.post('/soft-delete/:id', middlewareController.verifyAdminLogin, adminController.softDelete);
 router.delete('/destroy-product/:id/:slug', middlewareController.verifyAdminLogin, adminController.destroyProduct);
 router.put('/restore-product/:id', middlewareController.verifyAdminLogin, adminController.resotreProduct);
+router.put('/confirm-order/:id/:user', middlewareController.verifyAdminLogin, adminController.confirmOrder);
+router.put('/cancel-order/:id/:user', middlewareController.verifyAdminLogin, adminController.cancelOrder);
+router.put('/delivery-order/:id/:user', middlewareController.verifyAdminLogin, adminController.deliveryOrder);
+router.put('/delivered-order/:id/:user', middlewareController.verifyAdminLogin, adminController.deliveredOrder);
 router.put('/update-product/:id', middlewareController.verifyAdminLogin, uploadMultiple, adminController.handleUpdateProduct);
 router.get('/update-product/:slug', middlewareController.verifyAdminLogin, adminController.updateProduct);
 router.post('/add-product', middlewareController.verifyAdminLogin, uploadMultiple, adminController.saveProduct);
