@@ -1,0 +1,26 @@
+.admin-orders {
+    &-title {
+        margin-bottom: 20px;
+    }
+    &-table {
+        width: 600px;
+        margin: 0 auto;
+        &_wraper {
+            font-size: 1.4rem !important;
+        }
+    }
+}
+
+.dataTables_wrapper {
+    font-size: 1.4rem;
+}
+
+.dataTables_scroll {
+    display: block;
+    padding-top: 10px;
+}
+
+table.dataTable tbody td {
+    padding: 8px;
+    padding-left: 17px;
+}

@@ -377,6 +377,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 Validator.isRequired('#name_register', 'Vui lòng nhập tên đầy đủ của bạn'),
                 Validator.isRequired('#email_register'),
                 Validator.isEmail('#email_register'),
+                Validator.isRequired('#username_register'),
                 Validator.minLength('#password_register', 6),
                 Validator.isRequired('#re_password_register'),
                 Validator.isConfirmed('#re_password_register', function () {

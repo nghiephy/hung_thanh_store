@@ -62,6 +62,23 @@ class AdminController {
         });
     }
 
+    // [GET] /admin/orders
+    async getManageOrders(req, res, next) {
+        const trashListPromise = new Promise((resolve, reject) => {
+            Products.get_trash((trashList) => {
+                resolve(trashList);
+            });
+        });
+
+        var trashList = await trashListPromise;
+        trashList = Object.values(JSON.parse(JSON.stringify(trashList)));
+
+        res.render('admin/orders.hbs', {
+            layout: 'admin-main.hbs',
+            manage_orders: 'active',
+        });
+    }
+
     // [POST] /admin/soft-delete/:id
     async softDelete(req, res, next) {
         const idProduct = req.params.id;

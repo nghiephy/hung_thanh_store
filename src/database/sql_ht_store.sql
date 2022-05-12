@@ -842,6 +842,11 @@ DELIMITER ;
 -- test
 call getProductsWishList (15);
 
+select *
+from orders AS o
+join customers c on o.BUYER_ID = c.USER_ID
+join employees e on o.BUYER_ID = e.USER_ID;
+
 
 
 

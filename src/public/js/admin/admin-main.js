@@ -134,10 +134,18 @@ document.addEventListener('DOMContentLoaded', async function() {
     var onresize = function() {
         var width = document.body.clientWidth;
         if(width <= 1023) {
+            const iconNav = mbNavFulBtn.querySelector('i');
+
+            iconNav.classList.remove('fa-chevron-left');
+            iconNav.classList.add('fa-chevron-right');
             navLayoutEle.classList.add('small');
             console.log("small");
         }
         if(width > 1023) {
+            const iconNav = mbNavFulBtn.querySelector('i');
+
+            iconNav.classList.remove('fa-chevron-right');
+            iconNav.classList.add('fa-chevron-left');
             navLayoutEle.classList.remove('small');
         }
         if(width <= 1635) {
@@ -157,6 +165,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const dashboardBtn = document.getElementById('nav-item-dashboard-btn');
         const allProductBtn = document.getElementById('nav-item-all-product-btn');
         const addProductBtn = document.getElementById('nav-item-add-product-btn');
+        const manageOrdersBtn = document.getElementById('nav-item-manage-order-btn');
         const getTrashBtn = document.getElementById('admin-trash-btn');
         const returnAllProBtn = document.getElementById('all-product-btn');
         const updateProductBtns = document.querySelectorAll('.admin-product-item--update');
@@ -192,6 +201,10 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         addProductBtn.addEventListener('click', e => {
             addProduct();
+        });
+
+        manageOrdersBtn.addEventListener('click', e => {
+            getManageOrders();
         });
 
         if(getTrashBtn) {
@@ -252,6 +265,12 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     async function getDashboard() {
         const dataDashboard = await instance.get("/admin");
+        location.replace(dataDashboard.request.responseURL);
+        // location.reload(true);
+    }
+
+    async function getManageOrders() {
+        const dataDashboard = await instance.get("/admin/orders");
         location.replace(dataDashboard.request.responseURL);
         // location.reload(true);
     }
