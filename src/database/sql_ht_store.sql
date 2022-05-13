@@ -852,16 +852,21 @@ DROP PROCEDURE IF EXISTS getAllOrderList //
 CREATE PROCEDURE 
   getAllOrderList()
 BEGIN  
-	(select o.BUYER_ID as USER_ID, o.ORDER_ID, o.NOTE, o.TOTAL_PRICE, o.CUR_STATUS, order_s.NAME as CUR_STATUS_NAME, c.NAME, a.ADDRESS, a.WARD, a.DISTRICT, a.CITY
+	(select o.BUYER_ID as USER_ID, o.ORDER_ID, o.NOTE, o.TOTAL_PRICE, o.CUR_STATUS, order_s.NAME as CUR_STATUS_NAME, a.NAME, a.PHONE, a.ADDRESS, a.WARD, a.DISTRICT, a.CITY
 	from orders AS o
-	join customers c on o.BUYER_ID = c.USER_ID
-	join address a on a.USER_ID = o.BUYER_ID and a.ADDRESS_ID = o.ADDRESS_ID
+	left join customers c on o.BUYER_ID = c.USER_ID
+	join address a on a.ADDRESS_ID = o.ADDRESS_ID
     join order_statuses order_s on order_s.ORDER_STATUS_ID = o.CUR_STATUS)
     UNION
-    (select o.BUYER_ID as USER_ID, o.ORDER_ID, o.NOTE, o.TOTAL_PRICE, o.CUR_STATUS, order_s.NAME as CUR_STATUS_NAME, c.NAME, a.ADDRESS, a.WARD, a.DISTRICT, a.CITY
+    (select o.BUYER_ID as USER_ID, o.ORDER_ID, o.NOTE, o.TOTAL_PRICE, o.CUR_STATUS, order_s.NAME as CUR_STATUS_NAME, a.NAME, a.PHONE, a.ADDRESS, a.WARD, a.DISTRICT, a.CITY
 	from orders AS o
 	join employees c on o.BUYER_ID = c.USER_ID
-	join address a on a.USER_ID = o.BUYER_ID and a.ADDRESS_ID = o.ADDRESS_ID
+	join address a on a.ADDRESS_ID = o.ADDRESS_ID
+    join order_statuses order_s on order_s.ORDER_STATUS_ID = o.CUR_STATUS)
+	UNION
+    (select o.BUYER_ID as USER_ID, o.ORDER_ID, o.NOTE, o.TOTAL_PRICE, o.CUR_STATUS, order_s.NAME as CUR_STATUS_NAME, a.NAME, a.PHONE, a.ADDRESS, a.WARD, a.DISTRICT, a.CITY
+	from orders AS o
+	join address a on a.ADDRESS_ID = o.ADDRESS_ID
     join order_statuses order_s on order_s.ORDER_STATUS_ID = o.CUR_STATUS);
 END//
 DELIMITER ;
@@ -885,6 +890,26 @@ DELIMITER ;
 -- test
 call updateStatusOrder(15, 14, 3, '2022-05-12 00:00:00');
 
+-- procedure get order list of user for admin
+DELIMITER //
+DROP PROCEDURE IF EXISTS reportCommon //
+CREATE PROCEDURE 
+  reportCommon()
+BEGIN
+	select *
+    from
+	(select SUM(orders.TOTAL_PRICE) as INCOME
+	from orders) as a,
+    (select COUNT(orders.ORDER_ID) as TOTAL_ORDERS
+	from orders) as b,
+    (select COUNT(products.PRODUCT_ID) as TOTAL_PRODUCTS
+	from products) as C,
+    (select COUNT(IF(orders.CUR_STATUS = 2, orders.CUR_STATUS, null)) as WAIT_CONFIRM
+	from orders) as D;
+END//
+DELIMITER ;
+-- test
+call reportCommon();
 
 
 

@@ -1,0 +1,40 @@
+.admin-stock {
+    padding: 10px;
+    &-title {
+        font-weight: bold;
+        margin-top: 10px;
+        margin-bottom: 20px;
+    }
+    &-table {
+        width: 600px;
+        margin: 0 auto;
+        &_wraper {
+            font-size: 1.4rem !important;
+        }
+    }
+    #admin-stock-item-form {
+        .form-group {
+            label {
+                margin-bottom: 6px;
+            }
+        }
+    }
+    #admin-stock-item-quantity {
+        font-size: 1.4rem;
+        padding: 6px 10px;
+    }
+}
+
+.dataTables_wrapper {
+    font-size: 1.4rem;
+}
+
+.dataTables_scroll {
+    display: block;
+    padding-top: 10px;
+}
+
+table.dataTable tbody td {
+    padding: 8px;
+    padding-left: 17px;
+}

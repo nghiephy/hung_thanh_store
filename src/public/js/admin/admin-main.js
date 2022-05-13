@@ -166,10 +166,12 @@ document.addEventListener('DOMContentLoaded', async function() {
         const allProductBtn = document.getElementById('nav-item-all-product-btn');
         const addProductBtn = document.getElementById('nav-item-add-product-btn');
         const manageOrdersBtn = document.getElementById('nav-item-manage-order-btn');
+        const stockBtn = document.getElementById('nav-item-stock-btn');
         const confirmOrdersBtns = document.querySelectorAll('.admin-orders-actions-confirm');
         const cancelOrdersBtns = document.querySelectorAll('.admin-orders-actions-cancel');
         const deliveryOrdersBtns = document.querySelectorAll('.admin-orders-actions-delivery');
         const deliveredOrdersBtns = document.querySelectorAll('.admin-orders-actions-delivered');
+        const importStockBtns = document.querySelectorAll('.admin-stock-item-import-btn');
         const getTrashBtn = document.getElementById('admin-trash-btn');
         const returnAllProBtn = document.getElementById('all-product-btn');
         const updateProductBtns = document.querySelectorAll('.admin-product-item--update');
@@ -209,6 +211,10 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         manageOrdersBtn.addEventListener('click', e => {
             getManageOrders();
+        });
+
+        stockBtn.addEventListener('click', e => {
+            getStockManage();
         });
 
         if(getTrashBtn) {
@@ -293,6 +299,17 @@ document.addEventListener('DOMContentLoaded', async function() {
                 });
             })
         }
+        if(importStockBtns) {
+            importStockBtns.forEach( (importStockBtn) => {
+                importStockBtn.addEventListener('click', e => {
+                    const importStockForm = document.querySelector('#admin-stock-item-form');
+                    const actionForm = importStockForm.getAttribute('action');
+                    var data = new FormData(importStockForm);
+                    
+                    importStock(actionForm, data);
+                });
+            })
+        }
         if(confirmDeleteMulBtn) {
             confirmDeleteMulBtn.onclick = function() {
                 const checkboxes = document.querySelectorAll('input[name="checkbox-delete"]');
@@ -315,6 +332,12 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     async function getManageOrders() {
         const dataDashboard = await instance.get("/admin/orders");
+        location.replace(dataDashboard.request.responseURL);
+        // location.reload(true);
+    }
+
+    async function getStockManage() {
+        const dataDashboard = await instance.get("/admin/stock");
         location.replace(dataDashboard.request.responseURL);
         // location.reload(true);
     }
@@ -367,6 +390,13 @@ document.addEventListener('DOMContentLoaded', async function() {
         const dataResponse = await instance.put(pathUpdate);
         if(dataResponse.data.message === 'success') {
             // alert("Thao tác thành công!");
+            window.location.reload();
+        }
+    }
+    async function importStock(path, data) {
+        const dataResponse = await instance.put(path, data);
+        if(dataResponse.data.message === 'success') {
+            alert("Nhập kho cho sản phẩm thành công!");
             window.location.reload();
         }
     }

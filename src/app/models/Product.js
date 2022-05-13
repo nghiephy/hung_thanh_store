@@ -81,6 +81,16 @@ Product.get_all_for_ad = function (result) {
     });
 }
 
+Product.get_pro_with_stock_ad = function (result) {
+    db.query("SELECT PRODUCTS.*, CATEGORIES.NAME AS CAT_NAME, STOCK.STOCK_ID, STOCK.QUANTITY, STOCK.UPDATED_AT AS STOCK_UPDATED_AT FROM PRODUCTS JOIN CATEGORIES ON PRODUCTS.CATEGORY_ID = CATEGORIES.CATEGORY_ID JOIN STOCK ON STOCK.PRODUCT_ID = PRODUCTS.PRODUCT_ID WHERE PRODUCTS.DELETED = FALSE;", function(err, products) {
+        if(err) {
+            result(err);
+        }else{
+            result(products);
+        }
+    });
+}
+
 Product.get_pro_via_category = function (categoryName, result) {
     db.query(`call getProductViaCategory ('${categoryName}');`, function(err, products) {
         if(err) {
@@ -183,7 +193,7 @@ Product.add_new = async function (data, result) {
         return new Promise((resolve, reject) => {
             if(dataStock) {
                 dataStock.unshift(product_id);
-                db.query(`insert into stock(PRODUCT_ID, QUANTITY, CREATED_AT) values (?,?,?)`, dataStock, function(err, results, fields) {
+                db.query(`insert into stock(PRODUCT_ID, QUANTITY, UPDATED_AT) values (?,?,?)`, dataStock, function(err, results, fields) {
                     if(err) {
                         reject(err);
                     }else{

@@ -121,6 +121,8 @@ document.addEventListener('DOMContentLoaded', function()  {
             return Promise.reject(err);
     });
 
+    handleClick();
+
     // Hanlde get list image deleted
     imageDeleteBtns.forEach(imageDeleteBtn => {
         imageDeleteBtn.addEventListener('click', (e) => {
@@ -203,6 +205,16 @@ document.addEventListener('DOMContentLoaded', function()  {
             }
         }
         return "";
+    }
+
+    function handleClick() {
+        const inputProductsEle = document.querySelector('#images_product');
+
+        // Handle review avatar before save in DB
+        inputProductsEle.onchange = (event) => {
+            const fileListArr = [...inputProductsEle.files]
+            console.log(fileListArr);
+        }
     }
 
     function getParent (element, selector) {

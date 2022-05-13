@@ -6,6 +6,8 @@
             <tr>
                 <th>Mã đơn</th>
                 <th>Khách hàng</th>
+                <th>Đăng nhập</th>
+                <th>Số điện thoại</th>
                 <th>Ghi chú</th>
                 <th>Địa chỉ</th>
                 <th>Tổng tiền</th>
@@ -18,6 +20,8 @@
                 <tr class="admin-orders-item">
                     <td>{{this.ORDER_ID}}</td>
                     <td>{{this.NAME}}</td>
+                    <td>{{#if this.USER_ID includeZero=true}}Có{{else}}Không{{/if}}</td>
+                    <td>{{this.PHONE}}</td>
                     <td>{{this.NOTE}}</td>
                     <td>{{this.ADDRESS}}, {{this.WARD}}, {{this.DISTRICT}}, {{this.CITY}}.</td>
                     <td>{{this.TOTAL_PRICE}}</td>

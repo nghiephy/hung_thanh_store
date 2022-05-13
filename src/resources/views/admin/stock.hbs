@@ -1,0 +1,59 @@
+<section class="admin-stock">
+    <h1 class="admin-stock-title" >Danh sách sản phẩm</h1>
+
+    <table id="admin-stock-table" class="display nowrap admin-orders-table" style="width:100%">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tên sản phẩm</th>
+                <th>Loại</th>
+                <th>Đơn vị</th>
+                <th>Giá</th>
+                <th>Cập nhật lần cuối</th>
+                <th>Tồn kho</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each products}}
+                <tr class="admin-stock-item">
+                    <td>{{this.PRODUCT_ID}}</td>
+                    <td>{{this.NAME}}</td>
+                    <td>{{this.CAT_NAME}}</td>
+                    <td>{{this.BASIC_UNIT}}</td>
+                    <td>{{this.PRICE_PER_UNIT}}</td>
+                    <td>{{this.STOCK_UPDATED_AT}}</td>
+                    <td>{{this.QUANTITY}}</td>
+                    <td class="admin-stock-item--actions" >
+                        <button class="button button--confirm" data-bs-toggle="modal" data-bs-target="#admin-stock-item--import" data-bs-stock-id="{{this.STOCK_ID}}">Nhập kho</button>
+                    </td>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+
+    {{!-- Bootstrap modal section --}}
+    <div class="modal" id="admin-stock-item--import" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Nhập kho</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="admin-stock-item-form" action="">
+                    <div class="mb-3 form-group">
+                        <label for="recipient-name" class="col-form-label">Số lượng:</label>
+                        <input type="number" class="form-control" name="quantity" id="admin-stock-item-quantity">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Huỷ</button>
+                <button type="button" class="btn btn-danger admin-stock-item-import-btn">Nhập hàng</button>
+            </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="/js/admin/stock.js"></script>

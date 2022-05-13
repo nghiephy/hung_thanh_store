@@ -23,4 +23,16 @@ Stock.getStockViaId = async function(idProduct, result) {
     });
 }
 
+Stock.importStock = async function(stockId, quantity, updatedAt, result) {
+    const stmt = `update stock set stock.QUANTITY = stock.QUANTITY + ${quantity}, stock.UPDATED_AT = '${updatedAt}' WHERE stock.STOCK_ID = ${stockId};`;
+
+    db.query(stmt, function(err, results, fields) {
+        if(err) {
+            result(err);
+        }else {
+            result(results);
+        }
+    });
+}
+
 module.exports = Stock;

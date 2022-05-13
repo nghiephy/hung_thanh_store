@@ -46,6 +46,7 @@ router.get('/get-product', middlewareController.verifyAdminLogin, adminControlle
 router.get('/add-product', middlewareController.verifyAdminLogin, adminController.addProduct);
 router.get('/trash', middlewareController.verifyAdminLogin, adminController.getTrash);
 router.get('/orders', middlewareController.verifyAdminLogin, adminController.getManageOrders);
+router.get('/stock', middlewareController.verifyAdminLogin, adminController.getManageStock);
 router.delete('/soft-delete/:id', middlewareController.verifyAdminLogin, adminController.softDelete);
 router.post('/soft-delete/:id', middlewareController.verifyAdminLogin, adminController.softDelete);
 router.delete('/destroy-product/:id/:slug', middlewareController.verifyAdminLogin, adminController.destroyProduct);
@@ -58,6 +59,7 @@ router.put('/update-product/:id', middlewareController.verifyAdminLogin, uploadM
 router.get('/update-product/:slug', middlewareController.verifyAdminLogin, adminController.updateProduct);
 router.post('/add-product', middlewareController.verifyAdminLogin, uploadMultiple, adminController.saveProduct);
 router.post('/upload', multipartMiddleware, adminController.uploadImage);
+router.put('/import-stock/:id', multipartMiddleware, adminController.importStock);
 router.get('/', middlewareController.verifyAdminLogin, adminController.index);
 
 module.exports = router;

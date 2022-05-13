@@ -2806,7 +2806,12 @@ table.dataTable tbody td {
   display: inline-block;
 }
 
+.admin-orders {
+  padding: 10px;
+}
 .admin-orders-title {
+  font-weight: bold;
+  margin-top: 10px;
   margin-bottom: 20px;
 }
 .admin-orders-table {
@@ -2848,6 +2853,43 @@ table.dataTable tbody td {
 }
 .admin-orders-item--actions .admin-orders-actions-confirm {
   margin-right: 5px;
+}
+
+.dataTables_wrapper {
+  font-size: 1.4rem;
+}
+
+.dataTables_scroll {
+  display: block;
+  padding-top: 10px;
+}
+
+table.dataTable tbody td {
+  padding: 8px;
+  padding-left: 17px;
+}
+
+.admin-stock {
+  padding: 10px;
+}
+.admin-stock-title {
+  font-weight: bold;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+.admin-stock-table {
+  width: 600px;
+  margin: 0 auto;
+}
+.admin-stock-table_wraper {
+  font-size: 1.4rem !important;
+}
+.admin-stock #admin-stock-item-form .form-group label {
+  margin-bottom: 6px;
+}
+.admin-stock #admin-stock-item-quantity {
+  font-size: 1.4rem;
+  padding: 6px 10px;
 }
 
 .dataTables_wrapper {

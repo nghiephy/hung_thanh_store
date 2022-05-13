@@ -2,18 +2,30 @@ var Categories = require('../models/Category');
 var Products = require('../models/Product');
 var Order = require('../models/Order');
 var Stock = require('../models/Stock');
+var Report = require('../models/Report');
 const multipart = require('connect-multiparty');
+const moment = require('moment');
 const fs = require('fs');
 const path = require('path');
 const slugify = require('slugify');
 
 class AdminController {
     // [GET] /admin/index
-    index(req, res, next) {
+    async index(req, res, next) {
+        const reportCommonPromise = new Promise((resolve, reject) => {
+            Report.reportCommon((data) => {
+                resolve(data);
+            });
+        });
+        
+        var dataResponse = await reportCommonPromise;
+        console.log(dataResponse[0][0]);
+
         res.render('admin/index.hbs', {
             layout: 'admin-main.hbs',
             dashboard: 'active',
             user: req.user,
+            reportCommon: dataResponse[0][0],
         });
     }
 
@@ -78,6 +90,29 @@ class AdminController {
             layout: 'admin-main.hbs',
             manage_orders: 'active',
             orderList,
+        });
+    }
+
+    // [GET] /admin/stock
+    async getManageStock(req, res, next) {
+        const productListPromise = new Promise((resolve, reject) => {
+            Products.get_pro_with_stock_ad((productList) => {
+                resolve(productList);
+            });
+        });
+
+        var productList = await productListPromise;
+        productList = Object.values(JSON.parse(JSON.stringify(productList)));
+
+        productList.forEach(item => {
+            const formatDate = moment.utc(item.STOCK_UPDATED_AT).format('YYYY-MM-DD HH:mm:ss');
+            item.STOCK_UPDATED_AT = formatDate;
+        });
+
+        res.render('admin/stock.hbs', {
+            layout: 'admin-main.hbs',
+            manage_stock: 'active',
+            products: productList,
         });
     }
 
@@ -539,6 +574,42 @@ class AdminController {
             product,
             stock: stock[0],
         });
+    }
+
+    // [PUT] /admin/improt-stock/:id
+    async importStock(req, res, next) {
+        const stockId = Number(req.params.id);
+        const data = req.body;
+        const quantity = data.quantity;
+        var timestamp = '';
+        let date_ob = new Date();
+        let date = ("0" + date_ob.getDate()).slice(-2);
+        let month = ("0" + (date_ob.getMonth()+1)).slice(-2);
+        let year = date_ob.getFullYear();
+        let hours = date_ob.getHours();
+        let minutes = date_ob.getMinutes();
+        let seconds = date_ob.getSeconds();
+
+        timestamp = year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds;
+
+        const importStockPromise = new Promise((resolve, reject) => {
+            Stock.importStock(stockId, quantity, timestamp, (dataResponse) => {
+                resolve(dataResponse);
+            })
+        });
+        
+        const dataResponse = await importStockPromise;
+
+        if(dataResponse.errno) {
+            res.status(500).json({
+                message: 'fail',
+                err: dataResponse,
+            });
+        }else {
+            res.status(200).json({
+                message: 'success'
+            });
+        }
     }
 
     // [POST] /admin/add-product
