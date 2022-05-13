@@ -14,6 +14,22 @@ document.addEventListener('DOMContentLoaded', function() {
         var button = event.relatedTarget;
         idStock = button.getAttribute('data-bs-stock-id')
         importStockForm.action = '/admin/import-stock/' + idStock;
-        console.log(idStock);
-    })
+    });
+
+    // Validate form
+    validateForm();
+
+    function validateForm() {
+        Validator({
+            form: '#admin-stock-item-form',
+            formGroupSelector: '.form-group',
+            errorSelector: '.form-message',
+            onSubmit: async function (dataForm) {
+
+            },
+            rules: [
+                Validator.isRequired('#admin-stock-item-quantity', 'Vui lòng nhập số lượng'),
+            ]
+        })
+    }
 });

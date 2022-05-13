@@ -35,8 +35,8 @@ class OrdersController {
 
         var i;
         for(i=0; i<orderList.length; i++) {
-            orderList[i].INVOICE_DATE = moment.utc(orderList[i].INVOICE_DATE).format('YYYY-MM-DD');
-            orderList[i].UPDATED_DATE = moment.utc(orderList[i].UPDATED_DATE).format('YYYY-MM-DD');
+            orderList[i].INVOICE_DATE = moment.utc(orderList[i].INVOICE_DATE).format('YYYY-MM-DD HH:mm:ss');
+            orderList[i].UPDATED_DATE = moment.utc(orderList[i].UPDATED_DATE).format('YYYY-MM-DD HH:mm:ss');
 
             const getNamesPromise = new Promise((resolve, reject) => {
                 Order.getNameProductsOrder(userId,  orderList[i].ORDER_ID, (nameProducts) => {

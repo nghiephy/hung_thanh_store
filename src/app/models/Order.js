@@ -18,6 +18,14 @@ const Order = function (Order) {
 
 Order.addOrder = async function(dataOrder, dataProducts, result) {
     const time_update = dataOrder[3];
+    var dataQuantityBuy = [];
+    dataProducts.forEach(item => {
+        const quantityItem = [
+            item[0],
+            item[1],
+        ];
+        dataQuantityBuy.push(quantityItem);
+    });
     const addOrderPromise = new Promise((resolve, reject) => {
         if(dataOrder.length === 6) {
             db.query(`INSERT INTO ORDERS(ADDRESS_ID, BUYER_ID, NOTE, INVOICE_DATE, TOTAL_PRICE, CUR_STATUS) VALUES(?)`,[dataOrder], function(err, results, fields) {
@@ -69,9 +77,25 @@ Order.addOrder = async function(dataOrder, dataProducts, result) {
         });
     }
 
+    const updateStockPromise = new Promise((resolve, reject) => {
+        var callProcedures = '';
+        dataQuantityBuy.forEach(item => {
+            callProcedures = callProcedures + `call updateStockAfterBuying(${item[0]},${item[1]});`;
+        });
+        db.query(callProcedures, function(err, results, fields) {
+            if(err) {
+                result(err);
+                return;
+            }else{
+                resolve(results);
+            }
+        });
+    });
+
     const addOrderResponse = await addOrderPromise;
     const addOrderProductResponse = await addOrdersProductsPromise(addOrderResponse.insertId, dataProducts);
     const addHistoryOrderResponse = await addHistoryOrderPromise(addOrderResponse.insertId, time_update);
+    const updateStockResponse = await updateStockPromise;
     result(addOrderProductResponse);
 
 }

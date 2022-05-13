@@ -1,5 +1,5 @@
 
-document.addEventListener('DOMContentLoaded', async function() {   
+document.addEventListener('DOMContentLoaded', async function() {  
     const navItemEles = document.querySelectorAll('.nav-item');
     const navLayoutEle = document.querySelector('.navigation');
     const mbNavFulBtn = document.querySelector('.nav-full-btn');
@@ -139,7 +139,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             iconNav.classList.remove('fa-chevron-left');
             iconNav.classList.add('fa-chevron-right');
             navLayoutEle.classList.add('small');
-            console.log("small");
         }
         if(width > 1023) {
             const iconNav = mbNavFulBtn.querySelector('i');
@@ -155,11 +154,28 @@ document.addEventListener('DOMContentLoaded', async function() {
     window.addEventListener("resize", onresize);
 
     // Handle when click button display full nav layout
-    mbNavFulBtn.addEventListener('click', (e) => {
+    mbNavFulBtn.addEventListener('click', async (e) => {
+        const tableBodyEle = document.querySelector('.admin-table-manage tbody');
+        
         navLayoutEle.classList.toggle('small');
         mbNavFulBtn.querySelector('i').classList.toggle('fa-chevron-right');
         mbNavFulBtn.querySelector('i').classList.toggle('fa-chevron-left');
+
+        // Follow width body table and set for header when table's width was change
+        new ResizeObserver(outputsize).observe(tableBodyEle);
+
+        function outputsize() {
+            const dataTables_scrollHeadInner = document.querySelector('.dataTables_scrollHeadInner');
+            const datatable = document.querySelector('.display.nowrap.dataTable.no-footer');
+            var width = tableBodyEle.offsetWidth;
+            
+            dataTables_scrollHeadInner.style.width = width+'px';
+            datatable.style.width = width+'px';
+        }
+        
     });
+
+   
 
     function handleClick() {
         const dashboardBtn = document.getElementById('nav-item-dashboard-btn');
@@ -178,7 +194,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const btnDeleteProduct = document.getElementById('admin-product-delete-btn');
         const restoreProductBtns = document.querySelectorAll('.trash-product-item-restore');
         const destroyProductBtns = document.querySelectorAll('.trash-product-item-destroy');
-        var confirmDeleteMulBtn = document.querySelector('#admin-product-item--delete-mul');
+        var confirmDeleteMulBtn = document.querySelector('#admin-product-delete-mul-btn');
         var headerAdminOptionsBtn = document.querySelector('#header-top-config-options');
         const optionsPopup = headerAdminOptionsBtn.querySelector('.user-options-popup');
         var idProductArray = [];
@@ -305,8 +321,15 @@ document.addEventListener('DOMContentLoaded', async function() {
                     const importStockForm = document.querySelector('#admin-stock-item-form');
                     const actionForm = importStockForm.getAttribute('action');
                     var data = new FormData(importStockForm);
-                    
-                    importStock(actionForm, data);
+                    var object = {};
+                    data.forEach(function(value, key){
+                        object[key] = value;
+                    });
+                    if(object.quantity === '') {
+                        // alert('Vui lòng nhập số lượng!');
+                    }else {
+                        importStock(actionForm, data);
+                    }
                 });
             })
         }
@@ -317,8 +340,12 @@ document.addEventListener('DOMContentLoaded', async function() {
                     if(item.checked==true) {
                         idProductArray.push(Number(item.value));
                     }
-                })
-                softDeleteProduct('/admin/soft-delete/null', idProductArray);
+                });
+                if(idProductArray.length!==0) {
+                    softDeleteProduct('/admin/soft-delete/null', idProductArray);
+                }else {
+                    alert("Bạn chưa chọn sản phẩm nào!");
+                }
             }
         }
 

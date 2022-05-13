@@ -911,6 +911,20 @@ DELIMITER ;
 -- test
 call reportCommon();
 
+-- procedure update stock after buying
+DELIMITER //
+DROP PROCEDURE IF EXISTS updateStockAfterBuying //
+CREATE PROCEDURE 
+  updateStockAfterBuying(product_id int, quantity int)
+BEGIN  
+	update stock
+    set stock.QUANTITY = stock.QUANTITY - quantity
+    where stock.PRODUCT_ID = product_id;
+END//
+DELIMITER ;
+-- test
+call updateStockAfterBuying(1, 2);
+
 
 
 

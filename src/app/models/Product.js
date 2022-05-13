@@ -256,8 +256,8 @@ Product.update = async function (data, result) {
     };
 
     const responseProduct = await updateProductPromise;
-    console.log("Checl response updated >>>>");
-    console.log(responseProduct);
+    // console.log("Checl response updated >>>>");
+    // console.log(responseProduct);
     const responseImage = await addImage(data.id_product);
 
 }

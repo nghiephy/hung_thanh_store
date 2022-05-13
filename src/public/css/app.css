@@ -2574,6 +2574,12 @@ img {
 .modal .form-group #cke_1_contents {
   height: 400px !important;
 }
+.modal .dataTable {
+  width: 100% !important;
+}
+.modal .dataTables_scrollHeadInner {
+  width: 100% !important;
+}
 
 .dashboard {
   padding: 10px;
@@ -2892,6 +2898,9 @@ table.dataTable tbody td {
 }
 .admin-stock #admin-stock-item-form .form-group label {
   margin-bottom: 6px;
+}
+.admin-stock #admin-stock-item-form .form-group.invalid input {
+  border: 1px solid #f33a58;
 }
 .admin-stock #admin-stock-item-quantity {
   font-size: 1.4rem;

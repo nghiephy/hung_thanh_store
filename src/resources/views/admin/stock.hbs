@@ -1,7 +1,7 @@
 <section class="admin-stock">
     <h1 class="admin-stock-title" >Danh sách sản phẩm</h1>
 
-    <table id="admin-stock-table" class="display nowrap admin-orders-table" style="width:100%">
+    <table id="admin-stock-table" class="display nowrap admin-orders-table admin-table-manage" style="width:100%">
         <thead>
             <tr>
                 <th>ID</th>
@@ -45,12 +45,13 @@
                     <div class="mb-3 form-group">
                         <label for="recipient-name" class="col-form-label">Số lượng:</label>
                         <input type="number" class="form-control" name="quantity" id="admin-stock-item-quantity">
+                        <span class="form-message"></span>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Huỷ</button>
-                <button type="button" class="btn btn-danger admin-stock-item-import-btn">Nhập hàng</button>
+                <button type="submit" form="admin-stock-item-form" class="btn btn-danger admin-stock-item-import-btn">Nhập hàng</button>
             </div>
             </div>
         </div>

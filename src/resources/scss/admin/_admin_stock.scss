@@ -17,6 +17,9 @@
             label {
                 margin-bottom: 6px;
             }
+            &.invalid input {
+                border: 1px solid $warning-color;
+            }
         }
     }
     #admin-stock-item-quantity {

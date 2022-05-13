@@ -1,13 +1,17 @@
 
 document.addEventListener('DOMContentLoaded', function() {
+    var dataTable;
     $(document).ready(function() {
-        $('#admin-product-table').DataTable( {
+        dataTable = $('#admin-product-table').DataTable( {
             "scrollY": '100%',
             "scrollX": true,
             "aoColumnDefs": [
                 { "bSortable": false, "aTargets": [ 0 ] }, 
                 { "bSearchable": false, "aTargets": [ 0 ] }
             ],
+            "colReorder": {
+                realtime: false
+            }
         } );
     } );
     var deleteModal = document.getElementById('admin-product-item--delete');
@@ -34,6 +38,20 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         deleteMulOptionsEle.classList.toggle('d-none');
         btnDeleteMulProduct.classList.toggle('d-none');
+        if(dataTable != null) {
+            dataTable.destroy();
+        }
+        dataTable = $('#admin-product-table').DataTable( {
+            "scrollY": '100%',
+            "scrollX": true,
+            "aoColumnDefs": [
+                { "bSortable": false, "aTargets": [ 0 ] }, 
+                { "bSearchable": false, "aTargets": [ 0 ] }
+            ],
+            "colReorder": {
+                realtime: false
+            }
+        } );
     };
 
     cancelDeleteMulBtn.onclick = function () {
@@ -43,6 +61,21 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         deleteMulOptionsEle.classList.toggle('d-none');
         btnDeleteMulProduct.classList.toggle('d-none');
+        
+        if(dataTable != null) {
+            dataTable.destroy();
+        }
+        dataTable = $('#admin-product-table').DataTable( {
+            "scrollY": '100%',
+            "scrollX": true,
+            "aoColumnDefs": [
+                { "bSortable": false, "aTargets": [ 0 ] }, 
+                { "bSearchable": false, "aTargets": [ 0 ] }
+            ],
+            "colReorder": {
+                realtime: false
+            }
+        } );
     }
 
     confirmDeleteMulBtn.addEventListener('show.bs.modal', function (event) {

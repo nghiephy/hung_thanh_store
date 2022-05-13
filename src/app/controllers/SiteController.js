@@ -206,6 +206,7 @@ class SiteController {
         if(dataResponse.errno) {
             res.status(500).json({
                 message: 'fail',
+                err_message: dataResponse,
             });
         }else {
             if(user) {

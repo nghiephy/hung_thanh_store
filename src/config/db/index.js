@@ -10,6 +10,7 @@ var connection = mysql.createConnection({
     database: process.env.MYSQL_DATABASE,
     port: process.env.MYSQL_PORT,
     timezone: 'utc',
+    multipleStatements: true,
 });
 
 connection.connect(function(err) {
