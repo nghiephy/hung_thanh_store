@@ -903,7 +903,7 @@ BEGIN
     (select COUNT(orders.ORDER_ID) as TOTAL_ORDERS
 	from orders) as b,
     (select COUNT(products.PRODUCT_ID) as TOTAL_PRODUCTS
-	from products) as C,
+	from products where products.DELETED != 1) as C,
     (select COUNT(IF(orders.CUR_STATUS = 2, orders.CUR_STATUS, null)) as WAIT_CONFIRM
 	from orders) as D;
 END//

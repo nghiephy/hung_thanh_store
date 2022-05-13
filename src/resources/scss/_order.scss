@@ -1,4 +1,7 @@
 .order {
+    width: 100%;
+    // min-width: 500px;
+    // overflow-x: auto;
     &-table {
         width: 100%;
         border: 1px solid $border-color;

@@ -17,7 +17,7 @@ body {
   font-family: "Inter", sans-serif !important;
   transition: all 0.3s ease;
   overflow-x: hidden;
-  height: 100vh;
+  height: 100%;
 }
 body.admin-page {
   overflow-y: hidden;
@@ -203,6 +203,14 @@ img {
   justify-content: space-between;
   align-items: center;
 }
+@media (max-width: 767px) {
+  .header-top {
+    justify-content: flex-end;
+  }
+  .header-top .header-top-contact {
+    display: none !important;
+  }
+}
 .header-top-config, .header-top-contact {
   display: flex;
   justify-content: center;
@@ -323,6 +331,9 @@ img {
   justify-content: center;
   align-items: center;
   cursor: pointer;
+}
+.header-user-logo img {
+  height: 64px;
 }
 .header-user-info__list {
   list-style: none;
@@ -732,7 +743,7 @@ img {
   display: block;
   width: 100%;
   height: 100%;
-  padding: 18px 23px;
+  padding: 14px 23px;
   color: #555;
   font-weight: bold;
 }
@@ -2051,11 +2062,6 @@ img {
   justify-content: flex-start;
   align-items: flex-start;
 }
-@media (max-width: 767px) {
-  .cart-table__col .cart-product {
-    justify-content: center;
-  }
-}
 .cart-table__col .cart-product__image {
   display: inline-block;
   width: 80px;
@@ -3189,6 +3195,9 @@ table.dataTable tbody td {
   font-weight: bold;
 }
 
+.order {
+  width: 100%;
+}
 .order-table {
   width: 100%;
   border: 1px solid #e1e1e1;
@@ -3273,6 +3282,22 @@ table.dataTable tbody td {
 .wishlist-item-exit:hover {
   opacity: 0.8;
 }
+@media (max-width: 767px) {
+  .wishlist-item-exit {
+    top: 0;
+  }
+}
+@media (max-width: 767px) {
+  .wishlist-item-body .product_gallery {
+    margin-bottom: 10px;
+  }
+  .wishlist-item-body .product_body {
+    margin-bottom: 10px;
+  }
+  .wishlist-item-body .product_body-pricebox {
+    margin-top: 10px;
+  }
+}
 .wishlist-item .product_gallery-imgBox-wrap {
   width: 90px;
   height: 90px;
@@ -3299,6 +3324,11 @@ table.dataTable tbody td {
   flex-direction: column-reverse;
   position: relative;
 }
+@media (max-width: 991px) {
+  .wishlist-item .product_body-action {
+    align-items: flex-end;
+  }
+}
 .wishlist-item .product_body-action button {
   width: 160px;
   padding: 6px 8px;
@@ -3316,6 +3346,11 @@ table.dataTable tbody td {
   right: 100%;
   top: 50%;
   transform: translateY(-50%);
+}
+@media (max-width: 991px) {
+  .wishlist-item .product_body-action .like-btn {
+    right: 60%;
+  }
 }
 
 .modal-login {
@@ -3689,7 +3724,7 @@ select {
 }
 
 .wrapper {
-  height: 100vh;
+  height: 100%;
 }
 
 .item-annouce {

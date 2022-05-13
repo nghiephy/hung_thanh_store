@@ -63,6 +63,11 @@ $desktop-lg-width: 1200px;
  } 
 }  
 
+@mixin tablet-mobile { @media (max-width: #{$desktop-width - 1px}) {       
+  @content;   
+  } 
+}
+
 @mixin tablet-desktop { @media (min-width: #{$tablet-width}) {     
     @content;   
    } 

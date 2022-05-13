@@ -151,9 +151,6 @@
             display: flex;
             justify-content: flex-start;
             align-items: flex-start;
-            @include mobile {
-                justify-content: center;
-            }
             &__image {
                 display: inline-block;
                 width: 80px;

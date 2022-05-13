@@ -9,7 +9,7 @@
                     <div class="wishlist-item-exit" data-id-product="{{this.PRODUCT_ID}}">
                         <ion-icon name="close"></ion-icon>
                     </div>
-                    <div class="row">
+                    <div class="row wishlist-item-body">
                         <form style="display: none;" class="form-product" method="POST" action="#">
                             <input type="number" name="quantity" value="1">
                             <input  type="hidden" name="name" value="{{this.NAME}}">
@@ -18,14 +18,14 @@
                             <input  type="hidden" name="image" value="{{this.IMAGE_PATH}}">
                             <input  type="hidden" name="product_id" value="{{this.PRODUCT_ID}}">
                         </form>
-                        <div class="product_gallery col-lg-2">
+                        <div class="product_gallery col-lg-2 col-md-2 col-sm-12">
                             <div class="product_gallery-imgBox-wrap" >
                                 <a href="/products/{{this.SLUG}}" class="product_gallery-imgBox">
                                     <img src="{{this.IMAGE_PATH}}" alt="{{this.IMG_DESCRIPTION}}">
                                 </a>
                             </div>    
                         </div>
-                        <div class="product_body col-lg-7">
+                        <div class="product_body col-lg-7 col-md-7 col-sm-12">
                             <h1 class="product_body-title">
                                 <a href="/products/{{this.SLUG}}">{{this.NAME}}</a>
                             </h1>
@@ -36,7 +36,7 @@
                             </div>
                             
                         </div>
-                        <div class="product_body-action-wrap col-lg-3">
+                        <div class="product_body-action-wrap col-lg-3 col-md-12 ">
                             <div class="product_body-action">
                                 <button class="button--type1 product_body-action-buy buy-now" >Mua ngay</button>
                                 <button class="button--type2 product_body-action-whistlist add-cart-btn" >Thêm vào giỏ hàng</button>

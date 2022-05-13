@@ -24,6 +24,22 @@
             &:hover {
                 opacity: 0.8;
             }
+            @include mobile {
+                top: 0;
+            }
+        }
+        &-body {
+            @include mobile {
+                .product_gallery {
+                    margin-bottom: 10px;
+                }
+                .product_body {
+                    margin-bottom: 10px;
+                }
+                .product_body-pricebox {
+                    margin-top: 10px;
+                }
+            }
         }
         .product_gallery-imgBox-wrap {
             width: 90px;
@@ -50,6 +66,9 @@
             justify-content:space-around;
             flex-direction:column-reverse;
             position: relative;
+            @include tablet-mobile {
+                align-items: flex-end;
+            }
             button {
                 width: 160px;
                 padding: 6px 8px;
@@ -68,6 +87,9 @@
                 right: 100%;
                 top: 50%;
                 transform: translateY(-50%);
+                @include tablet-mobile {
+                    right: 60%;
+                }
             }
         }
     }

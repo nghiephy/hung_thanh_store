@@ -3,6 +3,7 @@ import { loadCartHeader,loadCartListHeader, deleteCarProHeader } from './modules
 document.addEventListener('DOMContentLoaded', function() {
     const forms = document.querySelectorAll('.form-product-category');
     const addToCartHomeBtns = document.querySelectorAll('.category-add-cart-btn');
+    const buyNowBtns = document.querySelectorAll('.buy-now');
 
     const instance = axios.create({
         baseURL: '/',
@@ -106,6 +107,63 @@ document.addEventListener('DOMContentLoaded', function() {
             deleteCarProHeader();
         })
         
+    });
+
+    buyNowBtns.forEach((buyNowBtn, indexBtn) => {
+        buyNowBtn.addEventListener('click', async (e) => {
+            const quantity = forms[indexBtn].querySelector('input[name="quantity"]').value;
+            const name = forms[indexBtn].querySelector('input[name="name"]').value;
+            const price_per_unit = forms[indexBtn].querySelector('input[name="price_per_unit"]').value;
+            const slug = forms[indexBtn].querySelector('input[name="slug"]').value;
+            const image = forms[indexBtn].querySelector('input[name="image"]').value;
+            const product_id = forms[indexBtn].querySelector('input[name="product_id"]').value;
+            
+            const product = {
+                NAME: name,
+                PRODUCT_ID: parseInt(product_id),
+                QUANTITY: parseInt(quantity),
+                PRICE_PER_UNIT: parseFloat(price_per_unit),
+                TOTAL_PRICE: parseFloat(price_per_unit)*quantity,
+                SLUG: slug,
+                IMAGE: image,
+            }
+
+            var cart = JSON.parse(window.localStorage.getItem('cart')) || [];
+            
+            const index = cart.findIndex(({SLUG}) => {
+                return SLUG == product.SLUG;
+            })
+
+            if(index != -1) {
+                cart[index].QUANTITY = parseInt(cart[index].QUANTITY) + parseInt(product.QUANTITY);
+                cart[index].TOTAL_PRICE += product.TOTAL_PRICE;
+
+                await instance.post('http://localhost:3000/cart/update-cart-item', {
+                    product_id: product.PRODUCT_ID,
+                    quantity: cart[index].QUANTITY,
+                    total_price: cart[index].TOTAL_PRICE,
+                });
+            }else{
+
+                await instance.post('http://localhost:3000/cart/save-cart', {
+                    dataCart: JSON.stringify([product]),
+                });
+                cart.push(product);
+            }
+
+            // Save new cart to localstore and toast message for user
+            window.localStorage.setItem('cart', JSON.stringify(cart));
+
+            // Update cart quantity header after add product
+            loadCartHeader();
+
+            // Update cart list products header after add product
+            loadCartListHeader();
+
+            deleteCarProHeader();
+
+            window.location.replace("/cart");
+        });
     });
     
     const orderByEles = $('.content-filter__item');

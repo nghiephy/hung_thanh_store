@@ -15,6 +15,17 @@ document.addEventListener('DOMContentLoaded', async function() {
     // loadDataHeader();
     handleClick();
 
+    // Handle header UI when scroll
+    document.addEventListener('scroll', (e) => {
+        const headerTopWrapEle = document.querySelector('.header-top-wrap');
+        if(window.scrollY > 0) {
+            headerTopWrapEle.classList.add('d-none');
+        }else{
+            headerTopWrapEle.classList.remove('d-none');
+        }
+
+    })
+
     const accessToken = getCookie('accessToken');
     let decodedToken = null;
     if(accessToken){
