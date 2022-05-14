@@ -70,15 +70,21 @@ document.addEventListener('DOMContentLoaded', function() {
     if(accessToken) {
         $("#order-btn").click( async function () {
             var cart = window.localStorage.getItem('cart') || [];
-            const addressId = document.querySelector('input[name="address"]:checked').value;
+            const addressId = document.querySelector('input[name="address"]:checked');
             const invoiceCkEle = document.querySelector('#invoice-ck');
             const invoiceForm = document.querySelector('#form-infor-invoice');
             const cardNoteOrderEle = document.querySelector('#card-note-order');
             const totalPriceInput = document.querySelector('#checkout-final-total-price');
             var formData = {};
+
+            if(addressId) {
+                formData.address_id = addressId.value;
+            }else {
+                alert('Bạn chưa có địa chỉ! Vui lòng vào quản lí tài khoản thêm địa chỉ!');
+                return;
+            }
     
             formData.cart = cart;
-            formData.address_id = addressId;
             formData.note_card = cardNoteOrderEle.value;
             formData.total_price = (totalPriceInput.innerText).slice(0, -2);
     
@@ -110,7 +116,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }else {
                 alert('Không có sản phẩm trong giỏ!');
             }
-    
         });
     }
 
