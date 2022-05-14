@@ -170,7 +170,9 @@ class UsersController {
         res.clearCookie("accessToken");
         res.clearCookie("refreshToken");
 
-        res.redirect("/");
+        res.json({
+            status: 'success',
+        });
     }
 
     //[GET] /user/check_exits_user
@@ -251,7 +253,6 @@ class UsersController {
         data = await getInforPromise;
         const newBirthday = moment.utc(data.BIRTHDAY).format('YYYY-MM-DD');
         data.BIRTHDAY = newBirthday;
-
         res.status(200).json({
             user: data,
         });
@@ -372,7 +373,7 @@ class UsersController {
         data = await getInforPromise;
         const newBirthday = moment.utc(data.BIRTHDAY).format('YYYY-MM-DD')
         data.BIRTHDAY = newBirthday;
-        
+        console.log(data);
         res.render('user/account.hbs', {
             layout: 'account-main.hbs',
             data_contact: data,

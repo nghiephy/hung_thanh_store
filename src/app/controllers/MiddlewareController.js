@@ -45,11 +45,16 @@ class MiddlewareController {
                     productsCart = JSON.parse(JSON.stringify(products[0]))
                 });
                 req.user = user;
-                // if(user.USER_TYPE === 'admin' && req.originalUrl !== '/user/account') {
-                //     console.log('OK');
-                //     res.redirect('/admin');
-                //     return;
-                // }
+               
+                if(user.USER_TYPE === 'admin' ) {
+                    if(req.originalUrl === '/user/information' || req.originalUrl === '/user/account' || req.originalUrl === '/user/update-account') {
+                        next();
+                        return;
+                    }
+                    console.log('OK');
+                    res.redirect('/admin');
+                    return;
+                }
                 next();
             });
         }else {

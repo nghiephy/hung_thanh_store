@@ -125,9 +125,10 @@ document.addEventListener('DOMContentLoaded', async function() {
     const buttonLogout = document.querySelector('#admin-header-top-config-item-logout');
     buttonLogout.addEventListener('click', async (e) => {
         window.localStorage.removeItem('cart');
+        window.localStorage.removeItem('wishlist');
         window.localStorage.removeItem('accessToken');
         await instance.post('http://localhost:3000/user/logout');
-        window.location.replace("/");
+        window.location.replace("http://localhost:3000/");
     })
 
     // Handle display small nav when screen.width < 1023px
